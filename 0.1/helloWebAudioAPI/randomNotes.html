@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Random Notes</title>
+  <body>
+    <script>
+      var context = new webkitAudioContext();
+      var osc = context.createOscillator();
+      var oscGain = context.createGainNode();
+      osc.connect(oscGain);
+      oscGain.connect(context.destination);
+
+      osc.noteOn(0);
+      (function randomNote(){
+        osc.frequency.value = Math.random() * 500 + 200;
+        oscGain.gain.value = Math.random();
+        setTimeout(randomNote, 500);
+      })();
+    </script>
+  </body>
+</html>

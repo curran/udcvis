@@ -1,0 +1,37 @@
+<html>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      var magicNumber = 9;// try 1,2,3,4,5,6,7,8,9,10 (or 8.5!)
+
+      var minFrequency = 100; // in Hertz
+      var maxFrequency = 700; // in Hertz
+      var period = 1/8; // in Seconds
+
+      var context = new webkitAudioContext();
+      var osc = context.createOscillator();
+      var oscGain = context.createGainNode();
+      osc.connect(oscGain);
+      oscGain.connect(context.destination);
+      oscGain.gain.value = 0;
+      osc.noteOn(0);
+      var noteTime = 0;
+      function schedule(){
+        while (noteTime < context.currentTime + 0.200) {
+          osc.frequency.setValueAtTime(frequency(), noteTime);
+          oscGain.gain.linearRampToValueAtTime(1, noteTime+0.001);
+          oscGain.gain.linearRampToValueAtTime(0, noteTime+period/2);
+          oscGain.gain.linearRampToValueAtTime(0, noteTime+period);
+          noteTime += period;
+        }
+        setTimeout(schedule, 30);
+      }
+      function frequency(){
+        var min = minFrequency, max = maxFrequency;
+        var variation = Math.sin(noteTime * Math.PI * magicNumber);
+        return min + (variation/2+0.5) * (max - min);
+      }
+      schedule();
+    </script>
+  </body>
+</html>
