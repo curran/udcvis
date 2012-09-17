@@ -1,0 +1,284 @@
+<h2>Universal Data Cube Visualization System</h2>
+<p>Journal of progress
+
+</p>
+<p>8/29/12
+MIT Student Center
+
+</p>
+<p>Documents envisioned:
+
+</p>
+<ul>
+<li>Visualization Techniques, characterized by data cube structure<ul>
+<li>Scatter Plot</li>
+<li>Bar Chart</li>
+<li>Stacked Bar Chart</li>
+<li>Pie Chart</li>
+<li>Choropleth Map</li>
+</ul>
+</li>
+<li>Visualization Theory, from Bertin, applied to data cubes<ul>
+<li>Color</li>
+<li>X, Y Position<ul>
+<li>By upper left corner</li>
+<li>By center</li>
+</ul>
+</li>
+<li>Shape<ul>
+<li>Rectangle<ul>
+<li>Width, Height</li>
+</ul>
+</li>
+<li>Circle<ul>
+<li>Radius</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Texture</li>
+</ul>
+</li>
+<li>Interaction Techniques<ul>
+<li>Selection<ul>
+<li>Rectangular</li>
+<li>Lassoo</li>
+<li>By Mark intersection</li>
+<li>By Mark center</li>
+<li>Spatial Index techniques<ul>
+<li>R-Tree</li>
+<li>Quadtree</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Public Data Sets, charactreized by data cube structure</li>
+<li>The Universal Data Cube Conceptual Model<ul>
+<li>DataSet<ul>
+<li>A collection of observations</li>
+<li>A set of metadata<ul>
+<li>Which dimensions<ul>
+<li>Which levels<ul>
+<li>Which members</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Which measures</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dimension</li>
+<li>Level</li>
+<li>Member</li>
+<li>Measure</li>
+<li>Observation<ul>
+<li>A DataSet</li>
+<li>A set of Members</li>
+<li>A measure</li>
+<li>A measure value</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Visualizations<ul>
+<li>A list of links (or embedded) implementations of visualizations and system components implemented as part of the project</li>
+</ul>
+</li>
+</ul>
+<p>Insight: The visualization and graphics system will be built independently of the data serialization, but the internal data representation, API, and visualization code must be harmonized with the conceptual data model of the Universal Data Cube.
+
+</p>
+<p>Plan: establish a project that will be developed for at least the next two years. Target 1.0 release for August 2014. Versions:
+
+</p>
+<ul>
+<li>0.00 09/12</li>
+<li>0.05 10/12</li>
+<li>0.10 11/12</li>
+<li>0.15 12/12</li>
+<li>0.20 01/13</li>
+<li>0.25 02/13</li>
+<li>0.30 03/13</li>
+<li>0.35 04/13</li>
+<li>0.40 05/13</li>
+<li>0.45 06/13</li>
+<li>0.50 07/13</li>
+<li>0.55 08/13</li>
+<li>0.50 09/13</li>
+<li>0.55 10/13</li>
+<li>0.60 11/13</li>
+<li>0.65 12/13</li>
+<li>0.70 01/14</li>
+<li>0.75 02/14</li>
+<li>0.80 03/14</li>
+<li>0.85 04/14</li>
+<li>0.90 05/14</li>
+<li>0.95 06/14</li>
+<li>0.96 07/14</li>
+<li>1.00 08/14</li>
+</ul>
+<p>Document the tools, make &quot;Hello World&quot; for each:
+
+</p>
+<ul>
+<li>Node.js</li>
+<li>Node.js packages</li>
+<li>Async.js</li>
+<li>Underscore.js</li>
+<li>Express.js<ul>
+<li>Jade</li>
+<li>Serving static files</li>
+</ul>
+</li>
+<li>MongoDB</li>
+<li>Socket.io</li>
+<li>Backbone</li>
+<li>Require.js</li>
+<li>Canvas<ul>
+<li>Fundamental shapes<ul>
+<li>Circle</li>
+<li>Square</li>
+<li>Triangle</li>
+<li>Pentagon</li>
+<li>Hexagon</li>
+<li>Star</li>
+</ul>
+</li>
+<li>Mobile Tricks<ul>
+<li>Full-screen</li>
+<li>Respond to orientation change</li>
+<li>Multi-touch events</li>
+</ul>
+</li>
+<li>CSS Colors<ul>
+<li>From RGB to hex</li>
+</ul>
+</li>
+<li>Mouse Events</li>
+<li>RequestAnimationFrame</li>
+</ul>
+</li>
+<li>D3</li>
+<li>GeoNames</li>
+<li>Literate coding documentation tool</li>
+<li>JavaScript RDF tools</li>
+</ul>
+<p>Import Critical Mass of Data:
+
+</p>
+<ul>
+<li>Enough to show multiple overlapping data sets</li>
+<li>UN Country-level population data, using GeoNames URIs</li>
+<li>US Census State-level population data, using GeoNames URIs</li>
+</ul>
+<p>Work on components:
+
+</p>
+<p><a href="images/2012_02_17_dependencyGraph.png"><img src="images/2012_02_17_dependencyGraph_small.png"></img></a>
+
+</p>
+<ul>
+<li>Layers API</li>
+<li>Graphical component framework<ul>
+<li>Try using Backbone for this</li>
+<li>Only one kind of container: Box<ul>
+<li>orientation: vertical or horizontal</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Tiling UI</li>
+<li>Pan, Zoom</li>
+<li>Interval framework (review JyVis code)</li>
+<li>Normalization</li>
+<li>Color Map<ul>
+<li>Model (with cache of color string objects)</li>
+<li>Editor</li>
+</ul>
+</li>
+<li>Green threads for render scheduling<ul>
+<li>TODO research what has been done</li>
+<li>Loop driven by requestAnimationFrame</li>
+<li>measure time between calls (should be 1000/60 ms)</li>
+<li>first: call rendering code</li>
+<li>second: call time-limited compute tasks</li>
+</ul>
+</li>
+<li>UDC Client Library</li>
+<li>Quick &amp; Dirty UDC-based visualizations<ul>
+<li>Reading data from a static file (ttl or RDF/XML?)</li>
+<li>Using the UDC client library</li>
+<li>Bar Chart, Pie Chart, Scatter Plot</li>
+</ul>
+</li>
+<li>Data Set Selector UI</li>
+<li>Dimension Selector UI</li>
+<li>Level Selector UI</li>
+<li>Measure Selector UI</li>
+<li>Quadstream<ul>
+<li>Review old code and algorithms</li>
+<li>BLG Tree</li>
+<li>R-Tree</li>
+<li>Quadstream tree</li>
+</ul>
+</li>
+</ul>
+<p>9/3/2012
+
+</p>
+<p>New information regarding basic tooling: Require.js, Underscore, Backbone.
+
+</p>
+<p>Backbone and Underscore DO NOT have built-in support for AMD. They can only be used in conjunction with Require.js when they are loaded in script tags in the HTML. In this case, the AMD modules that depend on them must assume the global variables from those libraries are present. This is one option for how to proceed. This seems simple and straightforward. The only downside is that these dependencies must be managed manually. This is probably no big deal.
+
+</p>
+<p>The AMD community has created forks of both Underscore and Backbone that DO have support for AMD. This means the scripts call <code>define()</code> if it is available, and ALSO define global variables. These forks are described in the blog post <a href="http://tagneto.blogspot.com/2012/01/amd-support-for-underscore-and-backbone.html">AMD Support for Underscore and Backbone</a>.
+
+</p>
+<p>Require.js has a cross-platform DOMReady utility called <code>domReady</code> (see <a href="http://requirejs.org/docs/api.html">API</a>);
+
+</p>
+<p>TODO: Get <a href="http://jashkenas.github.com/docco/">Docco</a> working. Install it with <code>sudo npm install -g docco</code>.
+
+</p>
+<p>9/7/2012
+
+</p>
+<p>Idea: build a point editor for implementing computational geometry algorithms and getting experience coding JavaScript.
+
+</p>
+<p>9/10/2012
+
+</p>
+<p>The UDC has a number of &quot;levels of involvement&quot;:
+
+</p>
+<ul>
+<li>Creating Dimensions, Members, and Levels</li>
+<li>Creating Measures, Aggregation Operators, Units and Quantities</li>
+<li>Creating Code Dictionaries</li>
+</ul>
+<p>As part of the data curation UI:
+
+</p>
+<ul>
+<li>Open CSV files</li>
+</ul>
+<p>9/13/2012
+
+</p>
+<p>Made significant progress. Created the following:
+
+</p>
+<ul>
+<li>helloExpress</li>
+<li>helloSocketIO</li>
+<li>helloWebAudioAPI</li>
+<li>helloiPad</li>
+<li>iPadDrum</li>
+</ul>
+
