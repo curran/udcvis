@@ -1,0 +1,40 @@
+var blgTree = new BLGTree();
+var vertices = [];
+int maxLevel = 2;
+void setup(){
+	noLoop();
+	var scale = 30;
+	var nodes = [];
+	nodes.push(new BLGTreeNode(1*scale,6*scale,0,0));
+	nodes.push(new BLGTreeNode(1*scale,5*scale,1,2));
+	nodes.push(new BLGTreeNode(2*scale,3*scale,2,1));
+	nodes.push(new BLGTreeNode(3*scale,2*scale,3,2));
+	nodes.push(new BLGTreeNode(5*scale,1*scale,4,0));
+	nodes.push(new BLGTreeNode(7*scale,2*scale,5,2));
+	nodes.push(new BLGTreeNode(8*scale,3*scale,6,1));
+	nodes.push(new BLGTreeNode(9*scale,5*scale,7,2));
+	nodes.push(new BLGTreeNode(9*scale,6*scale,8,0));
+	nodes.sort(function(a,b){return 0.5 - Math.random()});
+	
+	var insertOrderStr = "Insert order: "
+	for(var i = 0;i<nodes.length;i++){
+		blgTree.insertNode(nodes[i]);
+		insertOrderStr += nodes[i].id+" ";
+	}
+	$('#insText')[0].innerHTML = insertOrderStr;
+}
+void draw(){
+	background( 255 );
+	fill(0);
+	beginShape();
+	blgTree.forEach(vertex,maxLevel);
+	endShape();
+	$('#treeText')[0].innerHTML = "BLG Tree: "+blgTree.toString(maxLevel);
+}
+
+void mouseMoved(){
+	if(maxLevel != ((int)(4*mouseY/height))){
+		maxLevel = (int)(4*mouseY/height);
+		redraw();
+	}
+}

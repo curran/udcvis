@@ -1,0 +1,11 @@
+<shapes>
+	<id>usStates</id>
+	<name>US States</name>
+	<description>Shapes of all states of the USA.</description>
+	<source>US Census Bureau</source>
+	<sqlHost>localhost</sqlHost>
+	<sqlUser>root</sqlUser>
+	<sqlPassword>ivpr</sqlPassword>
+	<sqlDatabase>us</sqlDatabase>
+	<sqlTablePrefix>us</sqlTablePrefix>
+</shapes>

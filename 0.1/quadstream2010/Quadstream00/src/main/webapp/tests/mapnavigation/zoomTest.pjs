@@ -1,0 +1,101 @@
+var projection;
+var polygonSet;
+int maxLevel = 10;
+
+var selectionRect;
+var screenSelectionRect = new Rectangle(0,0,0,0);
+var geoSelectionRect = new Rectangle(0,0,0,0);
+
+var zoomRect1 = new Rectangle(0,0,0,0);
+var zoomRect2 = new Rectangle(0,0,0,0);
+float percentZoomed = 0;
+boolean zooming = false;
+int zoomFrameRate = 20;
+
+void setPolygons(polygons){
+	polygonSet = polygons;
+}
+void initProjection(geoViewRect){
+	var screenViewRect = new Rectangle(0,0,width,height);
+	projection = new Projection(geoViewRect,screenViewRect);
+	redraw();
+}
+void setup(){
+	frameRate(zoomFrameRate);
+	noLoop();
+}
+
+void draw(){
+	background( 255 );
+	if(projection != null){
+		if(zooming)
+			incrementZoom();
+		
+		fill(200);
+		stroke(100);
+		polygonSet.rtree.forEachSearch(projection.geoRect, drawPolygon);
+		
+		if(selectionRect){
+			stroke(0);
+			strokeWeight(1);
+			noFill();
+			drawRect(geoSelectionRect);
+		}
+	}
+}
+void drawRect(var r){
+	var x = projection.longToX(r.x1);
+	var y = projection.latToY(r.y1);
+	var w = projection.longToX(r.x2) - x;
+	var h = projection.latToY(r.y2) - y;
+	rect(x, y, w, h);
+}
+void drawPolygon(var polygon){
+	var callback = dojo.hitch(this,vertexProjected);
+	beginShape();
+	polygon.blgTree.forEach(callback,maxLevel);
+	polygon.blgTree.forFirst(callback,maxLevel);
+	endShape();
+}
+void vertexProjected(lon,lat){
+	vertex(projection.longToX(lon),projection.latToY(lat));
+}
+void setMaxLevel(int maximumLevel){
+	maxLevel = maximumLevel;
+	redraw();
+}
+void mousePressed(){
+	selectionRect = new Rectangle(mouseX, mouseY, mouseX, mouseY);
+	zooming = false;
+	mouseDragged();
+}
+void mouseDragged(){
+	selectionRect.setX2(mouseX);
+	selectionRect.setY2(mouseY);
+	screenSelectionRect.set(selectionRect);
+	screenSelectionRect.ensurePositiveArea();
+	projection.pixelToGeoRect(geoSelectionRect,screenSelectionRect);
+	redraw();
+}
+void mouseReleased(){
+	if(selectionRect != undefined){
+		zoomRect1.set(projection.geoRect);
+		zoomRect2.set(geoSelectionRect);
+		zoomRect2.ensureAspectRatio(projection.aspectRatio);
+		
+		percentZoomed = 0;
+		zooming = true;
+		selectionRect = undefined;
+		polygonSet.getVerticesForViewRect(zoomRect2,redraw);
+		loop();
+	}
+}
+void incrementZoom(){
+	percentZoomed += 1;
+	if(percentZoomed >= 100){
+		zooming = false;
+		noLoop();
+	}
+	else
+		projection.geoRect.interpolate(zoomRect1,zoomRect2,Math.sin(Math.sqrt(percentZoomed/100.0)*Math.PI/2));
+}	

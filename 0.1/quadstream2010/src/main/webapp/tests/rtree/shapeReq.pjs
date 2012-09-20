@@ -1,0 +1,105 @@
+int rectSize = 10;
+var projection;
+var selectionRect;
+var screenSelectionRect = new Rectangle(0,0,0,0);
+var geoSelectionRect = new Rectangle(0,0,0,0);
+var rtree = new RTree();
+int maxRTreeDepth = 1;
+var rects = [];
+int SHIFT = 48;
+int CTRL = 49;
+int ALT = 50;
+boolean ctrlPressed = false;
+
+void initProjection(geoViewRect){
+	var screenViewRect = new Rectangle(0,0,width,height);
+	projection = new Projection(geoViewRect,screenViewRect);
+	redraw();
+}
+
+void storeGeoRect(geoRect){
+	rects.push(geoRect);
+	rtree.insert(geoRect);
+}
+
+void setup(){
+	noLoop();
+}
+
+void draw(){
+	background( 255 );
+	fill(0,0,200);
+
+	if(projection != null){
+		noFill();
+		stroke(220);
+		if(rtree.root != null)
+			drawRTreeNodes(rtree.root,rtree.root,0);
+		
+		/*draw all rectangles*/
+		stroke(0);
+		noFill();
+		rtree.forEachSearch(projection.geoRect, drawRect);
+
+		
+//		for(var i = 0;i<rects.length;i++)
+//			drawRect(rects[i]);
+
+		if(selectionRect){
+			screenSelectionRect.set(selectionRect);
+			screenSelectionRect.ensurePositiveArea();
+			projection.pixelToGeoRect(geoSelectionRect,screenSelectionRect);
+
+			fill(0,200,0);
+			rtree.forEachSearch(geoSelectionRect, drawRect);
+			
+			stroke(255,0,0);
+			noFill();
+			if(rtree.root != null)
+				drawRTreeNodes(geoSelectionRect,rtree.root,0);
+
+			stroke(0);
+			strokeWeight(1);
+			drawRect(geoSelectionRect);
+		}
+	}
+}
+
+void drawRTreeNodes(r,n,level){
+	if(level > maxRTreeDepth)
+		maxRTreeDepth = level;
+	for (i in n.entries) {
+		var c = n.entries[i];
+		if (c.intersects(r) && !n.isLeaf){
+			strokeWeight(maxRTreeDepth-level);
+			drawRect(c);
+			drawRTreeNodes(r,c,level+1);
+		}
+	}
+}
+
+void drawRect(var r){
+	var x = projection.longToX(r.x1);
+	var y = projection.latToY(r.y1);
+	var w = projection.longToX(r.x2) - x;
+	var h = projection.latToY(r.y2) - y;
+	rect(x, y, w, h);
+}
+void mousePressed(){
+	selectionRect = new Rectangle(mouseX, mouseY, mouseX, mouseY);
+}
+void mouseDragged(){
+	if(ctrlPressed){
+		selectionRect.x1 = mouseX - (selectionRect.x2 - selectionRect.x1);
+		selectionRect.y1 = mouseY - (selectionRect.y2 - selectionRect.y1);
+	}
+	selectionRect.x2 = mouseX;
+	selectionRect.y2 = mouseY;
+	redraw();
+}
+void mouseReleased(){
+	selectionRect = undefined;
+	redraw();
+}
+void keyPressed() { ctrlPressed = key == CTRL;}
+void keyReleased() { ctrlPressed = false;}

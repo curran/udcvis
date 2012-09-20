@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>ResolutionSliderTest!</title>
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css">
+<style type="text/css">
+    body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+</style>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"
+	djConfig="parseOnLoad: true"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/processing.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/rectangle.js"></script>
+<script type="text/javascript" src="../../js/rtree.js"></script>
+<script type="text/javascript" src="../../js/blgTree.js"></script>
+<script type="text/javascript" src="../../js/projection.js"></script>
+<script type="text/javascript" src="../../js/polygonSet.js"></script>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Slider");
+dojo.require("dojo.parser");
+var polygonSetTestCanvas;
+function init(){
+	var shapesetID = "usStates";
+	$.get("resolutionSliderTest.pjs", function(code) {
+		polygonSetTestCanvas = Processing($("#canvas")[0], code);
+		var polygonSet = new PolygonSet();
+		polygonSetTestCanvas.setPolygons(polygonSet);
+		$.get("../../shapes", {
+			q : "bounds",
+			d : shapesetID
+		}, function(text) {
+			if (!err(text)) {
+				polygonSet.parseAndAddBounds(text);
+				polygonSetTestCanvas.initProjection(polygonSet.bounds);
+			}
+			$.get("../../shapes", {
+				q : "shapes",
+				d : shapesetID,
+				l : 0,
+				a : 0
+			}, function(text) {
+				if (!err(text)) {
+					polygonSet.parseAndAddVertices(text);
+					polygonSetTestCanvas.redraw();
+
+					$.get("../../shapes", {
+						q : "shapes",
+						d : shapesetID,
+						l : 1,
+						a : 0
+					}, function(text) {
+						if (!err(text)) {
+							polygonSet.parseAndAddVertices(text);
+							polygonSetTestCanvas.redraw();
+						}
+					});
+					$.get("../../shapes", {
+						q : "shapes",
+						d : shapesetID,
+						l : 1,
+						a : 1
+					}, function(text) {
+						if (!err(text)) {
+							polygonSet.parseAndAddVertices(text);
+							polygonSetTestCanvas.redraw();
+						}
+					});
+					$.get("../../shapes", {
+						q : "shapes",
+						d : shapesetID,
+						l : 1,
+						a : 2
+					}, function(text) {
+						if (!err(text)) {
+							polygonSet.parseAndAddVertices(text);
+							polygonSetTestCanvas.redraw();
+						}
+					});
+					$.get("../../shapes", {
+						q : "shapes",
+						d : shapesetID,
+						l : 1,
+						a : 3
+					}, function(text) {
+						if (!err(text)) {
+							polygonSet.parseAndAddVertices(text);
+							polygonSetTestCanvas.redraw();
+						}
+					});
+					
+				}
+			});
+		});
+	});
+}
+function sliderChanged(value){
+	if(polygonSetTestCanvas != undefined)
+		polygonSetTestCanvas.setMaxLevel(value);
+}
+</script>
+</head>
+<body class="tundra" onload="init();">
+<canvas id="canvas" width="600" height="500"></canvas>
+<div dojoType="dijit.form.HorizontalSlider" name="horizontal1"
+  onChange="sliderChanged"
+  value="8"
+  minimum="0"
+  maximum="8"
+  pageIncrement="0.3"
+  showButtons="false"
+  intermediateChanges="true"
+  style="width:600px; height: 20px;"
+  id="slider1">
+  <div dojoType="dijit.form.HorizontalRule" container="bottomDecoration" 
+    count=9 style="height:5px;"></div>
+  <ol dojoType="dijit.form.HorizontalRuleLabels" container="bottomDecoration" 
+    style="height:1em;font-size:75%;color:gray;" count="9">
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+  </ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+int radius = 5;
+int X = 0;
+int Y = 0;
+boolean initialized = false;
+var r1;
+
+void init(var rectangle1,var rectangle2){
+  r1 = rectangle1;
+  r2 = rectangle2;
+  union = new Rectangle(0,0,2,0);
+  initialized = true;
+  draw();
+}
+
+void setup(){
+  noLoop();
+}
+void drawRect(var r){
+  rect(r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1 );
+}
+void draw(){
+  background( 255 );
+  if(initialized){
+	union.set(r1);
+	union.add(r2);
+	fill(100,100,100)
+	drawRect(union);
+    if(r1.intersects(r2))
+      fill( 0, 121, 184 );
+    else
+      fill( 0, 50, 100 );
+    drawRect(r1);
+    drawRect(r2);
+  }                  
+}
+void mouseDragged(){
+  r1.x2 = mouseX;
+  r1.y2 = mouseY;
+  draw();
+}
+void mouseMoved(){
+  int w = r1.x2 - r1.x1;
+  int h = r1.y2 - r1.y1;
+  r1.x1 = mouseX-w;
+  r1.y1 = mouseY-h;
+  r1.x2 = mouseX;
+  r1.y2 = mouseY;
+  draw();
+}
+

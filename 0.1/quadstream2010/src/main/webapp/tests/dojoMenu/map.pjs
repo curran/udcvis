@@ -1,0 +1,48 @@
+// Global variables
+float radius = 5;
+//int x,y;
+int n = 0;
+int curr = 0;
+float[] xs = new float[n];
+float[] ys = new float[n];
+
+void setup(){
+	size( 200, 200 );
+	noLoop();
+	x = width / 2;
+	y = width / 2;
+}
+
+void draw(){
+	background( 255 );
+	fill( 0 );
+	if(n != 0){
+		float xMin=9999,xMax=-9999,yMin=9999,yMax=-9999;
+		for(int i = 0;i<n;i++){
+			if(xs[i]>xMax)
+				xMax = xs[i];
+			if(xs[i]<xMin)
+				xMin = xs[i];
+			if(ys[i]>yMax)
+				yMax = ys[i];
+			if(ys[i]<yMin)
+				yMin = ys[i];
+		}
+		console.log("xMax = "+xMax);
+		console.log("xMin = "+xMin);
+		console.log("yMax = "+yMax);
+		console.log("yMin = "+yMin);
+		
+		for(int i = 0;i<n;i++){
+			float x = (xs[i]-xMin)/(xMax-xMin)*width;
+			float y = height-(ys[i]-yMin)/(yMax-yMin)*height;
+			ellipse( x,y, radius, radius );
+		}
+	}
+}
+void mouseMoved(){
+	xs[curr] = mouseX;
+	ys[curr] = mouseY;
+	curr = (curr+1)%n;
+	redraw();
+}

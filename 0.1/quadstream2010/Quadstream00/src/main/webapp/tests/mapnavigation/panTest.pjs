@@ -1,0 +1,43 @@
+var projection;
+var polygonSet;
+int maxLevel = 10;
+void setPolygons(polygons){
+	polygonSet = polygons;
+}
+void initProjection(geoViewRect){
+	var screenViewRect = new Rectangle(0,0,width,height);
+	projection = new Projection(geoViewRect,screenViewRect);
+	redraw();
+}
+
+void setup(){
+	noLoop();
+}
+
+void draw(){
+	background( 255 );
+	if(projection != null){
+		fill(200);
+		stroke(100);
+		polygonSet.rtree.forEachSearch(projection.geoRect, drawPolygon);
+	}
+}
+void drawPolygon(var polygon){
+	var callback = dojo.hitch(this,vertexProjected);
+	beginShape();
+	polygon.blgTree.forEach(callback,maxLevel);
+	endShape();
+}
+void vertexProjected(lon,lat){
+	vertex(projection.longToX(lon),projection.latToY(lat));
+}
+void setMaxLevel(int maximumLevel){
+	maxLevel = maximumLevel;
+	redraw();
+}
+void mouseDragged(){
+	float longOffset = projection.xToLong(pmouseX) - projection.xToLong(mouseX);
+	float latOffset = projection.yToLat(pmouseY) - projection.yToLat(mouseY);
+	projection.geoRect.move(longOffset,latOffset);
+	redraw();
+}

@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>RectangleTest!</title>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"
+	djConfig="parseOnLoad: true"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/processing.js"></script>
+<script type="text/javascript" src="../../js/rectangle.js"></script>
+<script type="text/javascript" src="../../js/rtree.js"></script>
+<script type="text/javascript" src="../../js/projection.js"></script>
+<script type="text/javascript" src="../../js/polygonSet.js"></script>
+
+
+<script type="text/javascript">
+function err(returnData) {
+	if (returnData.substring(2, 7) == "error") {
+		alert(eval("(" + returnData + ")").error);
+		return true;
+	} else
+		return false;
+}
+
+function init(){
+	var shapesetID = "usStates";
+	$.get("shapeReq.pjs", function(code) {
+		var shapeReqCanvas = Processing($("#canvas")[0], code);
+		$.get("../../shapes", {
+			q : "bounds",
+			d : shapesetID
+		}, function(returnData) {
+			if (!err(returnData)) {
+				var lines = returnData.split("\n");
+				for ( var i = 0; i < lines.length; i++) {
+					console.log("line = "+lines[i]);
+					var line = lines[i].split(",");
+					var polygonId = parseInt(line[0]);
+					var x1 = parseFloat(line[1]);
+					var y1 = parseFloat(line[2]);
+					var x2 = parseFloat(line[3]);
+					var y2 = parseFloat(line[4]);
+					var r = new Rectangle(x1, y1, x2, y2);
+					if (polygonId == -1) {
+						shapeReqCanvas.initProjection(r);
+					} else {
+						shapeReqCanvas.storeGeoRect(r);
+					}
+				}
+				shapeReqCanvas.redraw();
+			}
+		});
+	});
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="600" height="500"></canvas>
+</body>
+</html>

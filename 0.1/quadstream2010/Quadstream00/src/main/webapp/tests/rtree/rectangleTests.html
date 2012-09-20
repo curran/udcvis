@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>RectangleTest!</title>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"
+	djConfig="parseOnLoad: true"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/processing.js"></script>
+<script type="text/javascript" src="../../js/rectangle.js"></script>
+
+
+<script type="text/javascript">
+function init(){
+	$.get("rectangleTests.pjs", function(code) {
+		var rt = Processing($("#canvas")[0], code);
+		var r1 = new Rectangle(10, 10, 30, 30);
+		var r2 = new Rectangle(140, 140, 160, 160);
+		rt.init(r1,r2);
+	});
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="300" height="300"></canvas>
+</body>
+</html>

@@ -1,0 +1,39 @@
+boolean moved = false;
+boolean dragged = false;
+boolean clicked = false;
+
+void setup()
+{
+  size(200, 200);
+  frameRate(15);
+  noStroke();
+  background(255);
+}
+
+void draw() 
+{
+  if(moved && !dragged)
+    fill(0,0,255);
+  if(!moved && dragged)
+    fill(0,255,0);
+  if(moved && dragged)
+    fill(255,0,0);
+  if(moved || dragged)
+    ellipse(mouseX,mouseY,10,10);
+  if(clicked){
+    fill(200,0,200);
+    ellipse(mouseX,mouseY,30,30);
+  }
+  moved = false;
+  dragged = false;
+  clicked = false;
+}
+void mouseMoved(){
+  moved = true;
+}
+void mouseDragged(){
+  dragged = true;
+}
+void mouseClicked(){
+  clicked = true;
+}

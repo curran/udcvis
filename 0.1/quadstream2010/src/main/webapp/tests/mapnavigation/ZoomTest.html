@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>ZoomTest!</title>
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css">
+<style type="text/css">
+    body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+</style>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"
+	djConfig="parseOnLoad: true"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/processing.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/rectangle.js"></script>
+<script type="text/javascript" src="../../js/rtree.js"></script>
+<script type="text/javascript" src="../../js/blgTree.js"></script>
+<script type="text/javascript" src="../../js/projection.js"></script>
+<script type="text/javascript" src="../../js/polygonSet.js"></script>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Slider");
+dojo.require("dojo.parser");
+var polygonSetTestCanvas;
+function init(){
+	var shapesetID = "usStates";
+	var shapesURL = "../../shapes";
+	
+	$.get("zoomTest.pjs", function(code) {
+		polygonSetTestCanvas = Processing($("#canvas")[0], code);
+		var polygonSet = new PolygonSet();
+		polygonSetTestCanvas.setPolygons(polygonSet);
+		polygonSet.initializeData(shapesURL,shapesetID,function(){
+			polygonSetTestCanvas.initProjection(polygonSet.bounds);
+			polygonSetTestCanvas.redraw();
+		});
+	});
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="600" height="500"></canvas>
+</body>
+</html>
