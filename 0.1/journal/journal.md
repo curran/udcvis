@@ -197,3 +197,9 @@ Made significant progress. Created the following:
  * helloWebAudioAPI
  * helloiPad
  * iPadDrum
+
+9/25/2012
+
+Had the insight that the UDC should be published as CORS-enabled files, and that the UDC client should represent the UDC data with an in-memory RDF store.
+
+Prototyped the [in-memory RDF store](../inMemoryRDFStore/docs/rdf.html)

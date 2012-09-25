@@ -1,0 +1,177 @@
+<!DOCTYPE html>  <html> <head>   <title>rdf.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               rdf.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">rdf</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>A quick and dirty sorted set implementation.
+It has the following drawbacks:</p>
+
+<ul>
+<li>It sorts on requests for iterators.
+<ul><li>Sporradic O(n lg n) cost</li></ul></li>
+<li>It defensively makes a copy of the array for iterators.
+<ul><li>O(n) memory and compute cost per iterator</li></ul></li>
+</ul>
+
+<p>Ideally this would be implemented using a Red-Black tree.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">makeSortedSet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">_array</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">_dirty</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">insert</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;inserting &quot;</span><span class="o">+</span><span class="nx">x</span><span class="p">);</span>
+        <span class="nx">_array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+        <span class="nx">_dirty</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">},</span>
+      <span class="nx">iterator</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">_dirty</span><span class="p">){</span>
+          <span class="nx">_array</span><span class="p">.</span><span class="nx">sort</span><span class="p">();</span>
+          <span class="nx">_dirty</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">_arrayCopy</span> <span class="o">=</span> <span class="nx">_array</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="p">{</span>
+          <span class="nx">hasNext</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">_arrayCopy</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+          <span class="p">},</span>
+          <span class="nx">next</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="nx">_arrayCopy</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">];</span>
+          <span class="p">},</span>
+          <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">it</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span> <span class="nx">strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">];</span>
+            <span class="k">while</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span>
+              <span class="nx">strings</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span>
+              <span class="nx">strings</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()</span><span class="o">?</span><span class="s2">&quot;, &quot;</span><span class="o">:</span><span class="s2">&quot;]&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  <span class="kd">var</span> <span class="nx">emptySet</span> <span class="o">=</span> <span class="nx">makeSortedSet</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The URI id counter for generating ids</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">idCounter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Keys are URI strings, values are integer URI ids.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">uriToId</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Keys are integer URI ids, values are URI strings.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">idToUri</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Keys are cantor pairs from subject and predicate URI ids.
+Values are sorted sets that have the following methods:</p>
+
+<ul>
+<li><code>insert(x)</code> Inserts an integer or literal <code>x</code>.</li>
+<li><p><code>iterator()</code> Gets an iterator object that has:</p>
+
+<ul><li><code>hasNext()</code> Returns true if there is a next value.</li>
+<li><code>next()</code> Gets the next element of the sorted set.</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">spIndex</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">poIndex</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Inserts a value into the given index. Arguments are:</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">indexInsert</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">index</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">list</span><span class="p">){</span>
+      <span class="nx">list</span> <span class="o">=</span> <span class="nx">index</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeSortedSet</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">list</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p><code>rdf(subject, predicate, object)</code> executes a query 
+on the in-memory store.
+The arguments here are either integer URI ids or the string '?'.
+Only one of the arguments is allowed to be '?'.
+The '?' must be either the subject or the object argument.
+The return value is a sorted array of matching values for the '?'.
+Values in the returned array may be either integers or literal objects.
+Each literal object <code>obj</code> has properties</p>
+
+<ul>
+<li><code>obj.isLiteral === true</code></li>
+<li><code>obj.value</code> gets the literal value.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">rdf</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">indexEntry</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">){</span>
+      <span class="nx">key</span> <span class="o">=</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+      <span class="nx">index</span> <span class="o">=</span> <span class="nx">spIndex</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">){</span>
+      <span class="nx">key</span> <span class="o">=</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">);</span>
+      <span class="nx">index</span> <span class="o">=</span> <span class="nx">poIndex</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;When calling rdf(s,p,o), either s or o must be &#39;?&#39;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">indexEntry</span> <span class="o">=</span> <span class="nx">index</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">indexEntry</span><span class="p">){</span>
+      <span class="k">return</span> <span class="nx">indexEntry</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+      <span class="k">return</span> <span class="nx">emptySet</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Creates a unique key for two integer IDs.
+From http://en.wikipedia.org/wiki/Pairing_function</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">cantor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="nx">b</span><span class="p">;</span>
+  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Returns a literal value for use as the <code>object</code> argument
+to <code>rdf.insert()</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">rdf</span><span class="p">.</span><span class="nx">literal</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>The prototype of literal values</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">literalPrototype</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">isLiteral</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">literal</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">literalPrototype</span><span class="p">);</span>
+      <span class="nx">literal</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nx">literal</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">})();</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>The argument is a URI string.
+The return value is an integer id for that URI.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">uri</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">uriToId</span><span class="p">[</span><span class="nx">uri</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">id</span><span class="p">){</span>
+      <span class="nx">id</span> <span class="o">=</span> <span class="nx">idCounter</span><span class="o">++</span><span class="p">;</span>
+      <span class="nx">uriToId</span><span class="p">[</span><span class="nx">uri</span><span class="p">]</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+      <span class="nx">idToUri</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">uri</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">id</span><span class="p">;</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p><code>insert(subject, predicate, object)</code>
+Inserts a triple into the in-memory store. The arguments are:</p>
+
+<ul>
+<li>The <code>subject</code> and <code>predicate</code> arguments are 
+integer URI ids from <code>rdf.uri()</code>.</li>
+<li><p>The <code>object</code> argument may be either:</p>
+
+<ul><li>a URI id from <code>rdf.uri()</code>, or </li>
+<li>a literal from <code>rdf.literal(value)</code>.</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">rdf</span><span class="p">.</span><span class="nx">insert</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">){</span>
+    <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">spIndex</span><span class="p">,</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">),</span> <span class="nx">o</span><span class="p">);</span>
+    <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">poIndex</span><span class="p">,</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">),</span> <span class="nx">s</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">rdf</span><span class="p">;</span>
+<span class="p">}();</span>
+
+<span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/People/EM/contact#me&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">fullName</span> <span class="o">=</span> <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/2000/10/swap/pim/contact#fullName&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/2000/10/swap/pim/contact#Person&#39;</span><span class="p">);</span>
+
+<span class="nx">rdf</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">person</span><span class="p">);</span>
+<span class="nx">rdf</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">,</span> <span class="nx">rdf</span><span class="p">.</span><span class="nx">literal</span><span class="p">(</span><span class="s2">&quot;Eric Miller&quot;</span><span class="p">));</span>
+<span class="nx">rdf</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span>
+  <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/2000/10/swap/pim/contact#mailbox&#39;</span><span class="p">),</span>
+  <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;mailto:em@w3.org&#39;</span><span class="p">));</span>
+<span class="nx">rdf</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span>
+  <span class="nx">rdf</span><span class="p">.</span><span class="nx">uri</span><span class="p">(</span><span class="s1">&#39;http://www.w3.org/2000/10/swap/pim/contact#personalTitle&#39;</span><span class="p">),</span>
+  <span class="nx">rdf</span><span class="p">.</span><span class="nx">literal</span><span class="p">(</span><span class="s2">&quot;Dr.&quot;</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">show</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">iterator</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iterator</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;expecting [&quot;Eric Miller&quot;], got &#39;</span><span class="p">);</span>
+<span class="nx">show</span><span class="p">(</span><span class="nx">rdf</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;expecting true, got &#39;</span><span class="p">)</span>
+<span class="nx">show</span><span class="p">(</span><span class="nx">rdf</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">).</span><span class="nx">next</span><span class="p">().</span><span class="nx">isLiteral</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;expecting [&#39;</span><span class="o">+</span><span class="nx">me</span><span class="o">+</span><span class="s1">&#39;], got &#39;</span><span class="p">);</span>
+<span class="nx">show</span><span class="p">(</span><span class="nx">rdf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">person</span><span class="p">));</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Region,Population,Year
+World,2532229237,1950
+Africa,229895014,1950
+Asia,1403388587,1950
+Europe,547287120,1950
+Latin America and the Caribbean,167368224,1950
+Northern America,171614868,1950
+Oceania,12675424,1950
+World,6895889018,2010
+Africa,1022234400,2010
+Asia,4164252297,2010
+Europe,738198601,2010
+Latin America and the Caribbean,590082023,2010
+Northern America,344528824,2010
+Oceania,36592873,2010</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

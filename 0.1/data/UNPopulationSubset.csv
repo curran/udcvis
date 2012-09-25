@@ -1,0 +1,25 @@
+var rdf = function(){
+  // The arguments here are either URI ids or the string '?'
+  var rdf = function(subject, predicate, object){
+  };
+  // The arguments for subject and predicate here are URI ids.
+  // The object argument may be either a URI id or a literal value.
+  rdf.insert(subject, predicate, object)
+}();
+
+
+Region,Population,Year
+World,2532229237,1950
+Africa,229895014,1950
+Asia,1403388587,1950
+Europe,547287120,1950
+Latin America and the Caribbean,167368224,1950
+Northern America,171614868,1950
+Oceania,12675424,1950
+World,6895889018,2010
+Africa,1022234400,2010
+Asia,4164252297,2010
+Europe,738198601,2010
+Latin America and the Caribbean,590082023,2010
+Northern America,344528824,2010
+Oceania,36592873,2010
