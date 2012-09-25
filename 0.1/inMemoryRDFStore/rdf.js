@@ -13,7 +13,6 @@ var rdf = function(){
     var _dirty = false;
     return {
       insert: function(x){
-        console.log("inserting "+x);
         _array.push(x);
         _dirty = true;
       },
@@ -46,12 +45,6 @@ var rdf = function(){
 
   var emptySet = makeSortedSet();
 
-  // The URI id counter for generating ids
-  var idCounter = 0;
-  // Keys are URI strings, values are integer URI ids.
-  var uriToId = {};
-  // Keys are integer URI ids, values are URI strings.
-  var idToUri = {};
 
   // Keys are cantor pairs from subject and predicate URI ids.
   // Values are sorted sets that have the following methods:
@@ -133,15 +126,23 @@ var rdf = function(){
 
   // The argument is a URI string.
   // The return value is an integer id for that URI.
-  rdf.uri = function(uri){
-    var id = uriToId[uri];
-    if(!id){
-      id = idCounter++;
-      uriToId[uri] = id;
-      idToUri[id] = uri;
-    }
-    return id;
-  };
+  rdf.uri = (function(){
+    // The URI id counter for generating ids
+    var idCounter = 0;
+    // Keys are URI strings, values are integer URI ids.
+    var uriToId = {};
+    // Keys are integer URI ids, values are URI strings.
+    //var idToUri = {};
+    return function(uri){
+      var id = uriToId[uri];
+      if(!id){
+        id = idCounter++;
+        uriToId[uri] = id;
+        //idToUri[id] = uri;
+      }
+      return id;
+    };
+  })();
 
   // `insert(subject, predicate, object)`
   // Inserts a triple into the in-memory store. The arguments are:
