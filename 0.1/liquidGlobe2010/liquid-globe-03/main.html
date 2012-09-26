@@ -1,0 +1,79 @@
+<html>  
+<head>  
+  <script src="js/processing.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/Graphic.js"></script>
+  <script src="js/Interval.js"></script>
+  <script src="js/Slider.js"></script>
+  <script src="js/sparql.js"></script>
+</head>
+
+<body style="margin: 0px;">
+<br>
+<br>
+<center>
+<canvas id="theCanvas" width="500" height="300"/>
+</center>
+<script type="text/javascript">  
+
+new Graphic(10,10,30,30);
+new Graphic(50,50,70,70);
+
+//Initialize the Processing.js sketch
+new Processing(document.getElementById("theCanvas"), sketch);
+function sketch(p) {
+  p.setup = function(){
+    //Call setup of the graphics library
+    Graphics_setup(p);
+    //Set the frame rate
+    p.frameRate(30);
+  }
+  p.draw = function(){
+    //clear the background
+    p.background(240);
+    //Call draw of the graphics library
+    Graphics_draw(p);
+  }
+  p.mousePressed = function(){
+    //Call mousePressed of the graphics library
+    Graphics_mousePressed(p);
+
+    var sparqler = new SPARQL.Service("http://dbpedia.org/sparql");
+    sparqler.setPrefix("foaf", "http://xmlns.com/foaf/0.1/"); // inherited by all (future) queries
+    sparqler.setPrefix("rdf", "http://xmlns.com/foaf/0.1/");
+    
+    //sparqler.setRequestHeader("Authentication", "Basic: " + basicAuthString);
+    var query = sparqler.createQuery();
+    query.query("PREFIX dbo: <http://dbpedia.org/ontology/> SELECT ?name ?students WHERE { ?university rdf:type dbo:University.  ?university foaf:name ?name.  ?university dbo:numberOfStudents ?students } ORDER BY DESC(?students) LIMIT 50",
+        {failure: function(json){console.log("error")}, success: function(json)
+        {
+          console.log(json);
+        }}//for (var x in json.head.vars) { console.log(x) }}}
+    );
+//    // passes a single value representing a single row of a single column (variable) to success callback
+//    query.setPrefix("ldf", "http://thefigtrees.net/lee/ldf-card#");
+//    var myAddress = query.selectSingleValue("SELECT ?mbox WHERE {ldf:LDF foaf:mbox ?mbox }",
+//      {failure: onFailure, success: function(value) { alert("value is: " + value); } }
+	//); 
+	
+	// shortcuts for all of the above (w/o ability to set any query-specific graphs or prefixes)
+//	sparqler.query(...) sparqler.ask(...) sparqler.selectValues(...) sparqler.selectSingleValue(...)
+    console.log("here")
+  }
+  p.mouseDragged = function(){
+    //Call mouseDragged of the graphics library
+    Graphics_mouseDragged(p);
+  }
+  p.mouseReleased = function(){
+    //Call mouseReleased of the graphics library
+    Graphics_mouseReleased(p);
+  }
+  p.keyReleased = function(){
+    Graphics_keyReleased(p);
+  }
+  p.keyPressed = function(){
+    Graphics_keyPressed(p);
+  }
+}
+</script>
+</body>

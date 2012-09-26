@@ -1,0 +1,154 @@
+<html>  
+<head>  
+  <script src="js/processing.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/Graphic.js"></script>
+  <script src="js/Interval.js"></script>
+  <script src="js/Slider.js"></script>
+</head>
+
+<body style="margin: 0px;">
+<canvas id="theCanvas" width="600" height="300"/>
+<script type="text/javascript">  
+
+//Initialize the Processing.js sketch
+new Processing(document.getElementById("theCanvas"), sketch);
+
+//Flags for motion (panning and zooming)
+var goingRight = false, goingLeft = false,
+    goingIn = false,    goingOut = false;
+
+//the y pixel coordinate of the first slider
+var y = 30;
+//the y pixel spacing between sliders
+var ySpacing = 40;
+//the leftmost x pixel of the sliders
+var x1 = 20;
+//the rightmost x pixel of the sliders
+var x2 = 280;
+//the knob size for all sliders
+var knobSize = 20;
+//the number of digits displayed on the sliders
+var nDigits = 3;
+
+//the initial, minimum and maximum values for x (position)
+var   x = 10, xMin = 0,   xMax = 20;
+//the initial, minimum and maximum values for dx (velocity)
+var   dx = 0,  dxMin = -1, dxMax = 1;
+//the initial, minimum and maximum values for ddx (acceleration)
+var   ddx = 0, ddxMin = -0.12,ddxMax = 0.12;
+//the initial, minimum and maximum values for dddx (acceleration)
+var   dddx = 0, dddxMin = -0.005,dddxMax = -dddxMin;
+//the x span
+var xSpan = xMax-xMin;
+// the dx dampening factor
+var dxDampening = 0.95;
+var dxDampeningMin = 0.7;
+var dxDampeningMax = 1;
+// the ddx dampening factor
+var ddxDampening = 0.9;
+var ddxDampeningMin = 0.7;
+var ddxDampeningMax = 1;
+
+
+var dy = ySpacing;
+function makeSlider(label,min,max,value,callback){
+  return new Slider(x1,y+=dy, x2,y ,min, max ,value,   knobSize)
+    .addLabel(label).showValue(nDigits)
+    .addCallback(callback);
+}
+  
+//Create the sliders:
+var xSlider = makeSlider("x",xMin,xMax,x,function(v){x=v;});
+var dxSlider = makeSlider("dx",dxMin,dxMax,dx,function(v){dx=v;});
+var ddxSlider = makeSlider("ddx",ddxMin,ddxMax,ddx,function(v){ddx=v;});
+var dddxSlider = makeSlider("dddx",dddxMin,dddxMax,dddx,function(v){dddx=v;});
+var dxDampeningSlider = makeSlider("dxDampening",dxDampeningMin,dxDampeningMax,dxDampening,function(v){dxDampening=v;});
+var ddxDampeningSlider = makeSlider("ddxDampening",ddxDampeningMin,ddxDampeningMax,ddxDampening,function(v){ddxDampening=v;});
+//new Slider(x1,y,     x2,y ,xMin,  xMax  ,x,    knobSize)
+//  .addLabel("x").showValue(nDigits);
+//var dxSlider =  new Slider(x1,y+=dy, x2,y ,dxMin, dxMax ,dx,   knobSize)
+//  .addLabel("dx").showValue(nDigits)
+//  .addCallback(function(value){dx = value; });
+//var ddxSlider = new Slider(x1,y+=dy, x2,y ,ddxMin,ddxMax,ddx,  knobSize)
+//  .addLabel("ddx").showValue(nDigits)
+//  .addCallback(function(value){ddx = value; });
+//var dddxSlider = new Slider(x1,y+=dy, x2,y ,dddxMin,dddxMax,dddx,  knobSize)
+//  .addLabel("dddx").showValue(nDigits)
+//  .addCallback(function(value){dddx = value; });
+
+/**
+ * Called every frame. Executes the
+ * "mass in viscous fluid" simulation.
+ */
+function iterateSimulation(){
+  //use velocity to increment position
+  x += dx;
+  //loop around
+  x = (x+xSpan)%xSpan;
+  //update the slider view
+  xSlider.setValue(x);
+
+  dddxSlider.setValue(goingRight?dddxMax:goingLeft?dddxMin:0);
+
+  //use acceleration to increment velocity
+  //simulate a viscous fluid by dampening the velocity
+  dxSlider.setValue((dx + ddx)*dxDampening);
+  //simulate a "smooth driver" by dampening the acceleration
+  ddxSlider.setValue((ddx+dddx)*ddxDampening);
+  //ddxSlider.setValue(dddx==0?0:(ddx+dddx));
+  //x = (x<xMin)?xMin:((x>xMax)?xMax:x);
+}
+
+function sketch(p) {
+  p.setup = function(){
+    //Call setup of the slider library
+    Slider_setup(p);
+    //Set the frame rate
+    p.frameRate(30);
+  }
+  p.draw = function(){
+    //iterate the simulation
+    iterateSimulation();
+    //clear the background
+    p.background(240);
+    //Call draw of the slider library
+    Slider_draw(p);
+  }
+  p.mousePressed = function(){
+    //Call mousePressed of the slider library
+    Slider_mousePressed(p);
+  }
+  p.mouseDragged = function(){
+    //Call mouseDragged of the slider library
+    Slider_mouseDragged(p);
+  }
+  p.mouseReleased = function(){
+    //Call mouseReleased of the slider library
+    Slider_mouseReleased(p);
+  }
+  p.keyPressed = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = true;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = true;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = true;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = true;
+    }
+  };
+  p.keyReleased = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = false;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = false;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = false;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = false;
+    }
+  }
+}
+</script>
+</body>

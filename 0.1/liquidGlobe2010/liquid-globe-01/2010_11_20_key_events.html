@@ -1,0 +1,61 @@
+<html>  
+<head>  
+  <script src="processing.js"></script>  
+</head>
+
+<body style="margin: 0px;">
+<canvas id="canvas1" width="100%" height="100%"/>
+<script id="script1" type="text/javascript">  
+window.onresize = windowResized;
+window.onload = init;
+var canvas = document.getElementById("canvas1");  
+var processing = new Processing(canvas, draw);  
+
+var x,y,dx,dy,size,acceleration = 0.1,dampening = 0.99;
+var w,h;
+
+function init(){
+  x = window.innerWidth/2;
+  y = window.innerHeight/2;
+  dx = dy = 0.1;
+  size = 20;
+  processing.frameRate(30);
+  windowResized();
+}
+
+function draw(p) {  
+  p.draw = function() {
+    p.background(255);
+  
+    if (p.__keyPressed) {
+      if (p.keyCode == p.UP) {
+        dy -= acceleration;
+      } else if (p.keyCode == p.DOWN) {
+        dy += acceleration;
+      }
+      if (p.keyCode == p.LEFT) {
+        dx -= acceleration;
+      } else if (p.keyCode == p.RIGHT) {
+        dx += acceleration;
+      }
+      p.fill(255);
+    } else {
+      p.fill(200);
+    }
+    p.ellipseMode(p.CENTER);
+    p.ellipse(x,y,size,size);
+    
+    w = window.innerWidth;
+    h = window.innerHeight;
+    x = (x+w+dx)%w;
+    y = (y+h+dy)%h;
+    dx *= dampening;
+    dy *= dampening;
+  };
+}
+
+function windowResized(){
+  processing.size(window.innerWidth, window.innerHeight);
+}
+</script>
+</body>

@@ -1,0 +1,97 @@
+<html>  
+<head>  
+  <script src="processing.js"></script>  
+</head>
+
+<body style="margin: 0px;">
+<canvas id="canvas1" width="100%" height="100%"/>
+<script id="script1" type="text/javascript">  
+window.onresize = windowResized;
+window.onload = init;
+var canvas = document.getElementById("canvas1");  
+var processing = new Processing(canvas, draw);
+var min = 0, max = 5;
+var viewMin = 0, viewMax = 5;
+var goingRight = false, goingLeft = false, goingIn = false, goingOut = false;
+
+
+var dx = 0, dz = 0, acceleration = 0.005, dampening = 0.9;
+
+function init(){
+  processing.frameRate(30);
+  windowResized();
+}
+
+function draw(p) {
+  p.draw = function() {
+    //draw the lines
+    p.background(255);
+    for(var i=min;i<max;i++){
+      var x = (i-viewMin)/(viewMax-viewMin)*window.innerWidth;
+      p.line(x,0,x,window.innerHeight);
+    }
+    
+    for(var i=min;i<max;i++){
+      var x = (i/max-viewMin)/(viewMax-viewMin)*window.innerWidth;
+      p.line(x,0,x,window.innerHeight);
+    }
+    
+    for(var i=min;i<max;i++){
+      var x = (i/max/max-viewMin)/(viewMax-viewMin)*window.innerWidth;
+      p.line(x,0,x,window.innerHeight);
+    }
+    
+    //increment the movement (pan+zoom)
+    dx *= dampening;
+    dz *= dampening;
+    var middle = (viewMax + viewMin)/2;
+    var span = ((viewMax - viewMin)/2);
+    var newSpan = span*(1+dz);
+    var offset = span*dx;
+    viewMin = middle - newSpan + offset;
+    viewMax = middle + newSpan + offset;
+    
+    //operate on key interactions
+    if (goingIn) {
+      dz -= acceleration;
+    }
+    if (goingOut) {
+      dz += acceleration;
+    }
+    if (goingLeft) {
+      dx -= acceleration;
+    }
+    if (goingRight) {
+      dx += acceleration;
+    }
+  };
+  
+  p.keyPressed = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = true;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = true;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = true;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = true;
+    }
+  };
+  p.keyReleased = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = false;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = false;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = false;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = false;
+    }
+  }
+}
+
+function windowResized(){
+  processing.size(window.innerWidth, window.innerHeight);
+}
+</script>
+</body>

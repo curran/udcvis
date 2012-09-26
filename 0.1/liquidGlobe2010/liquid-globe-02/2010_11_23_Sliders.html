@@ -1,0 +1,48 @@
+<html>  
+<head>  
+  <script src="js/processing.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/Graphic.js"></script>
+  <script src="js/Interval.js"></script>
+  <script src="js/Slider.js"></script>
+  
+</head>
+
+<body style="margin: 0px;">
+<canvas id="theCanvas" width="300" height="300"/>
+<script type="text/javascript">  
+window.onload = init;
+var processing = new Processing(document.getElementById("theCanvas"), draw);
+var viewXInterval = new Interval(-100,100);
+var viewWidthInterval = new Interval(0,300);
+
+var goingRight = false, goingLeft = false,
+    goingIn = false,    goingOut = false,
+    goingUp = false,    goingDown = false;
+
+var dx=0, dy=0, dz=0, acceleration = 0.005, dampening = 0.9;
+
+function init(){
+  //  Slider(x1,y1,x2 ,y2,min,max,value,knobSize)
+  new Slider(20,30,280,30,0  ,1  ,0.5  ,15).addLabel("foo").showValue(3);
+  new Slider(20,60,280,60,0  ,1  ,0.5  ,15).addLabel("bar").showValue(3); 
+  processing.frameRate(30);
+}
+
+function draw(p) {
+  p.setup = function(){
+    Slider_setup(p);
+  }
+  p.draw = function(){
+    p.background(240);
+    Slider_draw(p);
+  }
+  p.mousePressed = function(){
+    Slider_mousePressed(p);
+  }
+  p.mouseDragged = function(){
+    Slider_mouseDragged(p);
+  }
+}
+</script>
+</body>

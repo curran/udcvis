@@ -1,0 +1,148 @@
+<html>  
+<head>  
+  <script src="js/processing.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/Graphic.js"></script>
+  <script src="js/Interval.js"></script>
+  <script src="js/Slider.js"></script>
+</head>
+
+<body style="margin: 0px;">
+<canvas id="theCanvas" width="300" height="230"/>
+<script type="text/javascript">  
+
+//Initialize the Processing.js sketch
+new Processing(document.getElementById("theCanvas"), sketch);
+
+//Flags for motion (panning and zooming)
+var goingRight = false, goingLeft = false,
+    goingIn = false,    goingOut = false;
+
+//the y pixel coordinate of the first slider
+var y = 40;
+//the y pixel spacing between sliders
+var ySpacing = 40;
+//the leftmost x pixel of the sliders
+var x1 = 20;
+//the rightmost x pixel of the sliders
+var x2 = 280;
+//the knob size for all sliders
+var knobSize = 20;
+//the number of digits displayed on the sliders
+var nDigits = 3;
+
+//the initial, minimum and maximum values for x (position)
+var   x = 10, xMin = 0,   xMax = 20;
+//the initial, minimum and maximum values for dx (velocity)
+var   dx = 0,  dxMin = -1, dxMax = -dxMin;
+//the initial, minimum and maximum values for ddx (acceleration)
+var   ddx = 0, ddxMin = -0.12,ddxMax = -ddxMin;
+//the initial, minimum and maximum values for acceleration maximum (when arrow key is pressed)
+var   acceleration = 0.05, accelerationMin = 0,accelerationMax = 0.1;
+//the initial, minimum and maximum values for the maximum speed (max dx value)
+var   maxSpeed = dxMax, maxSpeedMin = 0,maxSpeedMax = 4;
+//the x span
+var xSpan = xMax-xMin;
+
+var dy = ySpacing;
+y-=dy;
+function makeSlider(label,min,max,value,callback){
+  return new Slider(x1,y+=dy, x2,y ,min, max ,value,   knobSize)
+    .addLabel(label).showValue(nDigits)
+    .addCallback(callback);
+}
+  
+//Create the sliders:
+var xSlider = makeSlider("position",xMin,xMax,x,function(v){x=v;});
+var dxSlider = makeSlider("velocity",dxMin,dxMax,dx,function(v){dx=v;});
+var ddxSlider = makeSlider("acceleration",ddxMin,ddxMax,ddx,function(v){ddx=v;});
+var accelerationSlider = makeSlider("max acceleration",accelerationMin,accelerationMax,acceleration,function(v){acceleration=v;});
+var maxSpeedSlider = makeSlider("max speed",maxSpeedMin,maxSpeedMax,maxSpeed,setMaxSpeed);
+function setMaxSpeed(newMaxSpeed){
+  dxMin = -(dxMax = maxSpeed = newMaxSpeed);
+  dxSlider.setMin(dxMin);
+  dxSlider.setMax(dxMax);
+
+};
+function setX(newX){xSlider.setValue(newX);}
+function setDx(newDx){dxSlider.setValue(newDx);}
+function setDdx(newDdx){ddxSlider.setValue(newDdx);}
+function setDddx(newDddx){acceleration.setValue(newDddx);}
+/**
+ * Called every frame. Executes the
+ * "mass in viscous fluid" simulation.
+ */
+function iterateSimulation(){
+  setX((x+dx+xSpan)%xSpan);
+  var oldDx = dx;
+  var newDx = dx + ddx;
+  if(newDx > maxSpeed) newDx = maxSpeed;
+  if(newDx < -maxSpeed) newDx = -maxSpeed;
+  setDx(newDx);
+
+  if(goingRight)
+    setDdx(acceleration);
+  else if(goingLeft)
+    setDdx(-acceleration);
+  else if(sgn(oldDx)!=sgn(newDx) && !ddxSlider.isBeingDragged()){
+    setDdx(0);
+    setDx(0);
+  }
+  else if(dx>0)
+    setDdx(-acceleration);
+  else if(dx<0)
+    setDdx(acceleration);
+}
+function sgn(x){return x>0?1:x<0?-1:0;}
+function sketch(p) {
+  p.setup = function(){
+    //Call setup of the slider library
+    Slider_setup(p);
+    //Set the frame rate
+    p.frameRate(30);
+  }
+  p.draw = function(){
+    //iterate the simulation
+    iterateSimulation();
+    //clear the background
+    p.background(240);
+    //Call draw of the slider library
+    Slider_draw(p);
+  }
+  p.mousePressed = function(){
+    //Call mousePressed of the slider library
+    Slider_mousePressed(p);
+  }
+  p.mouseDragged = function(){
+    //Call mouseDragged of the slider library
+    Slider_mouseDragged(p);
+  }
+  p.mouseReleased = function(){
+    //Call mouseReleased of the slider library
+    Slider_mouseReleased(p);
+  }
+  p.keyPressed = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = true;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = true;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = true;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = true;
+    }
+  };
+  p.keyReleased = function(){
+    if (p.keyCode == p.UP) {
+      goingIn = false;
+    } else if (p.keyCode == p.DOWN) {
+      goingOut = false;
+    } else if (p.keyCode == p.LEFT) {
+      goingLeft = false;
+    } else if (p.keyCode == p.RIGHT) {
+      goingRight = false;
+    }
+  }
+}
+</script>
+</body>

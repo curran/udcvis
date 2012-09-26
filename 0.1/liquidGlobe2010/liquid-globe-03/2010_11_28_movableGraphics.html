@@ -1,0 +1,56 @@
+<html>  
+<head>  
+  <script src="js/processing.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/Graphic.js"></script>
+  <script src="js/Interval.js"></script>
+  <script src="js/Slider.js"></script>
+</head>
+
+<body style="margin: 0px;">
+<br>
+<br>
+<center>
+<canvas id="theCanvas" width="500" height="300"/>
+</center>
+<script type="text/javascript">  
+
+new Graphic(10,10,30,30);
+new Graphic(50,50,70,70);
+
+//Initialize the Processing.js sketch
+new Processing(document.getElementById("theCanvas"), sketch);
+function sketch(p) {
+  p.setup = function(){
+    //Call setup of the graphics library
+    Graphics_setup(p);
+    //Set the frame rate
+    p.frameRate(30);
+  }
+  p.draw = function(){
+    //clear the background
+    p.background(240);
+    //Call draw of the graphics library
+    Graphics_draw(p);
+  }
+  p.mousePressed = function(){
+    //Call mousePressed of the graphics library
+    Graphics_mousePressed(p);
+  }
+  p.mouseDragged = function(){
+    //Call mouseDragged of the graphics library
+    Graphics_mouseDragged(p);
+  }
+  p.mouseReleased = function(){
+    //Call mouseReleased of the graphics library
+    Graphics_mouseReleased(p);
+  }
+  p.keyReleased = function(){
+    Graphics_keyReleased(p);
+  }
+  p.keyPressed = function(){
+    Graphics_keyPressed(p);
+  }
+}
+</script>
+</body>
