@@ -131,14 +131,11 @@ var rdf = function(){
     var idCounter = 0;
     // Keys are URI strings, values are integer URI ids.
     var uriToId = {};
-    // Keys are integer URI ids, values are URI strings.
-    //var idToUri = {};
     return function(uri){
       var id = uriToId[uri];
       if(!id){
         id = idCounter++;
         uriToId[uri] = id;
-        //idToUri[id] = uri;
       }
       return id;
     };
