@@ -175,6 +175,19 @@ TODO: Get [Docco](http://jashkenas.github.com/docco/) working. Install it with `
 9/7/2012
 
 Idea: build a point editor for implementing computational geometry algorithms and getting experience coding JavaScript.
+### A Point Editor - 9/7/2012
+In the directory `pointEditor`
+
+The first step taken toward interactive computational geometry programs was to create a simple point editor: <iframe src="pointEditor/index.html" style="border: 1px solid gray;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="520" height="200"></iframe>
+
+[run full screen](pointEditor/index.html), [view annotated source](pointEditor/docs/all-modules.html)
+
+The interactions are as follows:
+
+ * Click on empty space to create a point
+ * Click on a point to remove it
+ * Drag to move points
+
 
 9/10/2012
 
@@ -204,7 +217,20 @@ Had the insight that the UDC should be published as CORS-enabled files, and that
 
 Prototyped the [in-memory RDF store](../inMemoryRDFStore/docs/rdf.html)
 
+9/25/2012
+
+Imported liquidGlobe code.
+
 9/26/2012
 
 Prototyped the notion of an asynchronous iterator that can be paused and
 resumed - in the file `asyncIteration/iterationWithPauses.js`
+
+9/27/2012
+
+Imported computational geometry projects:
+
+ * pointEditor
+ * polygonEditor
+   * Added URL-hash based model storage 
+   * outputs CGAL-style polygon definition in the console.   
