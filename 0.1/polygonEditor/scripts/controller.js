@@ -23,8 +23,8 @@ define(['model'], function(model){
   }
 
   // On mouse down, 
-  document.addEventListener('mousedown', function(e){
-    var x = pMouseX = e.pageX, y = pMouseY = e.pageY;
+  canvas.addEventListener('mousedown', function(e){
+    var x = pMouseX = e.offsetX, y = pMouseY = e.offsetY;
     // look for a point under the mouse.
     pointUnderMouse = getPointUnderMouse(x, y);
     // If there is a point under the mouse,
@@ -47,13 +47,13 @@ define(['model'], function(model){
 
   // Set up mouse move events to drag the point under
   // the mouse.
-  document.addEventListener('mousemove', function(e){
+  canvas.addEventListener('mousemove', function(e){
     if(pointUnderMouse){
       pointMoved = true;
-      pointUnderMouse.x += e.pageX - pMouseX;
-      pointUnderMouse.y += e.pageY - pMouseY;
-      pMouseX = e.pageX;
-      pMouseY = e.pageY;
+      pointUnderMouse.x += e.offsetX - pMouseX;
+      pointUnderMouse.y += e.offsetY - pMouseY;
+      pMouseX = e.offsetX;
+      pMouseY = e.offsetY;
       model.trigger('change');
     }
   });
@@ -67,7 +67,7 @@ define(['model'], function(model){
       model.removePoint(pointUnderMouse);
     pointUnderMouse = undefined;
   }
-  document.addEventListener('mouseup', mouseUpOrOut);
-  document.addEventListener('mouseout', mouseUpOrOut);
+  canvas.addEventListener('mouseup', mouseUpOrOut);
+  canvas.addEventListener('mouseout', mouseUpOrOut);
   return {};
 });

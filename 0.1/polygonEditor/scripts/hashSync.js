@@ -14,6 +14,7 @@ define(['model'], function(model){
     model.trigger('change');
   }
 
+
   var timeoutId = 0;
   model.on('change', function(){
     if(timeoutId)

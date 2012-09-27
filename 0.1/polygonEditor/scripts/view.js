@@ -7,8 +7,8 @@ define(['model'], function(model){
 
   // Automatically adjust the canvas size to the
   // size of the containing window for iFrame deployment.
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  //canvas.width = window.innerWidth;
+  //canvas.height = window.innerHeight;
 
   // Draws a single point object that has `x` and `y` properties
   // that define its coordinates in pixels.
@@ -42,7 +42,26 @@ define(['model'], function(model){
     });
     drawLine(previousPoint, firstPoint);
   }
+  
+  function updateTextArea(){
+    var text = [model.points.length];
+    _(model.points).each(function(point){
+      text.push(point.x+" "+(200 - point.y));
+    });
+    document.getElementById("textarea").innerHTML = text.join('\n');
+  }
 
   // Whenever the model changes, redraw.
   model.on('change', redrawPoints);
+
+  // Whenever the model changes, update the text area with a delay.
+  var timeoutId = 0;
+  model.on('change', function(){
+    if(timeoutId)
+      clearTimeout(timeoutId);
+    timeoutId = setTimeout(function(){
+      updateTextArea();
+      timeoutId = 0;
+    },100);
+  });
 });
