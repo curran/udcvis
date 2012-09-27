@@ -17,7 +17,7 @@ define(function(){
   //  * a set of points - an array of objects with `x` and `y` properties.
   var points = [];
   //  * The radius (in pixelx) used for drawing all points.
-  var pointRadius = 10;
+  var pointRadius = 7;
 
   // The exported API contains the following functions:
   var exports = {
