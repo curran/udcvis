@@ -58,16 +58,18 @@ define(['model'], function(model){
     }
   });
 
-  // Set up mouse up and mouse out events to either
+  // Set up mouse up events to either
   //
   // * stop dragging the point, or
   // * delete the point if it was only clicked on and not dragged.
-  function mouseUpOrOut(e){
+  canvas.addEventListener('mouseup', function(e){
     if(!pointMoved)
       model.removePoint(pointUnderMouse);
     pointUnderMouse = undefined;
-  }
-  canvas.addEventListener('mouseup', mouseUpOrOut);
-  canvas.addEventListener('mouseout', mouseUpOrOut);
-  return {};
+  });
+
+  // Set up mouse out events to stop dragging points.
+  canvas.addEventListener('mouseout', function(e){
+    pointUnderMouse = undefined;
+  });
 });
