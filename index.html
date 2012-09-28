@@ -1,142 +1,98 @@
-<h1>System Architecture</h1>
-<p>Files on the Web -&gt; In-memory RDF Store -&gt; Visualization Algorithms
-
-</p>
-<h2>Files on the Web</h2>
-<p>The files contain the Universal Data Cube (UDC).
-
-</p>
-<p>The UDC is a set of RDF triples describing instances of the following classes:
+<h1>The Universal Data Cube Visualization System</h1>
+<p>So far this repository contains a collection of small programs that 
+demonstrate specific concepts, technologies, or techniques for creating
+interactive graphical applications using HTML5 and JavaScript. Here they are:
 
 </p>
 <ul>
-<li>DataSet</li>
-<li>DataCube</li>
-<li>Dimension</li>
-<li>Level</li>
-<li>Member</li>
-<li>Measure</li>
-<li>Observation</li>
+<li>asyncIteration<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/asyncIteration">in GitHub</a></li>
 </ul>
-<h2>In-Memory RDF Store</h2>
-<p>An in-memory RDF store is used to store the UDC data in the client program.
-
-</p>
-<p>UDC clients are typically browser-based JavaScript and HTML5 applications.
-
-</p>
-<p>The in-memory RDF store is designed such that visualization algorithms can 
-iterate in an incremental fashion through thir data query results.
-
-</p>
-<p>Clients using the in-memory RDF store can perform the following operations:
-
-</p>
-<ul>
-<li>Insert an RDF triple</li>
-<li><p>Query for values that match the &quot;?&quot; in following patterns:</p>
-<ul>
-<li>(subject, predicate, ?)</li>
-<li>(?, predicate, object)</li>
+</li>
+<li>bertin - a prototype of a visualization API based on the concept of
+&quot;marks&quot; from the book &quot;Semiology of Graphics&quot; by Jaque Bertin.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/bertin">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/bertin/markExperiments/index.html">run it</a></li>
+</ul>
+</li>
+<li>data - an example data set for use as the first data set imported into the
+UDC system for use in testing and initial development.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/data">in GitHub</a></li>
+</ul>
+</li>
+<li>helloExpress - an example application that uses the Node.js Web Framework 
+Express.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloExpress">in GitHub</a></li>
+</ul>
+</li>
+<li>helloRequireJS - an example project that uses the Require.js dependency
+management solution.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloRequireJS">in GitHub</a></li>
+</ul>
+</li>
+<li>helloSocketIO - an example Node.js server that uses the socket.io library
+for real-time communication.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloSocketIO">in GitHub</a></li>
+</ul>
+</li>
+<li>helloUnderscore - an example use of the Underscore functional programming
+library.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloUnderscore">in GitHub</a></li>
+</ul>
+</li>
+<li>helloWebAudioAPI - an example that uses the Web Audio API to generate
+sounds.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloWebAudioAPI">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/helloWebAudioAPI/magicSequencer.html">run Magic Sequencer</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/helloWebAudioAPI/randomNotes.html">run Random Notes</a></li>
+</ul>
+</li>
+<li>helloiPad - an example graphical application that harnesses the 
+multi-touch events provided by Mobile Safari on the iPad (and iPhone).<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/helloiPad">in GitHub</a></li>
+</ul>
+</li>
+<li>iPadDrum - an unfinished implementaion of a rhythmic musical instrument
+for the iPad. The architecture is that a server is running that relays
+information from the iPad (where interaction takes place) to a Web page
+(where audio generation takes place).<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/iPadDrum">in GitHub</a></li>
+</ul>
+</li>
+<li>inMemoryRDFStore - a prototype implementation of an idea for an efficient
+in-memory RDF store.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/inMemoryRDFStore">in GitHub</a></li>
+</ul>
+</li>
+<li>liquidGlobe2010 - a collection of code examples from 2010<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/liquidGlobe2010">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-01/2010_11_20_2d_pan_zoom.html">run 2D Pan and Zoom Example</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_23_Sliders.html">run Sliders Example</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_27_Sliders_parameterized.html">run Velocity Sliders</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_27_tickMarks.html">run tick marks example</a></li>
+</ul>
+</li>
+<li>pointEditor - a simple graphical editor for 2D point sets<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/pointEditor">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/pointEditor/docs/all-modules.html">annotated source code</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/pointEditor/">run Point Editor</a></li>
+</ul>
+</li>
+<li>polygonEditor - a graphical editor for polygons that generates output
+compatible with the CGAL computational geometry project.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/polygonEditor">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/polygonEditor/docs/all-modules.html">annotated source code</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/polygonEditor/">run Polygon Editor</a></li>
+</ul>
+</li>
+<li>quadstream2010 - a collection of Java and JavaScript code from 2010 that
+implements a prototype of the &quot;Quadstream&quot; algorithm for supporting 
+multi-scale geographic maps rendered on the Web.<ul>
+<li><a href="https://github.com/curran/udcvis/tree/gh-pages/0.1/quadstream2010">in GitHub</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/rtree/rtreeTest.html">run R-Tree Example</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/rtree/rectangleTests.html">run Rectangle Intersection Test</a></li>
+<li><a href="http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/blgtree/BLGTreeTest.html">run BLG-Tree Example</a></li>
 </ul>
 </li>
 </ul>
-<p>Query results are returned as an iterator that iterates over values in sorted
-order. Therefore efficient algorithms for set union and intersection can be 
-performed that themselves yield iterators that iteratively compute.
-
-</p>
-<p>Visualization algorithms can therefore perform complex SPARQL-like queries
-against the in-memory RDF store which can be incrementally evaluated using
-iterators. Because an iterator-based approach is taken, visualization 
-painting algorithms can execute bit by bit each frame, maintaining
-at least a 15 FPS framerate during interactions.
-
-</p>
-<h2>Visualization Algorithms</h2>
-<p>In interactive information visualization systems, performance is key.<br>Ideally, the frame rate would never drop below 15 Frames Per Second.
-
-</p>
-<p>If one assumes a single threaded model of computation (as in JavaScript),
-the requirement of continual interactive performance demands a mechanism of 
-frame-by-frame execution of visualization painting algorithms.
-
-</p>
-<p>A visualization painting algorithm is an algorithm that iterates through data
-query results and incrementally builds an interactive visualization by
-defining marks.
-
-</p>
-<p>Data query results are results from queries on the in-memory RDF store.
-To facilitate incremental visualization painting algorithms, these data query
-results are exposed via an iterator-based API.
-
-</p>
-<p>Because the iterator-based API is used for incrementally building 
-visualizations, one may think that the iterators must account in some way for
-updates of the collection during iteration. This is not so, because a higher
-level of the system should cause the visualization painting algorithm to
-restart from scratch as soon as the new data is available.
-
-</p>
-<p>In other words, the iterators will always stop when the collections they are 
-iterating over mutate (have elements added, removed, or changed).
-In this case, the responsibility of notifying 
-
-</p>
-<h3>Marks and Layers</h3>
-<p>A mark is a graphical representation of a set of Observations, as defined by 
-Jaques Bertin in his book &quot;The Semiology of Graphics&quot;. Each mark contributes:
-
-</p>
-<ul>
-<li>a polygon for the spatial index</li>
-<li>a styled graphical mark drawn to the base bitmap layer</li>
-</ul>
-<p>We will assume that all visualizations in the UDC Visualization System will 
-be displayed and interacted with via the following layers:
-
-</p>
-<ul>
-<li>a spatial index layer, which improves performance of interactions,</li>
-<li>a base layer that renders the visualization,</li>
-<li>a selection layer that only draws selected elements,</li>
-<li>a probe layer that only draws probed elements,</li>
-<li>a tooltip layer that displays labels for probed elements.</li>
-</ul>
-<p>Separation into these layers mean that a system-wide API can handle the tasks
-related to managing these layers and executing the following session-wide
-interactions:
-
-</p>
-<ul>
-<li>Brushed selection, which would cause only the selection layer to update</li>
-<li>Brushed probing, which would cause the probe and tooltip layer to update.</li>
-</ul>
-<p>In addition to the visualizations themselves, there are the following:
-
-</p>
-<ul>
-<li>The tiled pane user interface</li>
-<li>The progress bar layer on top of the entire visualization system</li>
-</ul>
-<p>The tiled pane user interface defines the visible components in terms of a 
-tree of horizontal and vertical containers (similar to Eclipse tabs).
-
-</p>
-<p>The progress bar layer displays pending operations and their status, such as:
-
-</p>
-<ul>
-<li>Pending server requests</li>
-<li>Ongoing data file parsing operations</li>
-<li>Redrawing of visualizations</li>
-<li>Frame rate information (only when it drops below 30)</li>
-</ul>
-<p>These indicators could also be represented with sound via the Web Audio API.
-For example, a tone could sound while each request is made, and a drum could
-sound whenever a parsing operation finished. Each operation made into sound 
-would make the entire operation of the system audible, and therefore more
-comprehensible.
-</p>
 
