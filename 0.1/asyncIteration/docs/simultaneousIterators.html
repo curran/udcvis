@@ -1,0 +1,112 @@
+<!DOCTYPE html>  <html> <head>   <title>simultaneousIterators.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="iterationWithPauses.html">                 iterationWithPauses.js               </a>                                           <a class="source" href="simultaneousIterators.html">                 simultaneousIterators.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               simultaneousIterators.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>A demonstration of green-threading afforded by simple
+use of the JavaScript event loop with an iterator API.</p>
+
+<p>The idea here is that this kind of scheduling can be used
+in the implementation of visualization painter algorithms
+such that they draw incrementally to an offscreen buffer,
+and the offscreen buffer is drawn to the display at 60 FPS.
+This is possible because <code>requestAnimationFrame</code> will insert
+callbacks onto the same event queue used for iterator scheduling,
+so the code that renders the visualization painter buffers to 
+the display will execute every 16 milliseconds, and in between
+executions, the visualization painter iterators will incrementally
+execute until they are done.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">useEventLoop</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>When <code>useEventLoop</code> is set to true, iterators will place
+each iteration callback on the JavaScript event loop.</p>
+
+<p>When <code>useEventLoop</code> is false, iterators call iteration
+callbacks immediately, causing the iterator to execute
+synchronously, blocking future iterators.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">arrA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">arrB</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">arrC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">hasNext</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">next</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">nextValue</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">];</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">useEventLoop</span><span class="p">)</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+          <span class="nx">callback</span><span class="p">(</span><span class="nx">nextValue</span><span class="p">);</span>
+        <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+      <span class="k">else</span>
+        <span class="nx">callback</span><span class="p">(</span><span class="nx">nextValue</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+
+<span class="kd">var</span> <span class="nx">forEach</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">it</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span>
+    <span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
+      <span class="nx">callback</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+      <span class="nx">forEach</span><span class="p">(</span><span class="nx">it</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">logEach</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">arr</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">forEach</span><span class="p">(</span><span class="nx">iterator</span><span class="p">(</span><span class="nx">arr</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="p">(</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;]=&#39;</span><span class="o">+</span><span class="nx">element</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">logArrays</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">logEach</span><span class="p">(</span><span class="s1">&#39; A&#39;</span><span class="p">,</span><span class="nx">arrA</span><span class="p">);</span>
+  <span class="nx">logEach</span><span class="p">(</span><span class="s1">&#39;         B&#39;</span><span class="p">,</span><span class="nx">arrB</span><span class="p">);</span>
+  <span class="nx">logEach</span><span class="p">(</span><span class="s1">&#39;                 C&#39;</span><span class="p">,</span><span class="nx">arrC</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">useEventLoop</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Without using the event loop:&quot;</span><span class="p">);</span>
+<span class="nx">logArrays</span><span class="p">();</span>
+
+<span class="nx">useEventLoop</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Using the event loop:&quot;</span><span class="p">);</span>
+<span class="nx">logArrays</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>From the output, one can clearly see that use of the event loop
+leads to interleaved scheduling of iterations, and not using it
+leads to strictly serial execution of iterators.</p>
+
+<p>Here is sample output:</p>
+
+<p><code>Without using the event loop:</code><br>
+<code>A[0]=0</code><br>
+<code>A[1]=1</code><br>
+<code>A[2]=2</code><br>
+<code>A[3]=3</code><br>
+<code>A[4]=5</code><br>
+<code>A[5]=7</code><br>
+<code>A[6]=9</code><br>
+<code>B[0]=1</code><br>
+<code>B[1]=3</code><br>
+<code>B[2]=4</code><br>
+<code>B[3]=5</code><br>
+<code>B[4]=6</code><br>
+<code>B[5]=7</code><br>
+<code>B[6]=8</code><br>
+<code>B[7]=9</code><br>
+<code>C[0]=1</code><br>
+<code>C[1]=2</code><br>
+<code>C[2]=3</code><br>
+<code>Using the event loop:</code><br>
+<code>A[0]=0</code><br>
+<code>C[0]=1</code><br>
+<code>B[0]=1</code><br>
+<code>A[1]=1</code><br>
+<code>B[1]=3</code><br>
+<code>C[1]=2</code><br>
+<code>A[2]=2</code><br>
+<code>C[2]=3</code><br>
+<code>B[2]=4</code><br>
+<code>A[3]=3</code><br>
+<code>B[3]=5</code><br>
+<code>A[4]=5</code><br>
+<code>B[4]=6</code><br>
+<code>A[5]=7</code><br>
+<code>B[5]=7</code><br>
+<code>A[6]=9</code><br>
+<code>B[6]=8</code><br>
+<code>B[7]=9</code><br></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
