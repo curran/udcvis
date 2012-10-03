@@ -147,8 +147,10 @@ var interpolate = function(){
 
 // ## Grade Bins
 
-// Keys are integer grades that define bins.
-// Values are integer sums for occurances those grades.
+// In the `gradeBins` object,
+//
+//  * Keys are integer grades that define bins.
+//  * Values are integer sums for occurences those grades.
 var gradeBins = {};
 
 var addGradesToBins = function(){

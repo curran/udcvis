@@ -117,8 +117,12 @@ interval (min2, max2).</p>
     <span class="nx">_value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
     <span class="k">return</span> <span class="nx">chain</span><span class="p">;</span>
   <span class="p">};</span>
-<span class="p">}();</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h2>Grade Bins</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Keys are integer grades that define bins.
-Values are integer sums for occurances those grades.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">gradeBins</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="p">}();</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h2>Grade Bins</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>In the <code>gradeBins</code> object,</p>
+
+<ul>
+<li>Keys are integer grades that define bins.</li>
+<li>Values are integer sums for occurences those grades.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">gradeBins</span> <span class="o">=</span> <span class="p">{};</span>
 
 <span class="kd">var</span> <span class="nx">addGradesToBins</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="nx">each</span><span class="p">(</span><span class="nx">grades</span><span class="p">,</span> <span class="nx">addGradeToBins</span><span class="p">);</span>
