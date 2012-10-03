@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/backbone.js"></script>
+    <script data-main="scripts/main.js" src="lib/require.js"></script>
+  </head>
+  <body>
+    This is a demonatration of the parametric line segment
+    equation:
+    <ul>
+      <li>p = v1 + t * (v2 - v1)</li>
+      <li>p is a point, drawn in blue</li>
+      <li>v1 and v2 are the two line segment endpoints</li>
+    </ul>
+    You can
+    <ul>
+      <li>drag the two black points, v1 and v2, and </li>
+      <li>move the mouse to the left and right to alter the value of t.</li>
+    </ul>
+    <canvas id="canvas" width="200" height="200"
+            style="border: 1px solid black;"></canvas>
+    <br>
+    Here are the current values:
+    <div id="textarea"></div>
+    <a href="docs/all-modules.html">Annotated source code</a>
+    <br>
+    Here's the <a href="docs/all-modules.html#section-16">part of the code that computes p</a>.
+  </body>
+</html>
