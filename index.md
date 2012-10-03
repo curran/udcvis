@@ -65,6 +65,10 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
    a refresh rate of about 30 FPS while performing this incremental drawing.
    * [run](http://curran.github.com/udcvis/0.1/painters/index.html) (open the
      console to see performance measurements)
+ * [Parametric Line](https://github.com/curran/udcvis/tree/gh-pages/0.1/parametricLine) - 
+   an educational tool illustrating a parametric line segment equation.
+   * [run it](http://curran.github.com/udcvis/0.1/parametricLine/)
+   * [annotated source](http://curran.github.com/udcvis/0.1/parametricLine/docs/all-modules.html)
  * pointEditor - a simple graphical editor for 2D point sets
    * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/pointEditor)
    * [annotated source code](http://curran.github.com/udcvis/0.1/pointEditor/docs/all-modules.html)
