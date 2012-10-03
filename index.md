@@ -4,15 +4,24 @@ So far this repository contains a collection of small programs that
 demonstrate specific concepts, technologies, or techniques for creating
 interactive graphical applications using HTML5 and JavaScript. Here they are:
 
- * asyncIteration
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/asyncIteration)
- * bertin - a prototype of a visualization API based on the concept of
- "marks" from the book "Semiology of Graphics" by Jaque Bertin.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/bertin)
+ * [Asynchronous Iteration](https://github.com/curran/udcvis/tree/gh-pages/0.1/asyncIteration) - experiments in scheduling using the JavaScript event loop.
+   * [Iteration with Pauses](https://github.com/curran/udcvis/blob/gh-pages/0.1/asyncIteration/iterationWithPauses.js) - 
+     Uses the JavaScript event loop for incremental iteration, implements a
+     simple strategy for pausing and resuming execution.
+   * [Simultaneous Iterators](https://github.com/curran/udcvis/blob/gh-pages/0.1/asyncIteration/simultaneousIterators.js) - 
+     Illustrates the difference between a blocking synchronous iteration
+     technique and an asynchronous iteration technique using the JavaScript
+     event loop (via setTimeout).
+ * [Concepts from Jaque Bertin](https://github.com/curran/udcvis/tree/gh-pages/0.1/bertin/markExperiments) -
+   a prototype of a visualization API based on the concept of
+   "marks" from the book "Semiology of Graphics" by Jaque Bertin.
    * [run it](http://curran.github.com/udcvis/0.1/bertin/markExperiments/index.html)
  * data - an example data set for use as the first data set imported into the
  UDC system for use in testing and initial development.
    * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/data)
+ * [Grade Histogram](https://github.com/curran/udcvis/tree/gh-pages/0.1/gradeHistogram)
+   * [run](http://curran.github.com/udcvis/0.1/gradeHistogram/index.html)
+   * [annotated source code](http://curran.github.com/udcvis/0.1/gradeHistogram/docs/script.html)
  * helloExpress - an example application that uses the Node.js Web Framework 
  Express.
    * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloExpress)
@@ -47,6 +56,15 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
    * [run Sliders Example](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_23_Sliders.html)
    * [run Velocity Sliders](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_27_Sliders_parameterized.html)
    * [run tick marks example](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_27_tickMarks.html)
+ * [Painters](https://github.com/curran/udcvis/tree/gh-pages/0.1/painters) - 
+   an experiment in using the JavaScript event loop in conjunction with
+   requestAnimationFrame for scheduling incremental execution of algorithms
+   that mutate a raster buffer. It turns out that it is possible to draw
+   2000 colored squares per 25 milliseconds, interleaved with flushing the 
+   offscreen buffer to the display. This way of scheduling seems to retain
+   a refresh rate of about 30 FPS while performing this incremental drawing.
+   * [run](http://curran.github.com/udcvis/0.1/painters/index.html) (open the
+     console to see performance measurements)
  * pointEditor - a simple graphical editor for 2D point sets
    * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/pointEditor)
    * [annotated source code](http://curran.github.com/udcvis/0.1/pointEditor/docs/all-modules.html)
