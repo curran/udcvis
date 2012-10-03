@@ -22,6 +22,12 @@ define(function(){
   //  * The radius (in pixels) used for drawing all points.
   var pointRadius = 7;
 
+  //  * The radius of the point p drawn between the endpoints.
+  var pRadius = 4;
+
+  //  * The color of the point p drawn between the endpoints.
+  var pColor = "blue";
+
   // The exported API contains the following functions:
   var exports = {
     //  * `model.addPoint(x, y)` adds a point to the model's
@@ -53,7 +59,9 @@ define(function(){
     setT: function(newT){
       t = newT;
       this.trigger('change');
-    }
+    },
+    pRadius: pRadius,
+    pColor: pColor
   };
   // [Backbone Events](http://backbonejs.org/#Events)
   // are used. The only event used by this module

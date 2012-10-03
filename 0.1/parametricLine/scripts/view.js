@@ -52,12 +52,9 @@ define(['model'], function(model){
   // Draws the small blue dot representing p
   function drawP(){
     tToP(function(x, y){
-      var tRadius = 4;
-      var tColor = "blue";
-
       c.beginPath();
-      c.arc(x, y, tRadius, 0, Math.PI * 2);
-      c.fillStyle = tColor;
+      c.arc(x, y, model.pRadius, 0, Math.PI * 2);
+      c.fillStyle = model.pColor;
       c.fill();
     });
   }
