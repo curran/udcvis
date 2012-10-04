@@ -16,42 +16,39 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
    a prototype of a visualization API based on the concept of
    "marks" from the book "Semiology of Graphics" by Jaque Bertin.
    * [run it](http://curran.github.com/udcvis/0.1/bertin/markExperiments/index.html)
- * data - an example data set for use as the first data set imported into the
+ * [Data](https://github.com/curran/udcvis/tree/gh-pages/0.1/data) - an example data set for use as the first data set imported into the
  UDC system for use in testing and initial development.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/data)
  * [Grade Histogram](https://github.com/curran/udcvis/tree/gh-pages/0.1/gradeHistogram)
    * [run](http://curran.github.com/udcvis/0.1/gradeHistogram/index.html)
    * [annotated source code](http://curran.github.com/udcvis/0.1/gradeHistogram/docs/script.html)
- * helloExpress - an example application that uses the Node.js Web Framework 
- Express.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloExpress)
- * helloRequireJS - an example project that uses the Require.js dependency
- management solution.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloRequireJS)
- * helloSocketIO - an example Node.js server that uses the socket.io library
- for real-time communication.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloSocketIO)
- * helloUnderscore - an example use of the Underscore functional programming
+ * [Hello CSS](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloCSS) A
+   CSS experiment for replicating the default typesetting style of LaTeX.
+   * [view CSS example](http://curran.github.com/udcvis/0.1/helloCSS/)
+   * [view LaTeX example](http://curran.github.com/udcvis/0.1/helloCSS/latexSample/document.pdf)
+ * [Hello Express](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloExpress) - 
+   an example application that uses the Express Node.js Web Framework.
+ * [Hello Require.js](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloRequireJS) - 
+   an example project that uses the Require.js dependency management solution.
+ * [Hello Socket.io](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloSocketIO) - 
+   an example Node.js server that uses the socket.io library for real-time communication.
+ * [Hello Underscore.js](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloUnderscore)
+ - an example use of the Underscore functional programming
  library.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloUnderscore)
- * helloWebAudioAPI - an example that uses the Web Audio API to generate
+ * [Hello Web Audio API](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloWebAudioAPI) - an example that uses the Web Audio API to generate
  sounds.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloWebAudioAPI)
    * [run Magic Sequencer](http://curran.github.com/udcvis/0.1/helloWebAudioAPI/magicSequencer.html)
    * [run Random Notes](http://curran.github.com/udcvis/0.1/helloWebAudioAPI/randomNotes.html)
- * helloiPad - an example graphical application that harnesses the 
- multi-touch events provided by Mobile Safari on the iPad (and iPhone).
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloiPad)
+ * [Hello iPad](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloiPad) - 
+   an example graphical application that harnesses the multi-touch events 
+   provided by Mobile Safari on the iPad (and iPhone).
  * iPadDrum - an unfinished implementaion of a rhythmic musical instrument
  for the iPad. The architecture is that a server is running that relays
  information from the iPad (where interaction takes place) to a Web page
  (where audio generation takes place).
    * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/iPadDrum)
- * inMemoryRDFStore - a prototype implementation of an idea for an efficient
+ * [In-memory RDF Store](https://github.com/curran/udcvis/tree/gh-pages/0.1/inMemoryRDFStore) - a prototype implementation of an idea for an efficient
  in-memory RDF store.
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/inMemoryRDFStore)
- * liquidGlobe2010 - a collection of code examples from 2010
-   * [in GitHub](https://github.com/curran/udcvis/tree/gh-pages/0.1/liquidGlobe2010)
+ * [Liquid Globe 2010](https://github.com/curran/udcvis/tree/gh-pages/0.1/liquidGlobe2010) - a collection of code examples from 2010
    * [run 2D Pan and Zoom Example](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-01/2010_11_20_2d_pan_zoom.html)
    * [run Sliders Example](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_23_Sliders.html)
    * [run Velocity Sliders](http://curran.github.com/udcvis/0.1/liquidGlobe2010/liquid-globe-02/2010_11_27_Sliders_parameterized.html)
