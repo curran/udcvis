@@ -6,22 +6,41 @@
 </head>
 
 <body>
-<div class="title">CSS Example</div>
-<div class="subtitle">Curran Kelleher</div>
-<div class="subtitle">October 4, 2012</div>
-<div class="section">Introduction</div>
-<p class="first">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae odio vel risus ultricies gravida id id nisi. In hac habitasse platea dictumst. Praesent tempor quam sed lacus aliquam egestas. Vivamus augue massa, viverra consequat lacinia ac, tincidunt id turpis. Donec quis purus vitae arcu tempus lobortis. Duis hendrerit bibendum nisi a pharetra. Integer eget hendrerit nibh. Proin vel tellus sem, eleifend hendrerit ante. Fusce et erat velit, eu aliquam erat. Duis aliquet, mauris non hendrerit auctor, mi eros volutpat est, nec rhoncus tortor tellus in augue. Aenean convallis, turpis a mattis egestas, mi ligula sollicitudin urna, in laoreet sapien tortor blandit felis. Curabitur vitae ante id elit vehicula vestibulum sed vitae turpis. In semper mattis lectus, id ullamcorper lectus dapibus sed.
+<h1>CSS Example</h1>
+<h2>Curran Kelleher</h2>
+<h2>October 4, 2012</h2>
+<h3>Introduction</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae odio vel risus ultricies gravida id id nisi. In hac habitasse platea dictumst. Praesent tempor quam sed lacus aliquam egestas. Vivamus augue massa, viverra consequat lacinia ac, tincidunt id turpis. Donec quis purus vitae arcu tempus lobortis. Duis hendrerit bibendum nisi a pharetra. Integer eget hendrerit nibh. Proin vel tellus sem, eleifend hendrerit ante. Fusce et erat velit, eu aliquam erat. Duis aliquet, mauris non hendrerit auctor, mi eros volutpat est, nec rhoncus tortor tellus in augue. Aenean convallis, turpis a mattis egestas, mi ligula sollicitudin urna, in laoreet sapien tortor blandit felis. Curabitur vitae ante id elit vehicula vestibulum sed vitae turpis. In semper mattis lectus, id ullamcorper lectus dapibus sed.
 </p><p>
 Cras vitae turpis et nisl facilisis adipiscing. Duis accumsan quam eget justo porta et venenatis mi suscipit. Sed sit amet lorem ante, quis vulputate magna. Donec lacinia nunc non magna ultricies cursus. Vivamus nisl nunc, luctus non tincidunt vel, porta fringilla lectus. Ut semper convallis enim, non pulvinar ipsum adipiscing vel. In hac habitasse platea dictumst. Morbi tempor libero a mi fringilla condimentum. Maecenas at lacus nec dolor varius pharetra a at elit. Praesent vitae ipsum ultricies tortor adipiscing lacinia.
 </p><p>
 Mauris tincidunt iaculis turpis. Nullam at ante mi. Integer venenatis egestas ipsum ut lacinia. Pellentesque sagittis feugiat eros vitae commodo. Vivamus lacinia nibh ullamcorper sapien aliquam nec iaculis nibh pellentesque. Quisque turpis tellus, lobortis suscipit bibendum nec, pulvinar a arcu. Ut sit amet lacinia est. Quisque bibendum erat sed neque gravida pretium. Ut sodales libero tellus. Cras commodo posuere fermentum. Proin pharetra pulvinar augue at rhoncus. Etiam varius viverra sapien, quis molestie justo feugiat et.
 </p>
-<div class="section">Conclusion</div>
-<p class="first">
+<h3>Conclusion</h3>
+<p>
 Praesent eget justo ac ante imperdiet dictum. Curabitur convallis lectus a dui blandit luctus. Maecenas neque orci, sagittis a dictum non, varius quis justo. Curabitur consequat gravida adipiscing. Sed commodo egestas tortor eu gravida. Vivamus ac eros sit amet quam ornare commodo a elementum mauris. Praesent placerat ullamcorper nunc, eu congue nulla volutpat et. Nullam molestie venenatis faucibus.
 </p><p>
 Pellentesque cursus tempus leo quis vulputate. Phasellus lobortis tortor at leo sagittis eu dapibus risus facilisis. Sed ut erat quam, vitae lobortis orci. Nunc mollis pellentesque semper. Nunc fermentum fringilla metus, ut suscipit felis pharetra vitae. Etiam nibh sem, posuere sed aliquam vel, fringilla ut enim. Pellentesque egestas elit eget sem faucibus at sagittis lectus hendrerit. Donec sit amet porta ipsum. Sed dolor nisi, vestibulum non pulvinar quis, bibendum at tellus. Vestibulum eu iaculis justo. Aenean condimentum tempor sapien, at blandit neque mattis ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam imperdiet nulla porta dui volutpat hendrerit. Aenean lacinia, massa eleifend cursus lacinia, purus velit luctus urna, ac bibendum ipsum dui nec ante</p>
 
+<script>
+  // This script detects the first paragraph in sections
+  // and assigns those p tags the class="first" attribute,
+  // so the CSS will not indent the first word (to match LaTeX).
+  var all = document.getElementsByTagName("*");
+  var firstParagraph = true;
+  var i, node;
+  for (i = 0, max = all.length; i < max; i++) {
+    node = all[i];
+    var isParagraph = node.nodeName == "P";
+    if(isParagraph && firstParagraph){
+      node.setAttribute("class", "first");
+      firstParagraph = false;
+    }
+    else{
+      firstParagraph = true;
+    }
+  }
+</script>
 </body>
 </html>
 
