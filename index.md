@@ -28,7 +28,8 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
  * [Hello Express](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloExpress) - 
    an example application that uses the Express Node.js Web Framework.
  * [Hello Require.js](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloRequireJS) - 
-   an example project that uses the Require.js dependency management solution.
+   example project skeletons that uses the [Require.js](http://requirejs.org/)
+   dependency management solution.
  * [Hello Socket.io](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloSocketIO) - 
    an example Node.js server that uses the socket.io library for real-time communication.
  * [Hello Underscore.js](https://github.com/curran/udcvis/tree/gh-pages/0.1/helloUnderscore)
