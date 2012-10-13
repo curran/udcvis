@@ -1,0 +1,59 @@
+<html>
+<title>Hello Web!!</title> 
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="processing-1.3.0.min.js"></script>
+</head>
+<body style="margin: 0px;"> <!-- to make full screen -->
+<canvas id="pjs"> </canvas>
+<script type="application/javascript">
+//connect to the chat server
+var socket = io.connect('/');
+socket.on('executeTransaction', function (data) {
+  x = data.x; y = data.y;
+  graphicsDirty = true; // trigger redraw
+  console.log("receiving ("+x+","+y+")");
+});
+function send(x,y){
+  socket.emit('commitTransaction', {x:x,y:y});
+}
+
+//send updates at most every Xms
+var millisec = 50;
+setInterval(function(){
+    if(positionChanged){
+      console.log("sending ("+x+","+y+")");
+      send(x,y);
+      positionChanged = false;
+    }
+  },millisec);
+
+var x = 0, y = 0, size = 10;
+var graphicsDirty = true;
+var positionChanged = true;
+function sketch(p){
+  p.setup = function(){
+    p.background(255);
+  }
+  p.draw = function(){
+    if(graphicsDirty){
+      //p.fill(255);
+      //p.rect(0,0,p.width, p.height);
+      p.fill(0);
+      p.ellipse(x, y, size, size);
+      graphicsDirty = false;
+    }
+  };
+  p.mouseDragged = function(){
+    x = p.mouseX; y = p.mouseY;
+    positionChanged = true; // trigger sending over WebSocket
+    graphicsDirty = true; // trigger redraw
+  }
+};
+var canvas = document.getElementById("pjs");  
+var p = new Processing(canvas, sketch);
+p.size(window.innerWidth, window.innerHeight);
+
+</script>
+</body>
+</html>

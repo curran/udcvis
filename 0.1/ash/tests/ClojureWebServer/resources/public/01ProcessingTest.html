@@ -1,0 +1,30 @@
+<html>
+<title>Hello Web - Processing.js Test</title> 
+<head> 
+<script src="processing.js"></script>
+</head>
+<body style="margin: 0px;">
+<canvas id="pjs"> </canvas>
+<script type="application/javascript">
+var x = 0;
+var t = 0;
+var radius = 200;
+function sketch(p){
+  p.draw = function(){
+    p.fill((Math.sin(t+=0.01)/2+0.5)*255,
+            (Math.sin(t*1.01)/2+0.5)*255,
+            (Math.sin(t*1.02)/2+0.5)*255);
+    x = (x+0.5+(x/1000));
+    p.ellipse( x%(p.width + radius/2),
+               radius/2+(p.height - radius)*(Math.sin(x/400)/2+0.5),
+               radius, radius);
+  };
+};
+
+var canvas = document.getElementById("pjs");  
+var p = new Processing(canvas, sketch);
+p.size(window.innerWidth, window.innerHeight);
+p.background(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{"type":"script","name":"A","latestVersion":0.02}
+{"type":"revision","name":"A","version":0.01,"message":"Added content","content":"A Content"}
+{"type":"revision","name":"A","version":0.02,"message":"V2","content":"A Content V2"}
+{"type":"script","name":"B","latestVersion":0.01}
+{"type":"revision","name":"B","version":0.01,"message":"B","content":"B Content"}

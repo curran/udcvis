@@ -1,0 +1,110 @@
+<html>  
+<head>  
+  <script src="processing-1.3.0.min.js"></script>  
+</head>
+
+<body style="margin: 0px;">
+Use arrows to pan, c and d to zoom.
+<br>
+<canvas id="canvas1" width="300" height="300"/>
+<script id="script1" type="text/javascript">  
+window.onload = init;
+var canvas = document.getElementById("canvas1");  
+var processing = new Processing(canvas, draw);
+var min = 0, max = 5;
+var viewMinX = 0, viewMaxX = 5, viewMinY = 0, viewMaxY = 5;
+var goingRight=false, goingLeft=false, goingIn=false, goingOut=false, goingUp=false, goingDown=false;
+
+
+var dx=0, dy=0, dz=0, acceleration = 0.005, dampening = 0.9;
+
+function init(){
+  processing.frameRate(30);
+}
+
+/* draws the circle 
+var x = 0, y = 0, size = 10;
+function sketch(p){
+  p.setup = function(){
+    p.background(255);
+  }
+  p.draw = function(){
+      //p.fill(255);
+      //p.rect(0,0,p.width, p.height);
+      p.fill(0);    
+      p.ellipse(x, y, size, size);
+  }; */
+  
+function draw(p) {
+  p.draw = function() {
+    //draw the circle
+    var size = 10;
+    p.background(255);
+    
+    for(var i=min;i<max;i++){
+      //x = dataToScreenSpaceX(i)
+      var x = (i-viewMinX)/(viewMaxX-viewMinX)*p.width;
+      var y = (i-viewMinY)/(viewMaxY-viewMinY)*p.height;
+      p.fill(0);    
+      p.ellipse(x, y, size, size);    
+    }
+    for(var i=min;i<max;i++){
+      //x = dataToScreenSpaceX(i/max)
+      var x = (i/max-viewMinX)/(viewMaxX-viewMinX)*p.width;
+      var y = (i/max-viewMinY)/(viewMaxY-viewMinY)*p.height;
+      p.fill(0,255,0);  //g  
+      p.ellipse(x, y, size, size);
+    }
+    for(var i=min;i<max;i++){
+     //x = dataToScreenSpaceX(i/max/max)
+      var x = (i/max/max-viewMinX)/(viewMaxX-viewMinX)*p.width;
+      var y = (i/max/max-viewMinY)/(viewMaxX-viewMinX)*p.height;
+      p.fill(0,0,255);   //b 
+      p.ellipse(x, y, size, size);
+    }
+    
+    //increment the movement (pan+zoom)
+    dx *= dampening;
+    dy *= dampening;
+    dz *= dampening;
+    var middleX = (viewMaxX + viewMinX)/2;
+    var middleY = (viewMaxY + viewMinY)/2;
+    
+    var spanX = ((viewMaxX - viewMinX)/2)*(1+dz);
+    var spanY = ((viewMaxY - viewMinY)/2)*(1+dz);
+    
+    var offsetX = spanX*dx;
+    var offsetY = spanY*dy;
+    viewMinX = middleX - spanX + offsetX;
+    viewMaxX = middleX + spanX + offsetX;
+    viewMinY = middleY - spanY + offsetY;
+    viewMaxY = middleY + spanY + offsetY;
+    
+    //operate on key interactions
+    if (goingIn)    dz -= acceleration;
+    if (goingOut)   dz += acceleration;
+    if (goingLeft)  dx -= acceleration;
+    if (goingRight) dx += acceleration;
+    if (goingUp)    dy -= acceleration;
+    if (goingDown)  dy += acceleration;
+  }
+  
+  p.keyPressed = function(){
+    if (p.key == 100)/*d*/         goingIn = true;
+    else if (p.key == 99)/*c*/     goingOut = true;
+    else if (p.keyCode == p.UP)    goingUp = true;
+    else if (p.keyCode == p.DOWN)  goingDown = true;
+    else if (p.keyCode == p.LEFT)  goingLeft = true;
+    else if (p.keyCode == p.RIGHT) goingRight = true;
+  }
+  p.keyReleased = function(){
+    if (p.key == 100)/*d*/         goingIn = false;
+    else if (p.key == 99)/*c*/     goingOut = false;
+    else if (p.keyCode == p.UP)    goingUp = false;
+    else if (p.keyCode == p.DOWN)  goingDown = false;
+    else if (p.keyCode == p.LEFT)  goingLeft = false;
+    else if (p.keyCode == p.RIGHT) goingRight = false;
+  }
+}
+</script>
+</body>

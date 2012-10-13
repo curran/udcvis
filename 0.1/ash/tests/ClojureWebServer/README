@@ -1,0 +1,1 @@
+A test of Clojure technology - a simple web server serving static files which set up a graphical environment for manupulation using Processing.js.

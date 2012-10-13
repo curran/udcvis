@@ -1,0 +1,11 @@
+{"type":"script","name":"A","latestVersion":0.01}
+{"type":"revision","name":"A","version":0.01,"message":"Initial creation","content":"println(\"A\");"}
+{"type":"script","name":"B","latestVersion":0.01}
+{"type":"revision","name":"B","version":0.01,"message":"Creation","content":"println(\"B\")"}
+{"type":"script","name":"C","latestVersion":0.03}
+{"type":"revision","name":"C","version":0.01,"message":"","content":"println(\"C\");"}
+{"type":"revision","name":"C","version":0.02,"message":"","content":"@embed in ProcessingTemplate 0.01\r\n@depends on A 0.01\r\n@depends on B 0.01\r\nprintln(\"C\");"}
+{"type":"revision","name":"C","version":0.03,"message":"","content":"@embed in ProcessingTemplate 0.02\r\n@depends on A 0.01\r\n@depends on B 0.01\r\nprintln(\"C\");"}
+{"type":"script","name":"ProcessingTemplate","latestVersion":0.02}
+{"type":"revision","name":"ProcessingTemplate","version":0.01,"message":"","content":"<html>\r\n<body>\r\n<script src=\"processing-1.3.0.min.js\"></script>\r\n<script type=\"application/processing\" data-processing-target=\"pjs\">\r\n${code}\r\n</script>\r\n<canvas id=\"pjs\"> </canvas>\r\n</body>\r\n</html>"}
+{"type":"revision","name":"ProcessingTemplate","version":0.02,"message":"","content":"<html>\r\n<body>\r\n<script src=\"../../../js/processing-1.3.6.js\"></script>\r\n<script type=\"application/processing\" data-processing-target=\"pjs\">\r\n${code}\r\n</script>\r\n<canvas id=\"pjs\"> </canvas>\r\n</body>\r\n</html>"}

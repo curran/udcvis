@@ -1,0 +1,4 @@
+Prathiba and Curran 11/14
+TODO:
+ - Make sure graphicsDirty is false when nothing is moving
+ - Solve ASH problems

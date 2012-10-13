@@ -1,0 +1,16 @@
+# Creating a Repository
+#from http://qugstart.com/blog/ruby-and-rails/create-a-new-git-remote-repository-from-some-local-files-or-local-git-repository/
+
+touch script.txt
+git init
+git add *
+git commit -m "Initial creation"
+
+# Creating a Tag
+#from http://learn.github.com/p/tagging.html
+git commit -m "made change" -a
+git tag -a v0.1 -m 'version 0.1'
+
+# Showing a revision
+#from http://linux.die.net/man/1/git-show
+git show v0.2:script.txt

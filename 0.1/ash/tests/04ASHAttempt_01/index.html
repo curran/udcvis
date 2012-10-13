@@ -1,0 +1,51 @@
+<html>
+<title>Hello ASH!</title> 
+<script src="ash.js"></script>
+<script type="application/javascript">
+
+// the URI for the Circle ASH resource type
+var CIRCLE = "http://datacubes.info/ash/types/circle";
+
+// default coordinates for new circles
+var defaultX = 0, defaultY = 0;
+
+// a flag to signal redrawing
+var graphicsDirty = true;
+
+// the list of circle objects managed by the plugin,
+// each corresponding to an ASH resource of type CIRCLE
+var circles = {};
+
+//Set up the ASH example plugin for Circles
+ASH.registerPlugin(CIRCLE,{
+  // the function that creates a resource,
+  // called when the 'type' property is set.
+  create: function(resourceID){
+    // create the local in-memory resource implementation
+    circles[resourceId] = {x:defaultX,y:defaultY};
+    return {
+      //the function that sets a value on a 'circle'
+      set:function(property,value){
+        //assuming 'property' == 'x' or 'y'
+        circles[resourceId][property] = value;
+        graphicsDirty = true;
+      },
+      //the function that unsets a value on a 'circle'
+      unset:function(property){
+        //assuming 'property' == 'x' or 'y'
+        var defaultValue = property=='x'?defaultX:defaultY;
+        circles[resourceId][property] = defaultValue;
+        graphicsDirty = true;
+      }
+    };
+  },
+  // the function that deletes a resource,
+  // called when the 'type' property is unset.
+  delete:function(resourceID){
+    circles[resourceId] = undefined;
+    graphicsDirty = true;
+  }
+});
+
+</script>
+</html>

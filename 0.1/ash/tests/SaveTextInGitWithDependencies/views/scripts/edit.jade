@@ -1,0 +1,23 @@
+h1 #{revision.name}
+  h3
+    a(href='/scripts/'+revision.name+'/'+revision.version+'/run') run
+h6 v#{revision.version}
+ - if(revision.dependencies)
+   h6 dependencies:
+   ul
+   each dependency in revision.dependencies
+     li
+       a(href='/scripts/'+dependency.name+'/'+dependency.version) #{dependency.name+' v'+dependency.version}
+form(action='/scripts/'+revision.name, method='POST')
+  input(type='hidden', name='_method', value='PUT')
+  p
+    textArea(type='text', id='revision_content', name='revision[content]')= revision.content
+  p
+    label(for='product_price') Comment
+  p
+    input(type='text', id='revision_message', name='revision[message]')
+  p
+    input(type='submit', value='Save')
+  p
+    a(href='/scripts/'+revision.name+'/versions') See all versions
+    

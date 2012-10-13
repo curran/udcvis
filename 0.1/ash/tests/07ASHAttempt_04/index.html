@@ -1,0 +1,143 @@
+<html>
+<title>Hello Web!!</title> 
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="processing-1.3.0.min.js"></script>
+<script src="ash.js"></script>
+</head>
+<body style="margin: 0px;"> <!-- to make full screen -->
+<canvas id="pjs"> </canvas>
+<script type="application/javascript">
+
+// the ID for the Circle ASH resource type
+var CIRCLE = "Circle";
+
+// default coordinates and colors for new circles
+var defaults = { 'x' : 5, 'y' : 10, 'r' : 0, 'g' : 0, 'b' : 0 }
+
+// circle size
+var circleDiameter = 30;
+
+// a flag to signal redrawing
+var graphicsDirty = true;
+
+// the list of circle objects managed by the plugin,
+// each corresponding to an ASH resource of type CIRCLE
+var circles = {};
+
+//Set up the ASH example plugin for Circles
+ASH.registerPlugin({
+  type: CIRCLE,
+  // the function that creates a resource,
+  // called when the 'type' property is set.
+  create: function(resourceId){
+    var circle = {resourceId:resourceId};
+    for(i in defaults){ circle[i] = defaults[i] };
+    circles[resourceId] = circle;
+    return {
+      //the function that sets a value on a 'circle'
+      set:function(property,value){
+        //assuming 'property' in {x,y,r,g,b}
+        circles[resourceId][property] = value;
+        graphicsDirty = true;
+      },
+      //the function that unsets a value on a 'circle'
+      unset:function(property){
+        var defaultValue = defaults[property];
+        if(defaultValue != undefined)
+          circles[resourceId][property] = defaultValue;
+        else
+          console.error("Undefined property for Circle: '"+property+"'");
+        graphicsDirty = true;
+      }
+    };
+  },
+  // the function that deletes a resource,
+  // called when the 'type' property is unset.
+  delete:function(resourceId){
+    delete(circles[resourceId]);
+    graphicsDirty = true;
+  }
+});
+
+var positionChanged = true;
+function sketch(p){
+  var circleBeingMoved = undefined;
+  
+  function getCircleUnderPoint(x,y){
+    for(i in circles){
+      var circle = circles[i];
+      var dist2 = Math.pow(circle.x - x,2)+Math.pow(circle.y - y,2);
+      var radius2 = Math.pow(circleDiameter/2,2);
+      if(dist2 < radius2)
+        return circle;
+    }
+    return undefined;
+  };
+  
+  function random255(){ return Math.ceil(Math.random()*255); }
+  
+  p.setup = function(){
+    p.background(255);
+  };
+  p.draw = function(){
+    if(graphicsDirty){
+      p.fill(255);
+      p.rect(0,0,p.width, p.height);
+      
+      for(i in circles){
+        var circle = circles[i];
+        p.fill(circle.r,circle.g,circle.b);
+        p.ellipse(circle.x, circle.y, circleDiameter, circleDiameter);
+      }
+      graphicsDirty = false;
+    }
+  };
+  
+  p.mouseClicked = function(){
+    var circleUnderPoint = getCircleUnderPoint(p.mouseX,p.mouseY);
+    if(circleUnderPoint == undefined){
+      // create a circle
+      ASH.genResourceId(function(resourceId){
+        ASH.begin();
+        ASH.set(resourceId,ASH.TYPE,CIRCLE);
+        ASH.set(resourceId,'x',p.mouseX);
+        ASH.set(resourceId,'y',p.mouseY);
+        ASH.set(resourceId,'r',random255());
+        ASH.set(resourceId,'g',random255());
+        ASH.set(resourceId,'b',random255());
+        ASH.commit();
+        graphicsDirty = true;
+      });
+    }
+    else{
+      // delete the circle under point
+      var circle = circleUnderPoint.resourceId;
+      ASH.begin();
+      ASH.unset(circle,ASH.TYPE);
+      ASH.commit();
+    }
+  };
+  p.mousePressed = function(){
+    circleBeingMoved = getCircleUnderPoint(p.mouseX,p.mouseY);
+  };
+  p.mouseReleased = function(){
+    circleBeingMoved = undefined;
+  };
+  p.mouseDragged = function(){
+    if(circleBeingMoved != undefined){
+      var circle = circleBeingMoved.resourceId;
+      ASH.begin();
+      ASH.set(circle,'x',p.mouseX);
+      ASH.set(circle,'y',p.mouseY);
+      ASH.commit();
+      graphicsDirty = true;
+    }
+  };
+};
+var canvas = document.getElementById("pjs");  
+var p = new Processing(canvas, sketch);
+p.size(window.innerWidth, window.innerHeight);
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+This is an example Node.js server that serves a single static page (index.html) and implements a chat server on WebSockets using the socket.io library.
+
+To test, start the server with
+node app.js
+
+1. Open three browsers to localhost:8080
+2. Open the Javascript console of each
+3. In the JS console, execute send('foo')
+This should cause 'foo' to be output in all the other browser windows.

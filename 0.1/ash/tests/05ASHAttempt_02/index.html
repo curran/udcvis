@@ -1,0 +1,87 @@
+<html>
+<title>Hello ASH!</title> 
+<script src="ash.js"></script>
+<script type="application/javascript">
+
+// the ID for the Circle ASH resource type
+var CIRCLE = "Circle";
+
+// default coordinates for new circles
+var defaultX = 5, defaultY = 10;
+
+// a flag to signal redrawing
+var graphicsDirty = true;
+
+// the list of circle objects managed by the plugin,
+// each corresponding to an ASH resource of type CIRCLE
+var circles = {};
+
+//Set up the ASH example plugin for Circles
+ASH.registerPlugin({
+  type: CIRCLE,
+  // the function that creates a resource,
+  // called when the 'type' property is set.
+  create: function(resourceId){
+    // create the local in-memory resource implementation
+    circles[resourceId] = {x:defaultX,y:defaultY};
+    return {
+      //the function that sets a value on a 'circle'
+      set:function(property,value){
+        //assuming 'property' == 'x' or 'y'
+        circles[resourceId][property] = value;
+        graphicsDirty = true;
+      },
+      //the function that unsets a value on a 'circle'
+      unset:function(property){
+        //assuming 'property' == 'x' or 'y'
+        var defaultValue = property=='x'?defaultX:defaultY;
+        circles[resourceId][property] = defaultValue;
+        graphicsDirty = true;
+      }
+    };
+  },
+  // the function that deletes a resource,
+  // called when the 'type' property is unset.
+  delete:function(resourceId){
+    circles[resourceId] = undefined;
+    graphicsDirty = true;
+  }
+});
+
+// Unit tests
+
+// test unique ID generation
+var circle1 = ASH.genResourceId();
+var circle2 = ASH.genResourceId();
+
+if(circle1 == circle2)
+  console.error("Ids are not unique");
+  
+// test setting of the type property
+// e.g. test invocation of the plugin mechanism
+ASH.set(circle1,ASH.TYPE,CIRCLE);
+if(circles[circle1] == undefined)
+  console.error("Circle not created");
+if(circles[circle1].x != defaultX || circles[circle1].y != defaultY)
+  console.error("Circle defaults not working");
+  
+// test setting of the X and Y properties
+ASH.set(circle1,'x',500);
+if(circles[circle1].x != 500)
+  console.error("X not set");
+ASH.set(circle1,'y',400);
+if(circles[circle1].y != 400)
+  console.error("Y not set");
+  
+// TODO test unset of X and Y
+
+// TOTO enforce contract that all else must first be unset before unsetting TYPE
+
+// test unsetting of the type property
+// e.g. test invocation of the plugin resource deletion mechanism
+ASH.unset(circle1,ASH.TYPE);
+if(circles[circle1] != undefined)
+  console.error("Circle not deleted");
+
+</script>
+</html>

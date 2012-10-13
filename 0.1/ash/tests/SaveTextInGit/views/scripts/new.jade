@@ -1,0 +1,8 @@
+h1 New script
+form(action='/scripts', method='POST')
+  p
+    label(for='script_name') Name:
+  p
+    input(type='text', id='script_name', name='script[name]', value='')
+  p
+    input(type='submit')

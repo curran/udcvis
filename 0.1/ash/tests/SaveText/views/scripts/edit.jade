@@ -1,0 +1,7 @@
+h1 #{script.name}
+form(action='/scripts/'+script.name, method='POST')
+  input(type='hidden', name='_method', value='PUT')
+  p
+    textArea(type='text', id='script_content', name='script[content]')= script.content
+  p
+    input(type='submit', value='Save')

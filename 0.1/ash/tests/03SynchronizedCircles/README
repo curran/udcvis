@@ -1,0 +1,7 @@
+This is an example Node.js server that serves a single static page (index.html) and implements a chat server on WebSockets using the socket.io library. Building on the previous code, the server was modified to serve static files, and a simple graphical interface was implemented using Processing.js which enables collaborative sketching.
+
+To test, start the server with
+node app.js
+
+1. Open two browsers to localhost:8080
+2. Start painting with the mouse and see it appear in both browsers.

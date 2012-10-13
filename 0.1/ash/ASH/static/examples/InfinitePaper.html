@@ -1,0 +1,553 @@
+<html>
+<title>Infinite Paper</title> 
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../js/processing-1.3.0.min.js"></script>
+<script src="../js/ash.js"></script>
+</head>
+<body onorientationchange="orientationChange()"
+      style="margin: 0px;"> <!-- to make full screen -->
+<canvas ontouchstart="touchStart(event)"
+	      ontouchmove="touchMove(event);"
+        ontouchend="touchEnd(event);"
+        id="pjs">
+</canvas>
+<script type="application/javascript">
+function resize(){
+  processing.size(window.innerWidth,window.innerHeight);
+}    
+var pinch = undefined;
+function copyTouch(touch){
+  return {
+    pageX:touch.pageX, pageY:touch.pageY,identifier:touch.identifier
+  };
+}
+function touchStart(e){
+  if(e.touches.length == 2){
+    pinch = {
+      a:copyTouch(e.touches[0]), b:copyTouch(e.touches[1]),
+      centerX: (viewMinX + viewMaxX)/2, spanX:viewMaxX - viewMinX,
+      centerY: (viewMinY + viewMaxY)/2, spanY:viewMaxY - viewMinY,
+    }
+  }
+}
+function touchMove(e){
+  if(pinch){
+    var a1 = pinch.a, b1 = pinch.b, a2, b2, i;
+    for(i=0;i<e.touches.length;i++)
+      if(e.touches[i].identifier == a1.identifier)
+        a2 = e.touches[i];
+      else if(e.touches[i].identifier == b1.identifier)
+        b2 = e.touches[i];
+    if(a2 && b2){
+      var x1 = (a1.pageX + b1.pageX)/2;
+      var x2 = (a2.pageX + b2.pageX)/2;
+      var dx = x1 - x2;
+      var y1 = (a1.pageY + b1.pageY)/2;
+      var y2 = (a2.pageY + b2.pageY)/2;
+      var dy = y1 - y2;
+      var initialTouchDistance = Math.sqrt(
+        Math.pow(b1.pageX-a1.pageX,2) +
+        Math.pow(b1.pageY-a1.pageY,2)
+      );
+      var finalTouchDistance = Math.sqrt(
+        Math.pow(b2.pageX-a2.pageX,2) +
+        Math.pow(b2.pageY-a2.pageY,2)
+      );
+      var dz = initialTouchDistance/finalTouchDistance;
+      var centerX = pinch.centerX + dx;
+      var centerY = pinch.centerY + dy;
+      var spanX = pinch.spanX * dz;
+      var spanY = pinch.spanY * dz;
+      viewMinX = centerX - spanX/2
+      viewMaxX = centerX + spanX/2
+      viewMinY = centerY - spanY/2
+      viewMaxY = centerY + spanY/2
+    }
+  }
+}
+function touchEnd(e){
+  
+}
+function orientationChange(){
+  resize();
+}
+// The ID for the Label and Connection ASH resource types
+var LABEL = "Label";
+var CONNECTION = "Connection";
+var PANZOOM = "PanZoom";
+// default coordinates and colors for new labels
+var defaults = {
+  'x' : 5, 'y' : 10, 'size':30,
+  'r' : 0, 'g' : 0, 'b' : 0 ,
+  'text':''
+}
+// a flag to signal redrawing
+var graphicsDirty = true;
+// the list of label objects managed by the plugin,
+// each corresponding to an ASH resource of type LABEL
+var labels = {};
+var connections = {};
+// The screen space diamater (in pixels) given to new labels.
+var defaultSizeOnScreen = 30;
+var viewMinX, viewMaxX, viewMinY, viewMaxY, panZoomResourceId = undefined;
+var goingRight=false, goingLeft=false, goingIn=false, goingOut=false, goingUp=false, goingDown=false;
+var dx=0, dy=0, dz=0, acceleration = 0.005, dampening = 0.9;
+var epsilon = 0.001;
+
+//Set up the ASH example plugin for Labels
+ASH.registerPlugin({
+  type: LABEL,
+  // the function that creates a resource,
+  // called when the 'type' property is set.
+  create: function(resourceId){
+    var label = {resourceId:resourceId};
+    for(i in defaults){ label[i] = defaults[i] };
+    
+    labels[resourceId] = label;
+    return {
+      // the function that sets a value on a 'label'
+      set:function(property,value){
+        //assuming 'property' in {x,y,size,r,g,b,text}
+        if(property != 'text')
+          value = Number(value);
+        labels[resourceId][property] = value;
+        graphicsDirty = true;
+      },
+      //the function that unsets a value on a 'label'
+      unset:function(property){
+        var defaultValue = defaults[property];
+        if(defaultValue != undefined)
+          labels[resourceId][property] = defaultValue;
+        else
+          console.error("Undefined property for Label: '"+property+"'");
+        graphicsDirty = true;
+      }
+    };
+  },
+  // the function that deletes a resource,
+  // called when the 'type' property is unset.
+  delete:function(resourceId){
+    delete(labels[resourceId]);
+    graphicsDirty = true;
+  }
+});
+ASH.registerPlugin({
+  type: CONNECTION,
+  // the function that creates a resource,
+  // called when the 'type' property is set.
+  create: function(resourceId){
+    var connection = {resourceId:resourceId};
+    connections[resourceId] = connection;
+    return {
+      set:function(property,value){
+        //assuming 'property' in {labelA,labelB}
+        connections[resourceId][property] = value;
+        graphicsDirty = true;
+      },
+      unset:function(property){
+        delete connections[resourceId][property];
+        graphicsDirty = true;
+      }
+    };
+  },
+  delete:function(resourceId){
+    delete(connections[resourceId]);
+    graphicsDirty = true;
+  }
+});
+
+function moving(){
+  return (Math.abs(dx) > epsilon || 
+          Math.abs(dy) > epsilon ||
+          Math.abs(dz) > epsilon);
+}
+
+ASH.registerPlugin({
+  type: PANZOOM,
+  create: function(resourceId){
+    panZoomResourceId = resourceId;
+    return {
+      set:function(property,value){
+        //console.log("moving() = "+moving());
+        //console.log("dx = "+dx+" dy = "+dy+" dz = "+dz);
+        if(!moving()){
+          //assuming 'property' in {viewMinX,viewMaxX,viewMinY,viewMaxY}
+          value = Number(value);
+          if(property === 'viewMinX')
+            previousViewMinX = viewMinX = value;
+          else if(property === 'viewMaxX')
+            previousViewMaxX = viewMaxX = value;
+          else if(property === 'viewMinY')
+            previousViewMinY = viewMinY = value;
+          else if(property === 'viewMaxY')
+            previousViewMaxY = viewMaxY = value;
+          graphicsDirty = true;
+          panZoomResourceIsInitialized = true;
+        }
+      },
+      unset:function(property){
+      }
+    };
+  },
+  delete:function(resourceId){
+  }
+});
+function syncPanZoom(){
+  if(panZoomChanged()){
+    ASH.begin();
+    syncPanZoomInTransaction();
+    ASH.commit();
+  }
+}
+var previousViewMinX = 0;
+var previousViewMaxX = 0;
+var previousViewMinY = 0;
+var previousViewMaxY = 0;
+
+function panZoomChanged(){
+  return (
+    previousViewMinX != viewMinX||
+    previousViewMaxX != viewMaxX||
+    previousViewMinY != viewMinY||
+    previousViewMaxY != viewMaxY
+  );
+}
+
+function syncPanZoomInTransaction(){
+  ASH.set(panZoomResourceId,'viewMinX',viewMinX);
+  ASH.set(panZoomResourceId,'viewMaxX',viewMaxX);
+  ASH.set(panZoomResourceId,'viewMinY',viewMinY);
+  ASH.set(panZoomResourceId,'viewMaxY',viewMaxY);
+}
+ASH.joinSession("$sessionName",function(){
+  if(!panZoomResourceId)
+    ASH.genResourceId(function(resourceId){
+      panZoomResourceId = resourceId;
+      ASH.begin();
+      ASH.set(panZoomResourceId,ASH.TYPE,PANZOOM);
+      syncPanZoomInTransaction();
+      ASH.commit();
+    });
+  setInterval(syncPanZoom,100);
+});
+
+function connectionExists(labelA, labelB){
+  for(i in connections){
+    var connection = connections[i];
+    if(connection.labelA === labelA && connection.labelB === labelB)
+      return true;
+    else if(connection.labelA === labelB && connection.labelB === labelA)
+      return true;
+  }
+  return false;
+}
+function sketch(p){
+  var labelBeingMoved = undefined;
+  var labelBeingConnected = undefined;
+  
+  var textToStrokeRatio = 0.05;
+  
+  var minTextSizeWhite = 5;  // min
+  var minTextSizeBlack = 20; // max
+  var maxTextSizeBlack = 100;// min
+  var maxTextSizeWhite = 300;// max
+  
+  
+  function textFill(size){
+    if(size > minTextSizeBlack && size < maxTextSizeBlack)
+      return 0;
+    else if(size > maxTextSizeBlack && size < maxTextSizeWhite)
+      return 255*(size - maxTextSizeBlack)/(maxTextSizeWhite - maxTextSizeBlack);
+    else
+      return 255*(1 - (size - minTextSizeWhite)/(minTextSizeBlack - minTextSizeWhite))
+  }
+  
+  function getLabelUnderPoint(screenSpaceX, screenSpaceY){
+    // get the text bounding box using this example
+    // http://processingjs.org/source/text-width/text-width.html
+    for(i in labels){
+     
+      var label = labels[i];
+      var height = dataToScreenSpace(label.size);
+      var roundedSize = Math.round(height);
+      p.textSize(roundedSize);
+      var width = Number(p.textWidth(label.text));
+      var x1 = dataToScreenSpaceX(label.x) - width/2;
+      var y1 = dataToScreenSpaceY(label.y) - height/2
+      var x2 = x1 + width;
+      var y2 = y1 + height;
+      
+          
+  // was used to debug the text 
+      //p.fill(200);
+      //p.rect(x1,y1,width,height);
+      
+      if(screenSpaceX > x1 && screenSpaceX < x2 && 
+         screenSpaceY > y1 && screenSpaceY < y2)
+        return label;
+    }
+    return undefined;
+  };
+  
+  function random255(){ return Math.ceil(Math.random()*255); }
+  
+  function iteratePanZoom(){
+    graphicsDirty = true; //TODO fix this
+  
+    //increment the movement (pan+zoom)
+    dx *= dampening;
+    dy *= dampening;
+    dz *= dampening;
+    var middleX = (viewMaxX + viewMinX)/2;
+    var middleY = (viewMaxY + viewMinY)/2;
+    
+    var spanX = ((viewMaxX - viewMinX)/2)*(1+dz);
+    var spanY = ((viewMaxY - viewMinY)/2)*(1+dz);
+    
+    var offsetX = spanX*dx;
+    var offsetY = spanY*dy;
+    
+    viewMinX = middleX - spanX + offsetX;
+    viewMaxX = middleX + spanX + offsetX;
+    viewMinY = middleY - spanY + offsetY;
+    viewMaxY = middleY + spanY + offsetY;
+    
+    //operate on key interactions
+    if (goingIn)    dz -= acceleration;
+    if (goingOut)   dz += acceleration;
+    if (goingLeft)  dx -= acceleration;
+    if (goingRight) dx += acceleration;
+    if (goingUp)    dy -= acceleration;
+    if (goingDown)  dy += acceleration;
+    
+    // when they get small, set them to zero
+    if(!(goingIn || goingOut || 
+         goingLeft || goingRight || 
+         goingUp || goingDown)){
+      if(!moving()){
+        dx = 0;
+        dy = 0;
+        dz = 0;
+      }
+    }
+  }
+  
+  p.setup = function(){
+    p.background(255);
+  };
+  
+  function screenToDataSpaceX(screenSpaceX){
+    return screenSpaceX/p.width*(viewMaxX-viewMinX)+viewMinX;
+  }
+  
+  function screenToDataSpaceY(screenSpaceY){
+    return screenSpaceY/p.height*(viewMaxY-viewMinY)+viewMinY;
+  }
+  
+  function screenToDataSpace(screenSpaceLength){
+    return screenSpaceLength*(viewMaxX-viewMinX)/p.width;
+  }
+  
+  function dataToScreenSpaceX(dataSpaceX){
+    return (dataSpaceX-viewMinX)/(viewMaxX-viewMinX)*p.width;
+  }
+  
+  function dataToScreenSpaceY(dataSpaceY){
+    return (dataSpaceY-viewMinY)/(viewMaxY-viewMinY)*p.height;
+  }
+  
+  function dataToScreenSpace(dataSpaceLength){
+    return dataSpaceLength*p.width/(viewMaxX-viewMinX);
+  }
+  
+  p.draw = function(){
+    iteratePanZoom();
+    if(graphicsDirty){
+      p.fill(255);
+      p.noStroke();
+      p.rect(0,0,p.width, p.height);
+      
+      p.stroke(0);
+      for(i in connections){
+        var connection = connections[i];
+        var a = labels[connection.labelA];
+        var b = labels[connection.labelB];
+        var x1 = dataToScreenSpaceX(a.x);
+        var y1 = dataToScreenSpaceY(a.y);
+        var x2 = dataToScreenSpaceX(b.x);
+        var y2 = dataToScreenSpaceY(b.y);
+       
+        var size = dataToScreenSpace(Math.max(a.size, b.size));
+        if(size > minTextSizeWhite && size < maxTextSizeWhite){
+          var avgSize = (a.size + b.size)/2;
+          var strokeWeight = dataToScreenSpace(avgSize) * textToStrokeRatio;
+        	p.strokeWeight(strokeWeight);
+          p.stroke(textFill(size));
+          p.line(x1,y1,x2,y2);
+        }
+      }
+      if(labelBeingConnected != undefined){
+        var x1 = dataToScreenSpaceX(labelBeingConnected.x);
+        var y1 = dataToScreenSpaceY(labelBeingConnected.y);
+        var x2 = p.mouseX;
+        var y2 = p.mouseY;
+        var strokeWeight = dataToScreenSpace(labelBeingConnected.size);
+        strokeWeight *= textToStrokeRatio;
+        p.strokeWeight(strokeWeight); 
+        p.stroke(0); 
+        p.line(x1,y1,x2,y2);
+      }
+      
+      for(i in labels){
+        var label = labels[i];
+        
+        p.fill(label.r,label.g,label.b);
+        var x = dataToScreenSpaceX(label.x);
+        var y = dataToScreenSpaceY(label.y);
+        
+        var size = dataToScreenSpace(label.size);
+        
+        if(label.text && size > minTextSizeWhite && size < maxTextSizeWhite){
+          var roundedSize = Math.round(size);
+          
+          p.textSize(roundedSize);
+          //p.setFont(fontsCache[roundedSize]);
+          
+          var sizeIncreaseRatio = 1.3;
+          
+          var textYOffset = size*.3;
+          
+          // draw the ellipse behind the text
+          var width = p.textWidth(label.text);
+          
+          var ellipseWidth = width * sizeIncreaseRatio;
+          var ellipseSize = size * sizeIncreaseRatio;
+          p.ellipseMode(p.CORNER);
+          p.fill(255);
+          p.noStroke();
+          p.ellipse(x - ellipseWidth/2,y-ellipseSize/2,ellipseWidth,ellipseSize);
+          
+          // draw the text in front of the ellipse
+          p.fill(textFill(size));
+          p.textAlign(p.CENTER);
+          p.text(label.text,x,y+textYOffset);
+        }
+      }
+      graphicsDirty = false;
+    }
+  };
+  
+  p.mouseClicked = function(){
+    
+    var dataSpaceX = screenToDataSpaceX(p.mouseX);
+    var dataSpaceY = screenToDataSpaceY(p.mouseY);
+    
+    var labelUnderPoint = getLabelUnderPoint(p.mouseX, p.mouseY);
+    
+    if(labelBeingConnected != undefined){
+      if(labelUnderPoint == undefined)
+        //"connect to nowhere" --> stop drawing the line
+        labelBeingConnected = null;
+      else{
+        ASH.genResourceId(function(resourceId){
+          var labelA = labelBeingConnected.resourceId;
+          var labelB = labelUnderPoint.resourceId;
+          if(!connectionExists(labelA, labelB)){
+            ASH.begin();
+            ASH.set(resourceId,ASH.TYPE,CONNECTION);
+            ASH.set(resourceId,'labelA',labelA);
+            ASH.set(resourceId,'labelB',labelB);
+            ASH.commit();
+            graphicsDirty = true;
+            labelBeingConnected = undefined;
+          }
+        });
+      }
+    }
+    else{
+      if(p.mouseButton == p.RIGHT && labelUnderPoint != undefined){
+        // delete the label under point
+        var label = labelUnderPoint.resourceId;
+        ASH.begin();
+        ASH.unset(label,'x');
+        ASH.unset(label,'y');
+        ASH.unset(label,'r');
+        ASH.unset(label,'g');
+        ASH.unset(label,'b');
+        ASH.unset(label,'size');
+        ASH.unset(label,'text');
+        ASH.unset(label,ASH.TYPE);
+        ASH.commit();
+      }
+      else if(p.mouseButton == p.LEFT){
+        if(labelUnderPoint == undefined){
+          // Prompt for text
+          var text = prompt("Please enter your text","");
+          // create a label
+          if(text != null){
+            ASH.genResourceId(function(resourceId){
+              ASH.begin();
+              ASH.set(resourceId,ASH.TYPE,LABEL);
+              ASH.set(resourceId,'x',dataSpaceX);
+              ASH.set(resourceId,'y',dataSpaceY);
+              ASH.set(resourceId,'r',random255());
+              ASH.set(resourceId,'g',random255());
+              ASH.set(resourceId,'b',random255());
+              ASH.set(resourceId,'size',
+                screenToDataSpace(defaultSizeOnScreen));
+              ASH.set(resourceId,'text',text);
+              ASH.commit();
+              graphicsDirty = true;
+            });
+          }
+        } else if(labelUnderPoint!=undefined){
+          labelBeingConnected = labelUnderPoint;
+        }
+      }
+    }
+  };
+  p.mousePressed = function(){
+    labelBeingMoved = getLabelUnderPoint(p.mouseX,p.mouseY);
+  };
+  p.mouseReleased = function(){
+    labelBeingMoved = undefined;
+  };
+  p.mouseDragged = function(){
+    if(labelBeingMoved != undefined){
+      var label = labelBeingMoved.resourceId;
+      ASH.begin();
+      ASH.set(label,'x',screenToDataSpaceX(p.mouseX));
+      ASH.set(label,'y',screenToDataSpaceY(p.mouseY));
+      ASH.commit();
+      graphicsDirty = true;
+    }
+  };
+  p.keyPressed = function(){
+    if (p.key == 100)/*d*/         goingIn = true;
+    else if (p.key == 99)/*c*/     goingOut = true;
+    else if (p.keyCode == p.UP)    goingUp = true;
+    else if (p.keyCode == p.DOWN)  goingDown = true;
+    else if (p.keyCode == p.LEFT)  goingLeft = true;
+    else if (p.keyCode == p.RIGHT) goingRight = true;
+  };
+  p.keyReleased = function(){
+    if (p.key == 100)/*d*/         goingIn = false;
+    else if (p.key == 99)/*c*/     goingOut = false;
+    else if (p.keyCode == p.UP)    goingUp = false;
+    else if (p.keyCode == p.DOWN)  goingDown = false;
+    else if (p.keyCode == p.LEFT)  goingLeft = false;
+    else if (p.keyCode == p.RIGHT) goingRight = false;
+  };
+};
+var canvas = document.getElementById("pjs");  
+var p = new Processing(canvas, sketch);
+p.size(window.innerWidth, window.innerHeight);
+// set the view region for panning and zooming
+viewMinX = viewMinY = 0;
+viewMaxX = window.innerWidth;
+viewMaxY = window.innerHeight;
+</script>
+</body>
+</html>
+
