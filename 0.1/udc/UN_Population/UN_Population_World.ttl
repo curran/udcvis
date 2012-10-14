@@ -1,0 +1,440 @@
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qb:              <http://purl.org/linked-data/cube#> .
+@prefix udc:             <http://universaldatacube.org/> .
+@prefix measures:        <http://universaldatacube.org/measures/> .
+@prefix dataset:         <http://universaldatacube.org/datasets/UNPopulationEstimates> .
+@prefix sdmx-dimension:  <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix world:           <http://www.geonames.org/6295630> .
+
+dataset:
+    a qb:DataSet;
+    rdfs:label "UN Population Estimates";
+    rdfs:comment "Data from the United Nations covering world population estimates by year from 1950 to 2010".
+
+dataset:observation0
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2532229237 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1950> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation1
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2580959811 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1951> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation2
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2628448169 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1952> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation3
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2675766194 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1953> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation4
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2723726367 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1954> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation5
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2772881677 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1955> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation6
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2823513099 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1956> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation7
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2875642147 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1957> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation8
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2929068760 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1958> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation9
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 2983434676 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1959> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation10
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3038412766 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1960> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation11
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3093909471 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1961> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation12
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3150241630 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1962> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation13
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3208212366 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1963> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation14
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3268896174 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1964> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation15
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3333007049 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1965> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation16
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3400823017 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1966> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation17
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3471955133 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1967> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation18
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3545612656 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1968> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation19
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3620652065 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1969> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation20
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3696186306 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1970> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation21
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3772048386 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1971> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation22
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3848319463 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1972> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation23
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 3924667649 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1973> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation24
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4000764130 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1974> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation25
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4076419207 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1975> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation26
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4151409530 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1976> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation27
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4225863840 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1977> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation28
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4300401689 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1978> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation29
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4375899125 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1979> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation30
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4453007478 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1980> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation31
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4531799255 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1981> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation32
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4612119820 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1982> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation33
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4694097271 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1983> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation34
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4777827832 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1984> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation35
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4863289935 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1985> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation36
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 4950590704 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1986> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation37
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5039478411 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1987> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation38
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5129112573 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1988> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation39
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5218374508 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1989> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation40
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5306425154 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1990> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation41
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5392938741 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1991> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation42
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5478009489 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1992> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation43
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5561743942 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1993> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation44
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5644416076 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1994> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation45
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5726239315 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1995> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation46
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5807211831 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1996> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation47
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5887259665 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1997> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation48
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 5966464736 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1998> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation49
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6044931358 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/1999> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation50
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6122770220 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2000> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation51
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6200002758 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2001> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation52
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6276721836 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2002> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation53
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6353195588 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2003> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation54
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6429757631 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2004> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation55
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6506649175 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2005> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation56
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6583958568 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2006> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation57
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6661637460 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2007> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation58
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6739610289 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2008> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation59
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6817737123 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2009> ;
+    sdmx-dimension:refArea world: .
+
+dataset:observation60
+    a qb:Observation ;
+    qb:dataSet dataset: ;
+    measures:Population 6895889010 ;
+    sdmx-dimension:refPeriod <http://reference.data.gov.uk/id/year/2010> ;
+    sdmx-dimension:refArea world: .
+
