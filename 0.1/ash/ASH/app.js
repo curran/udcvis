@@ -1,7 +1,9 @@
 var fs = require('fs')
   , express = require('express')
-  , app = express.createServer()
-  , io = require('socket.io').listen(app)
+  , app = express()
+  , http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server)
   , lazy = require('lazy');
 
 app.configure(function(){
