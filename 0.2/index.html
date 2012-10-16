@@ -1,0 +1,31 @@
+<h1>The Universal Data Cube Visualization System v0.2</h1>
+<p>The organizational approach for version 0.2 is as follows:
+
+</p>
+<ul>
+<li><code>lib</code> contains third party libraries</li>
+<li><code>modules</code> contains UDCViS modules</li>
+<li><code>examples</code> contains example applications that use those modules</li>
+<li><code>data</code> contains RDF data used by examples</li>
+</ul>
+<p>Require.js is used for scalable modular coding.
+
+</p>
+<h2>Examples</h2>
+<ul>
+<li><a href="./examples/helloModules">Hello Modules</a> - 10/16/2012 - Shows how 
+an application can be set up that uses libraries and modules via
+Require.js. This is designed to be a template for future examples.<ul>
+<li><code>modules/requireJSConfig.js</code> configures Require.js to look for modules 
+in the right place:<ul>
+<li>Third party libs are <code>require(&#39;libName&#39;)</code></li>
+<li>UDCViS modules are <code>require(&#39;udcvis/moduleName&#39;)</code></li>
+</ul>
+</li>
+<li>This configuration can be re-used by many examples.</li>
+</ul>
+</li>
+</ul>
+<p>Curran 10/16/2012
+</p>
+
