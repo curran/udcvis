@@ -24,7 +24,7 @@ The idea is as follows:
     * Embeddable within Web pages
  * This collection of data sets and interactive visualization 
    framework can be incrementally built up over time by a large 
-   number of contributors from around the world,
+   number of contributors from around the world.
  * Target users include:
    * Educators
    * Journalists
@@ -44,5 +44,3 @@ The versioning scheme is as follows:
    * Recruitment of users, contributors, and collaborators.
    * Iterative design from user feedback.
  * 1.0 - 2014 - A final version corresponding to a completed dissertation. 
-
-Curran 10/16/2012
