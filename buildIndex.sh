@@ -2,4 +2,4 @@
 #
 # assumes the Node.js "marked" package is installed
 # npm install marked
-cat index.md | marked > index.html
+cat README.md | marked > index.html

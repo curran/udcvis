@@ -1,6 +1,6 @@
-# The Universal Data Cube Visualization System
+# The Universal Data Cube Visualization System v0.1
 
-So far this repository contains a collection of small programs that 
+This repository contains a collection of small programs that 
 demonstrate specific concepts, technologies, or techniques for creating
 interactive graphical applications using HTML5 and JavaScript. Here they are:
 
