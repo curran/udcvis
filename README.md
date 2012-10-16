@@ -1,7 +1,9 @@
-# The Universal Data Cube Visualization System
+# The Universal Data Cube <br>Visualization System
 
 The UDCViS is a conceptually designed system in an early phase of 
-implementation. It is a research project of Curran Kelleher.
+implementation.
+
+It is a research project of Curran Kelleher.
 
 The code is available in the [UDCViS GitHub Repo](https://github.com/curran/udcvis).
 

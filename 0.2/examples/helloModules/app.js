@@ -1,5 +1,5 @@
-require(["jquery", "underscore", "backbone", "async"],
-        function($, _, Backbone, async) {
+require(["jquery", "underscore", "backbone", "async", "collections/sorted-set"],
+        function($, _, Backbone, async, SortedSet) {
   var log = function(str){
     console.log(str);
     document.write(str+"<br>");
@@ -14,6 +14,15 @@ require(["jquery", "underscore", "backbone", "async"],
         log("Backbone is "+msg);
         async.nextTick(function(){
           log("async is go");
+
+          var set = new SortedSet();
+          set.add(1);
+
+          set.toArray().sort(function () {
+            return Math.random() - .5;
+          }).forEach(function (value) {
+            log("collections is go");
+          });
         });
       });
       o.trigger("change", "go");
