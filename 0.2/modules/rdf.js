@@ -11,7 +11,33 @@ define(['collections/sorted-set', 'collections/iterator'],
 
   var indices = {
     // `indices.s` contains subjects.
-    s: new SortedSet()
+    s: new SortedSet(),
+    // `indices.p` contains predicates.
+    p: new SortedSet(),
+    // `indices.o` contains objects.
+    o: new SortedSet(),
+    // `indices.sp` contains:
+    //
+    // * keys: cantor(subject, predicate)
+    // * values: Sorted Sets of object ids.
+    sp: {},
+    // `indices.po` contains:
+    //
+    // * keys: cantor(predicate, object)
+    // * values: Sorted Sets of subject ids.
+    po: {},
+    // `indices.so` contains:
+    //
+    // * keys: cantor(subject, object)
+    // * values: Sorted Sets of predicate ids.
+    so: {}
+  };
+
+  // `cantor(a, b)` Creates a unique integer for any two integers
+  //a and b
+  // From [Wikipedia: Pairing Function](http://en.wikipedia.org/wiki/Pairing_function)
+  var cantor = function(a, b){
+    return (a+b)*(a+b+1)/2+b;
   };
 
   return {
@@ -30,9 +56,23 @@ define(['collections/sorted-set', 'collections/iterator'],
     // `rdf.insert(subject, predicate, object)`
     // * Inserts a triple.
     // * Arguments are ids returned from `rdf.id()`,
-    insert: function(s, p, o){
-      indices.s.add(s);
-    },
+    insert: (function(){
+      function indexInsert(index, key, value){
+        var sortedSet = index[key];
+        if(!sortedSet)
+          sortedSet = index[key] = new SortedSet();
+        sortedSet.add(value);
+      };
+      return function(s, p, o){
+        indices.s.add(s);
+        indices.p.add(p);
+        indices.o.add(o);
+
+        indexInsert(indices.sp, cantor(s, p), o);
+        indexInsert(indices.po, cantor(p, o), s);
+        indexInsert(indices.so, cantor(s, o), p);
+      }
+    })(),
     // `rdf.query(subject, predicate, object)`
     // * Queries the RDF store.
     // * Arguments are either:
@@ -58,6 +98,16 @@ define(['collections/sorted-set', 'collections/iterator'],
     query: function(s, p, o){
       if(s === '?' && p === '*' && o === '*')
         return new Iterator(indices.s.iterate());
+      if(s === '*' && p === '?' && o === '*')
+        return new Iterator(indices.p.iterate());
+      if(s === '*' && p === '*' && o === '?')
+        return new Iterator(indices.o.iterate());
+      if(s === '?' && p !=  '*' && o !=  '*')
+        return new Iterator(indices.po[cantor(p, o)].iterate());
+      if(s !=  '*' && p === '?' && o !=  '*')
+        return new Iterator(indices.so[cantor(s, o)].iterate());
+      if(s !=  '*' && p !=  '*' && o === '?')
+        return new Iterator(indices.sp[cantor(s, p)].iterate());
     }
   };
 });

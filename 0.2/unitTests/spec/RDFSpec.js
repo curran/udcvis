@@ -9,15 +9,41 @@ define(["udcvis/rdf"], function(rdf) {
       expect(rdf.id('baz')).toEqual(3);
     });
 
-    it("should be able to answer queries of the form (?,*,*)", function() {
-      var foo = rdf.id('foo');
-      var bar = rdf.id('bar');
-      var baz = rdf.id('baz');
-      rdf.insert(foo, bar, baz);
-      var resultIterator = rdf.query('?','*','*');
-      resultIterator.forEach(function(value){
-        expect(value).toEqual(foo);
-      });
+    var foo = rdf.id('foo');
+    var bar = rdf.id('bar');
+    var baz = rdf.id('baz');
+    rdf.insert(foo, bar, baz);
+
+    it("should answer queries of the form (?,*,*)", function() {
+      expect(rdf.query('?', '*','*').next()).toEqual(foo);
+    });
+
+    it("should answer queries of the form (*,?,*)", function() {
+      expect(rdf.query('*','?','*').next()).toEqual(bar);
+    });
+
+    it("should answer queries of the form (*,*,?)", function() {
+      expect(rdf.query('*','*','?').next()).toEqual(baz);
+    });
+
+    var zoo = rdf.id('zoo');
+    var zar = rdf.id('zar');
+    var zaz = rdf.id('zaz');
+    rdf.insert(zoo, zar, zaz);
+
+    it("should answer queries of the form (?,id,id)", function() {
+      expect(rdf.query('?', bar, baz).next()).toEqual(foo);
+      expect(rdf.query('?', zar, zaz).next()).toEqual(zoo);
+    });
+
+    it("should answer queries of the form (id,?,id)", function() {
+      expect(rdf.query(foo, '?', baz).next()).toEqual(bar);
+      expect(rdf.query(zoo, '?', zaz).next()).toEqual(zar);
+    });
+
+    it("should answer queries of the form (id,id,?)", function() {
+      expect(rdf.query(foo, bar, '?').next()).toEqual(baz);
+      expect(rdf.query(zoo, zar, '?').next()).toEqual(zaz);
     });
   });
 });
