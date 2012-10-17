@@ -36,7 +36,7 @@ The idea is as follows:
 
 The versioning scheme is as follows:
 
- * [0.1 - September - October 2012](http://universaldatacube.org/0.2/) - Stand-alone prototypes proofs
+ * [0.1 - September - October 2012](http://universaldatacube.org/0.1/) - Stand-alone prototypes proofs
    of concept, and technology tests.
  * [0.2 - October - December 2012](http://universaldatacube.org/0.2/pages/) - A first attempt at building 
    foundational UDCViS modules.
