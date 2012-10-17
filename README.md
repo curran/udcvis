@@ -1,16 +1,18 @@
-# The Universal Data Cube <br>Visualization System
-##### UDCViS #####
+# The Universal Data Cube <br>Visualization System<br>(UDCViS)
+##### [Curran Kelleher](http://universalvisualization.org/?page_id=2)
+##### October 2012
 
- * The UDCViS is an early-stage research project.
+ * An early-stage research project.
  * Planned to be completed by 2014.
- * [UDCViS GitHub Repo](https://github.com/curran/udcvis).
- * Published at [UniversalDataCube.org](http://universaldatacube.org).
+ * Open source code: [UDCViS GitHub Repo](https://github.com/curran/udcvis).
+ * Running live: [UniversalDataCube.org](http://universaldatacube.org).
 
 The idea is as follows:
 
  * Public data sets are on the Web,
    * but are often not accessible.
- * These can be published using RDF.
+ * These can be published in the Semantic Web.
+   * Using the [RDF Data Cube Vocabulary](http://www.w3.org/TR/vocab-data-cube/).
  * This RDF data can be integrated in the browser.
  * The integrated data can be explored with:
    * Multiple linked views
@@ -22,7 +24,7 @@ The idea is as follows:
    * Synchronous colalboration
      * immediate updates like Google Docs
    * Embeddable within Web pages
- * Mass-collaboration for global commons of:
+ * Mass-collaboration can be leveraged to evolve a global commons of:
    * Data sets
    * Visualization software
    * User-generated visualizations

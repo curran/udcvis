@@ -17,6 +17,8 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
    "marks" from the book "Semiology of Graphics" by Jaque Bertin.
    * [run it](http://curran.github.com/udcvis/0.1/bertin/markExperiments/index.html)
  * [Data](https://github.com/curran/udcvis/tree/gh-pages/0.1/data) - an example data set for use as the first data set imported into the
+   * [UN Population Data](https://github.com/curran/udcvis/tree/gh-pages/0.1/udc/UN_Population) - 
+   Encoded as RDF using the Data Cube Vocabulary.
  UDC system for use in testing and initial development.
  * [Grade Histogram](https://github.com/curran/udcvis/tree/gh-pages/0.1/gradeHistogram)
    * [run](http://curran.github.com/udcvis/0.1/gradeHistogram/index.html)
