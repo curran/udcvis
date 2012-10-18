@@ -14,6 +14,11 @@ define(["udcvis/rdf"], function(rdf) {
     var baz = rdf.id('baz');
     rdf.insert(foo, bar, baz);
 
+    it("should be able to recover values from ids", function(){
+      expect(rdf.value(foo)).toEqual('foo');
+      expect(rdf.value(bar)).toEqual('bar');
+    });
+
     it("should answer queries of the form (?,*,*)", function() {
       expect(rdf.query('?', '*','*').next()).toEqual(foo);
     });

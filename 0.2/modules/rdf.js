@@ -41,7 +41,7 @@ define(['collections/sorted-set', 'collections/iterator'],
     sp: {}
   };
 
-  var idAndValue = (function(){
+  var idsAndValues = (function(){
     var i = 1, ids = {}, values = {};
     return {
       id: function(value){
@@ -66,12 +66,12 @@ define(['collections/sorted-set', 'collections/iterator'],
     // * `value` is a string - either 
     //   * a URI, or 
     //   * a literal.
-    id: idAndValue.id,
+    id: idsAndValues.id,
     // `rdf.value(id)`
     //
     // * Returns the value for the given `id`.
     // * The inverse of `rdf.id(value)`.
-    value: idAndValue.value,
+    value: idsAndValues.value,
     // `rdf.insert(subject, predicate, object)`
     //
     //  * Inserts a triple.
