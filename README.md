@@ -10,21 +10,22 @@
 
 The versioning scheme is as follows:
 
- * [0.1](http://curran.github.com/udcvis/0.1/): September - October 2012
+ * [Version 0.1](http://curran.github.com/udcvis/0.1/): September - October 2012
    * Stand-alone prototypes
    * Proofs of concept
    * Technology tests
- * [0.2](http://curran.github.com/udcvis/0.2/pages/): October - December 2012
+ * [Version 0.2](http://curran.github.com/udcvis/0.2/pages/): October - December 2012
    * A first prototype of the UDCViS modules
    * Example applications
    * Technology tests
- * 0.3: January - March 2012
+ * Version 0.3: January - March 2012
   * A refactoring of UDCViS modules.
- * 0.4 ... 0.9
+ * Versions 0.4 ... 0.9
    * Continual refinement of modules, architecture, and example applications.
    * Recruitment of users, contributors, and collaborators.
    * Iterative design from user feedback.
- * 1.0 - 2014 - A final version corresponding to a completed dissertation. 
+ * Version 1.0 - 2014 - A final version corresponding to a completed dissertation. 
+
 The idea is as follows:
 
  * Public data sets are on the Web,
