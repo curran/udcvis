@@ -54,20 +54,57 @@ triple of the form (subject, predicate, object).</p>             </td>          
 <ul><li>keys: cantor(subject, predicate)</li>
 <li>values: Sorted Sets of object ids.</li>
 <li>Answers queries of the form (id,id,?)</li></ul></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">sp</span><span class="o">:</span> <span class="p">{}</span>
-  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">return</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p><code>rdf.id(value)</code></p>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">sp</span><span class="o">:</span> <span class="p">{},</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <ul>
+<li>The names below mean:
+<ul><li><code>q</code> = "?" (question)</li>
+<li><code>i</code> = some id</li>
+<li><code>w</code> = "*" (wildcard)</li>
+<li>Spacing corresponds to spo, (subject, predicate, object)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <ul>
+<li><code>indices.qiw</code> contains:
+<ul><li>keys: predicate</li>
+<li>values: Sorted Sets of subject ids.</li>
+<li>Answers queries of the form (?,id,*)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">qiw</span><span class="o">:</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <ul>
+<li><code>indices.qwi</code> contains:
+<ul><li>keys: object</li>
+<li>values: Sorted Sets of subject ids.</li>
+<li>Answers queries of the form (?,*,id)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">qwi</span><span class="o">:</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <ul>
+<li><code>indices.iqw</code> contains:
+<ul><li>keys: subject</li>
+<li>values: Sorted Sets of predicate ids.</li>
+<li>Answers queries of the form (id,?,*)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">iqw</span><span class="o">:</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <ul>
+<li><code>indices.wqi</code> contains:
+<ul><li>keys: object</li>
+<li>values: Sorted Sets of predicate ids.</li>
+<li>Answers queries of the form (*,?,id)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">wqi</span><span class="o">:</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <ul>
+<li><code>indices.iwq</code> contains:
+<ul><li>keys: subject</li>
+<li>values: Sorted Sets of object ids.</li>
+<li>Answers queries of the form (id,*,?)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">iwq</span><span class="o">:</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <ul>
+<li><code>indices.wiq</code> contains:
+<ul><li>keys: predicate</li>
+<li>values: Sorted Sets of object ids.</li>
+<li>Answers queries of the form (*,id,?)</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">wiq</span><span class="o">:</span> <span class="p">{}</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">return</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p><code>rdf.id(value)</code></p>
 
 <ul>
 <li>Returns a unique integer id for each unique <code>value</code>.</li>
 <li><code>value</code> is a string - either 
 <ul><li>a URI, or </li>
 <li>a literal.</li></ul></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">id</span><span class="o">:</span> <span class="nx">idsAndValues</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p><code>rdf.value(id)</code></p>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">id</span><span class="o">:</span> <span class="nx">idsAndValues</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p><code>rdf.value(id)</code></p>
 
 <ul>
 <li>Returns the value for the given <code>id</code>.</li>
 <li>The inverse of <code>rdf.id(value)</code>.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">value</span><span class="o">:</span> <span class="nx">idsAndValues</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p><code>rdf.insert(subject, predicate, object)</code></p>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">value</span><span class="o">:</span> <span class="nx">idsAndValues</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p><code>rdf.insert(subject, predicate, object)</code></p>
 
 <ul>
 <li>Inserts a triple.</li>
@@ -87,8 +124,15 @@ triple of the form (subject, predicate, object).</p>             </td>          
         <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">sp</span><span class="p">,</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">),</span> <span class="nx">o</span><span class="p">);</span>
         <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">po</span><span class="p">,</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">),</span> <span class="nx">s</span><span class="p">);</span>
         <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">so</span><span class="p">,</span> <span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">o</span><span class="p">),</span> <span class="nx">p</span><span class="p">);</span>
+
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">qiw</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">s</span><span class="p">);</span>
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">qwi</span><span class="p">,</span> <span class="nx">o</span><span class="p">,</span> <span class="nx">s</span><span class="p">);</span>
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">iqw</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">wqi</span><span class="p">,</span> <span class="nx">o</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">iwq</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">o</span><span class="p">);</span>
+        <span class="nx">indexInsert</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">wiq</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">);</span>
       <span class="p">}</span>
-    <span class="p">})(),</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p><code>rdf.query(subject, predicate, object)</code></p>
+    <span class="p">})(),</span></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p><code>rdf.query(subject, predicate, object)</code></p>
 
 <ul>
 <li>Queries the RDF store.</li>
@@ -119,12 +163,26 @@ triple of the form (subject, predicate, object).</p>             </td>          
         <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">p</span><span class="p">.</span><span class="nx">iterate</span><span class="p">());</span>
       <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">o</span><span class="p">.</span><span class="nx">iterate</span><span class="p">());</span>
+
       <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">po</span><span class="p">[</span><span class="nx">cantor</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">o</span><span class="p">)].</span><span class="nx">iterate</span><span class="p">());</span>
       <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">so</span><span class="p">[</span><span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">o</span><span class="p">)].</span><span class="nx">iterate</span><span class="p">());</span>
       <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">sp</span><span class="p">[</span><span class="nx">cantor</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">)].</span><span class="nx">iterate</span><span class="p">());</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">qiw</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">qwi</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">iqw</span><span class="p">[</span><span class="nx">s</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">wqi</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">iwq</span><span class="p">[</span><span class="nx">s</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">s</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">!=</span>  <span class="s1">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span> <span class="o">===</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Iterator</span><span class="p">(</span><span class="nx">indices</span><span class="p">.</span><span class="nx">wiq</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">iterate</span><span class="p">());</span>
     <span class="p">}</span>
   <span class="p">};</span>
 <span class="p">});</span>
