@@ -5,3 +5,4 @@ The following open source third party libraries are used:
  * [`backbone.js`](http://backbonejs.org/) For events and MVC components.
  * [`require-jquery.js`](http://requirejs.org/) For scalable modular coding.
  * [`underscore.js`](http://requirejs.org/docs/jquery.html) For functional programming utilities.
+ * [`collections`](https://github.com/kriskowal/collections) For collection APIs like SortedSet and Iterators.
