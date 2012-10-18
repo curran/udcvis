@@ -13,6 +13,30 @@ define(['collections/sorted-set', 'collections/iterator'],
     return (a+b)*(a+b+1)/2+b;
   };
 
+  // ### IDs and Values
+  // Throughout this RDF module, the terms "subject", "predicate", and 
+  // "object" refer to integer ids that map to elements of an RDF
+  // triple of the form (subject, predicate, object).
+  var idsAndValues = (function(){
+    // Code that maps between IDs and values is located here.
+    var i = 1, ids = {}, values = {};
+    return {
+      id: function(value){
+        var id = ids[value];
+        if(!id){
+          id = ids[value] = i++;
+          values[id] = value;
+        }
+        return id;
+      },
+      // The `id` and `value` functions are exposed in the public API.
+      value: function(id){
+        return values[id];
+      }
+    };
+  })();
+
+
   // ### Indices
   var indices = {
     //  * `indices.s` contains subjects.
@@ -40,23 +64,6 @@ define(['collections/sorted-set', 'collections/iterator'],
     //    * Answers queries of the form (id,id,?)
     sp: {}
   };
-
-  var idsAndValues = (function(){
-    var i = 1, ids = {}, values = {};
-    return {
-      id: function(value){
-        var id = ids[value];
-        if(!id){
-          id = ids[value] = i++;
-          values[id] = value;
-        }
-        return id;
-      },
-      value: function(id){
-        return values[id];
-      }
-    };
-  })();
 
   // ## Public API
   return {
