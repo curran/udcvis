@@ -174,31 +174,68 @@ define(['collections/sorted-set', 'collections/iterator'],
     //   * `( *  , id , ?  )`
     query: function(s, p, o){
       if(s === '?' && p === '*' && o === '*')
-        return new Iterator(indices.s.iterate());
+        return indices.s.iterate();
       if(s === '*' && p === '?' && o === '*')
-        return new Iterator(indices.p.iterate());
+        return indices.p.iterate();
       if(s === '*' && p === '*' && o === '?')
-        return new Iterator(indices.o.iterate());
+        return indices.o.iterate();
 
       if(s === '?' && p !=  '*' && o !=  '*')
-        return new Iterator(indices.po[cantor(p, o)].iterate());
+        return indices.po[cantor(p, o)].iterate();
       if(s !=  '*' && p === '?' && o !=  '*')
-        return new Iterator(indices.so[cantor(s, o)].iterate());
+        return indices.so[cantor(s, o)].iterate();
       if(s !=  '*' && p !=  '*' && o === '?')
-        return new Iterator(indices.sp[cantor(s, p)].iterate());
+        return indices.sp[cantor(s, p)].iterate();
 
       if(s === '?' && p !=  '*' && o === '*')
-        return new Iterator(indices.qiw[p].iterate());
+        return indices.qiw[p].iterate();
       if(s === '?' && p === '*' && o !=  '*')
-        return new Iterator(indices.qwi[o].iterate());
+        return indices.qwi[o].iterate();
       if(s !=  '*' && p === '?' && o === '*')
-        return new Iterator(indices.iqw[s].iterate());
+        return indices.iqw[s].iterate();
       if(s === '*' && p === '?' && o !=  '*')
-        return new Iterator(indices.wqi[o].iterate());
+        return indices.wqi[o].iterate();
       if(s !=  '*' && p === '*' && o === '?')
-        return new Iterator(indices.iwq[s].iterate());
+        return indices.iwq[s].iterate();
       if(s === '*' && p !=  '*' && o === '?')
-        return new Iterator(indices.wiq[p].iterate());
+        return indices.wiq[p].iterate();
+    },
+    and: function(it1, it2){
+      var nextValue, next1, next2;
+      var findNextValue = function(){
+        nextValue = undefined;
+        next1 = next2 = NaN;
+        while(!nextValue){
+          try{
+            if(next1 === next2)
+              nextValue = next1;
+            else
+              if(next1 < next2 || isNaN(next1))
+                next1 = it1.next();
+              else if(next2 < next1 || isNaN(next2))
+                next2 = it2.next();
+          }
+          catch(e){
+            // Flow goes here when iteration ends
+            break;
+          }
+        }
+      };
+      findNextValue();
+      return {
+        next: function(){
+          var currentValue = nextValue;
+          if(currentValue != undefined){
+            findNextValue();
+            return currentValue;
+          }
+          else
+            // StopIteration is thrown for all collections
+            // when iteration terminates. It is a global 
+            // injected by Iterator.js.
+            throw StopIteration;
+        }
+      };
     }
   };
 });

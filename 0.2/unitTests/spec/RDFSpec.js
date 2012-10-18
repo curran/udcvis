@@ -80,5 +80,32 @@ define(["udcvis/rdf"], function(rdf) {
       expect(rdf.query('*', bar, '?').next()).toEqual(baz);
       expect(rdf.query('*', zar, '?').next()).toEqual(zaz);
     });
+
+    var a = rdf.id('a');
+    var b = rdf.id('b');
+    var c = rdf.id('c');
+    var color = rdf.id('color');
+    var red = rdf.id('red');
+    var green = rdf.id('green');
+    var size = rdf.id('size');
+    var large = rdf.id('large');
+    var small = rdf.id('small');
+    rdf.insert(a, color, red);
+    rdf.insert(b, color, red);
+    rdf.insert(c, color, green);
+    rdf.insert(a, size, small);
+    rdf.insert(b, size, large);
+    rdf.insert(c, size, large);
+
+    it("should perform set intersection", function(){
+      var result = rdf.and(
+        rdf.query('?', color, red),
+        rdf.query('?', size, large)
+      );
+      expect(result.next()).toEqual(b);
+      expect(function(){
+        result.next();
+      }).toThrow(StopIteration);
+    });
   });
 });
