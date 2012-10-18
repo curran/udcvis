@@ -62,7 +62,49 @@ define(['collections/sorted-set', 'collections/iterator'],
     //    * keys: cantor(subject, predicate)
     //    * values: Sorted Sets of object ids.
     //    * Answers queries of the form (id,id,?)
-    sp: {}
+    sp: {},
+    
+    //  * The names below mean:
+    //    * `q` = "?" (question)
+    //    * `i` = some id
+    //    * `w` = "*" (wildcard)
+    //    * Spacing corresponds to spo, (subject, predicate, object)
+
+    //  * `indices.qiw` contains:
+    //    * keys: predicate
+    //    * values: Sorted Sets of subject ids.
+    //    * Answers queries of the form (?,id,*)
+    qiw: {},
+
+    //  * `indices.qwi` contains:
+    //    * keys: object
+    //    * values: Sorted Sets of subject ids.
+    //    * Answers queries of the form (?,*,id)
+    qwi: {},
+
+    //  * `indices.iqw` contains:
+    //    * keys: subject
+    //    * values: Sorted Sets of predicate ids.
+    //    * Answers queries of the form (id,?,*)
+    iqw: {},
+
+    //  * `indices.wqi` contains:
+    //    * keys: object
+    //    * values: Sorted Sets of predicate ids.
+    //    * Answers queries of the form (*,?,id)
+    wqi: {},
+
+    //  * `indices.iwq` contains:
+    //    * keys: subject
+    //    * values: Sorted Sets of object ids.
+    //    * Answers queries of the form (id,*,?)
+    iwq: {},
+
+    //  * `indices.wiq` contains:
+    //    * keys: predicate
+    //    * values: Sorted Sets of object ids.
+    //    * Answers queries of the form (*,id,?)
+    wiq: {}
   };
 
   // ## Public API
@@ -98,6 +140,13 @@ define(['collections/sorted-set', 'collections/iterator'],
         indexInsert(indices.sp, cantor(s, p), o);
         indexInsert(indices.po, cantor(p, o), s);
         indexInsert(indices.so, cantor(s, o), p);
+
+        indexInsert(indices.qiw, p, s);
+        indexInsert(indices.qwi, o, s);
+        indexInsert(indices.iqw, s, p);
+        indexInsert(indices.wqi, o, p);
+        indexInsert(indices.iwq, s, o);
+        indexInsert(indices.wiq, p, o);
       }
     })(),
     // `rdf.query(subject, predicate, object)`
@@ -130,12 +179,26 @@ define(['collections/sorted-set', 'collections/iterator'],
         return new Iterator(indices.p.iterate());
       if(s === '*' && p === '*' && o === '?')
         return new Iterator(indices.o.iterate());
+
       if(s === '?' && p !=  '*' && o !=  '*')
         return new Iterator(indices.po[cantor(p, o)].iterate());
       if(s !=  '*' && p === '?' && o !=  '*')
         return new Iterator(indices.so[cantor(s, o)].iterate());
       if(s !=  '*' && p !=  '*' && o === '?')
         return new Iterator(indices.sp[cantor(s, p)].iterate());
+
+      if(s === '?' && p !=  '*' && o === '*')
+        return new Iterator(indices.qiw[p].iterate());
+      if(s === '?' && p === '*' && o !=  '*')
+        return new Iterator(indices.qwi[o].iterate());
+      if(s !=  '*' && p === '?' && o === '*')
+        return new Iterator(indices.iqw[s].iterate());
+      if(s === '*' && p === '?' && o !=  '*')
+        return new Iterator(indices.wqi[o].iterate());
+      if(s !=  '*' && p === '*' && o === '?')
+        return new Iterator(indices.iwq[s].iterate());
+      if(s === '*' && p !=  '*' && o === '?')
+        return new Iterator(indices.wiq[p].iterate());
     }
   };
 });

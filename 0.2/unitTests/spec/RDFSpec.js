@@ -50,5 +50,35 @@ define(["udcvis/rdf"], function(rdf) {
       expect(rdf.query(foo, bar, '?').next()).toEqual(baz);
       expect(rdf.query(zoo, zar, '?').next()).toEqual(zaz);
     });
+
+    it("should answer queries of the form (?,id,*)", function() {
+      expect(rdf.query('?', bar, '*').next()).toEqual(foo);
+      expect(rdf.query('?', zar, '*').next()).toEqual(zoo);
+    });
+
+    it("should answer queries of the form (?,*,id)", function() {
+      expect(rdf.query('?', '*', baz).next()).toEqual(foo);
+      expect(rdf.query('?', '*', zaz).next()).toEqual(zoo);
+    });
+
+    it("should answer queries of the form (id,?,*)", function() {
+      expect(rdf.query(foo, '?', '*').next()).toEqual(bar);
+      expect(rdf.query(zoo, '?', '*').next()).toEqual(zar);
+    });
+
+    it("should answer queries of the form (*,?,id)", function() {
+      expect(rdf.query('*', '?', baz).next()).toEqual(bar);
+      expect(rdf.query('*', '?', zaz).next()).toEqual(zar);
+    });
+
+    it("should answer queries of the form (id,*,?)", function() {
+      expect(rdf.query(foo, '*', '?').next()).toEqual(baz);
+      expect(rdf.query(zoo, '*', '?').next()).toEqual(zaz);
+    });
+
+    it("should answer queries of the form (*,id,?)", function() {
+      expect(rdf.query('*', bar, '?').next()).toEqual(baz);
+      expect(rdf.query('*', zar, '?').next()).toEqual(zaz);
+    });
   });
 });
