@@ -1,61 +1,81 @@
+// An in-memory RDF store with support for:
+//
+//  * Efficient querying
+//  * Incremental result iteration
 define(['collections/sorted-set', 'collections/iterator'], 
     function(SortedSet, Iterator){
-  var set = new SortedSet();
-  set.add(1);
-  set.add(3);
-  set.add(2);
-  var iterator = new Iterator(set.iterate());
-  iterator.forEach(function (value) {
-    console.log(value);
-  });
-
-  var indices = {
-    // `indices.s` contains subjects.
-    s: new SortedSet(),
-    // `indices.p` contains predicates.
-    p: new SortedSet(),
-    // `indices.o` contains objects.
-    o: new SortedSet(),
-    // `indices.sp` contains:
-    //
-    // * keys: cantor(subject, predicate)
-    // * values: Sorted Sets of object ids.
-    sp: {},
-    // `indices.po` contains:
-    //
-    // * keys: cantor(predicate, object)
-    // * values: Sorted Sets of subject ids.
-    po: {},
-    // `indices.so` contains:
-    //
-    // * keys: cantor(subject, object)
-    // * values: Sorted Sets of predicate ids.
-    so: {}
-  };
-
-  // `cantor(a, b)` Creates a unique integer for any two integers
-  //a and b
-  // From [Wikipedia: Pairing Function](http://en.wikipedia.org/wiki/Pairing_function)
+  // ## Private Variables
+  // `cantor(a, b)` 
+  //
+  //  * The [Cantor Pairing Function](http://en.wikipedia.org/wiki/Pairing_function)
+  //  * Returns a unique integer for any two integers `a` and `b`.
   var cantor = function(a, b){
     return (a+b)*(a+b+1)/2+b;
   };
 
+  // ### Indices
+  var indices = {
+    //  * `indices.s` contains subjects.
+    //    * Answers queries of the form (?,\*,\*)
+    s: new SortedSet(),
+    //  * `indices.p` contains predicates.
+    //    * Answers queries of the form (\*,?,\*)
+    p: new SortedSet(),
+    //  * `indices.o` contains objects.
+    //    * Answers queries of the form (\*,\*,?)
+    o: new SortedSet(),
+    //  * `indices.po` contains:
+    //    * keys: cantor(predicate, object)
+    //    * values: Sorted Sets of subject ids.
+    //    * Answers queries of the form (?,id,id)
+    po: {},
+    //  * `indices.so` contains:
+    //    * keys: cantor(subject, object)
+    //    * values: Sorted Sets of predicate ids.
+    //    * Answers queries of the form (id,?,id)
+    so: {},
+    //  * `indices.sp` contains:
+    //    * keys: cantor(subject, predicate)
+    //    * values: Sorted Sets of object ids.
+    //    * Answers queries of the form (id,id,?)
+    sp: {}
+  };
+
+  var idAndValue = (function(){
+    var i = 1, ids = {}, values = {};
+    return {
+      id: function(value){
+        var id = ids[value];
+        if(!id){
+          id = ids[value] = i++;
+          values[id] = value;
+        }
+        return id;
+      },
+      value: function(id){
+        return values[id];
+      }
+    };
+  })();
+
+  // ## Public API
   return {
-    // `rdf.id(val)`
+    // `rdf.id(value)`
     //
-    // * A unique integer id is returned for each unique value.
-    // * `val` is a string - either 
+    // * Returns a unique integer id for each unique `value`.
+    // * `value` is a string - either 
     //   * a URI, or 
-    //   * a literal value.
-    id: (function(){
-      var i = 1, id, ids = {};
-      return function(val){
-        return (id = ids[val]) ? id : (ids[val] = i++);
-      };
-    })(),
+    //   * a literal.
+    id: idAndValue.id,
+    // `rdf.value(id)`
+    //
+    // * Returns the value for the given `id`.
+    // * The inverse of `rdf.id(value)`.
+    value: idAndValue.value,
     // `rdf.insert(subject, predicate, object)`
-    // * Inserts a triple.
-    // * Arguments are ids returned from `rdf.id()`,
+    //
+    //  * Inserts a triple.
+    //  * Arguments are ids returned from `rdf.id()`,
     insert: (function(){
       function indexInsert(index, key, value){
         var sortedSet = index[key];
@@ -74,27 +94,28 @@ define(['collections/sorted-set', 'collections/iterator'],
       }
     })(),
     // `rdf.query(subject, predicate, object)`
+    //
     // * Queries the RDF store.
     // * Arguments are either:
     //   * ids returned from `rdf.id()`,
     //   * the string "?" (what to match), or
     //   * the string "*" (wildcard).
     // * Returns an iterator over ids that match "?".
-    //   * Only one "?" is allowed.
-    // * Supports thr following cases:
-    //
-    // | ?  | *  | *  |
-    // | *  | ?  | *  |
-    // | *  | *  | ?  |
-    // | ?  | id | id |
-    // | id | ?  | id |
-    // | id | id | ?  |
-    // | ?  | id | *  |
-    // | ?  | *  | id |
-    // | id | ?  | *  |
-    // | *  | ?  | id |
-    // | id | *  | ?  |
-    // | *  | id | ?  |
+    //   * Only one "?" is allowed in the query.
+    //   * Iterates in sorted order.
+    // * Supports the following cases:
+    //   * `( ?  , *  , *  )`
+    //   * `( *  , ?  , *  )`
+    //   * `( *  , *  , ?  )`
+    //   * `( ?  , id , id )`
+    //   * `( id , ?  , id )`
+    //   * `( id , id , ?  )`
+    //   * `( ?  , id , *  )`
+    //   * `( ?  , *  , id )`
+    //   * `( id , ?  , *  )`
+    //   * `( *  , ?  , id )`
+    //   * `( id , *  , ?  )`
+    //   * `( *  , id , ?  )`
     query: function(s, p, o){
       if(s === '?' && p === '*' && o === '*')
         return new Iterator(indices.s.iterate());
