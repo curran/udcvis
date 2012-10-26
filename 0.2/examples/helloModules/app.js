@@ -1,4 +1,5 @@
-require(["jquery", "underscore", "backbone", "async", "collections/sorted-set"],
+require(["jquery", "underscore", "lib/backbone", "lib/async", 
+         "lib/collections/sorted-set"],
         function($, _, Backbone, async, SortedSet) {
   var log = function(str){
     console.log(str);
