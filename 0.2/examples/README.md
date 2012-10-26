@@ -11,5 +11,8 @@
             and underscore was not working with `require('lib/underscore')`.
         * UDCViS modules are `require('udcvis/moduleName')`
     * This configuration can be re-used by many examples.
- * [SPARQL Example](./examples/SPARQLExample)
- * [Resize Canvas Example](./examples/resizeCanvas)
+ * [Resize Canvas Example](./examples/resizeCanvas) - 10/26/2012
+   * A demonstration of the modules `requestAnimFrame` and `resizeCanvas`.
+ * [SPARQL Example](./examples/SPARQLExample) - 10/26/2012
+   * Demonstrates querying DBPedia using JQuery and SPARQL and 
+     displaying the results using text on a canvas.
