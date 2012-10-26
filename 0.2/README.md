@@ -13,3 +13,6 @@
      * [Run unit tests](http://curran.github.com/udcvis/0.2/unitTests/SpecRunner.html) 
    * [`examples`](https://github.com/curran/udcvis/tree/gh-pages/0.2/examples) - Example Applications
    * [`data`](https://github.com/curran/udcvis/tree/gh-pages/0.2/data) - RDF Data Sets
+ * Related External Resources
+   * Curransoft.com/code
+     * [RDF and SPARQL Examples](http://curransoft.com/code/?s=SPARQL)
