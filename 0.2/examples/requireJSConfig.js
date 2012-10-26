@@ -1,7 +1,8 @@
 var require = {
-  baseUrl: '../../lib',
+  baseUrl: './scripts',
   paths: {
-    'udcvis': '../../modules'
+    'lib':'../../../lib',
+    'udcvis': '../../../modules'
   },
   urlArgs: "cacheBust=" +  (new Date()).getTime()
 };

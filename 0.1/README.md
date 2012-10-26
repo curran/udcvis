@@ -85,3 +85,4 @@ interactive graphical applications using HTML5 and JavaScript. Here they are:
    * [run R-Tree Example](http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/rtree/rtreeTest.html)
    * [run Rectangle Intersection Test](http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/rtree/rectangleTests.html)
    * [run BLG-Tree Example](http://curran.github.com/udcvis/0.1/quadstream2010/Quadstream00/src/main/webapp/tests/blgtree/BLGTreeTest.html)
+ * [Resize Canvas](https://github.com/curran/udcvis/tree/gh-pages/0.1/resizeCanvas) Dynamically make the canvas full screen.

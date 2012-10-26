@@ -1,0 +1,24 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix scovo: <http://purl.org/NET/scovo#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix eg: <http://universaldatacube.org/0.2/data/QBExample/eg.ttl> .
+@prefix admingeo: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+
+eg:refPeriod a rdf:Property, qb:DimensionProperty;
+  rdfs:label "reference period"@en;
+  rdfs:subPropertyOf sdmx-dimension:refPeriod;
+  rdfs:range interval:Interval;
+  qb:concept sdmx-concept:refPeriod . 
+
+eg:refArea a rdf:Property, qb:DimensionProperty;
+  rdfs:label "reference area"@en;
+  rdfs:subPropertyOf sdmx-dimension:refArea;
+  rdfs:range admingeo:UnitaryAuthority;
+  qb:concept sdmx-concept:refArea . 
+
+
