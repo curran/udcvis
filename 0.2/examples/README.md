@@ -16,3 +16,5 @@
  * [SPARQL Example](./examples/SPARQLExample) - 10/26/2012
    * Demonstrates querying DBPedia using JQuery and SPARQL and 
      displaying the results using text on a canvas.
+ * [Components Example](./examples/helloComponents) - 10/28/2012
+   * A demonstration of the `components` module.
