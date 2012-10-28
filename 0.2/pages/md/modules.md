@@ -5,6 +5,9 @@
  * `components` A 2D graphical component framework.
    * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/modules/components.js)
    * [Documentation](http://curran.github.com/udcvis/0.2/modules/docs/components.html)
+   * Example
+     * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/helloComponents/app.js)
+     * [Run it](http://curran.github.com/udcvis/0.2/examples/helloComponents/app.html)
  * `rdf` An in-memory RDF store.
    * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/modules/rdf.js)
    * [Unit Tests](https://github.com/curran/udcvis/blob/gh-pages/0.2/unitTests/spec/RDFSpec.js)
@@ -15,3 +18,6 @@
  * `resizeCanvas` A utility for making a canvas full-screen.
    * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/modules/resizeCanvas.js)
    * [Documentation](http://curran.github.com/udcvis/0.2/modules/docs/resizeCanvas.html)
+   * Example
+     * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/resizeCanvasExample/app.js)
+     * [Run it](/Users/curran/Dropbox/Curran-K/dissertation/udcvis/0.2/examples/resizeCanvasExample/app.html)

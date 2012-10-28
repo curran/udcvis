@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<title>Algorithmic Composition</title>
+</head>
+<body>
+<script>
+if(window.webkitAudioContext){
+  var context = new webkitAudioContext();
+  
+  function makeVoice(frequency, period){
+    var osc = context.createOscillator();
+    osc.frequency.value = frequency;
+    var oscGain = context.createGainNode();
+    osc.connect(oscGain);
+    oscGain.connect(context.destination);
+    oscGain.gain.value = 0;
+    osc.noteOn(0);
+    return {
+      gain: oscGain,
+      frequency: frequency,
+      period: period,
+      noteTime: 0,
+      on: false
+    };
+  }
+  
+  var voices = [
+    makeVoice(50, 2),
+    makeVoice(100, 1),
+    makeVoice(200, 1/2),
+    makeVoice(400, 1/4),
+    makeVoice(600, 1/8),
+    makeVoice(800, 1/16)
+  ];
+  var noteTime = 0;
+  var latency = 7/1000;// in seconds
+  function schedule(){
+    _.each(voices, function(voice, i){
+      var volume = 1/6 * Math.random();// (voice.on ? 1 : 0);
+      var oscGain = voice.gain;
+      var period;
+      if(i > 2)
+        period = voice.period*Math.pow(2, Math.round(Math.random()*3));
+      else
+        period = voice.period;
+      while (voice.noteTime < context.currentTime + latency) {
+        oscGain.gain.linearRampToValueAtTime(volume, voice.noteTime+0.001);
+        oscGain.gain.linearRampToValueAtTime(0, voice.noteTime+period/2);
+        oscGain.gain.linearRampToValueAtTime(0, voice.noteTime+period);
+        voice.noteTime += period;
+      }
+    });
+    setTimeout(schedule, 0);
+  }
+  schedule();
+}
+</script>
+</body>
+</html>
