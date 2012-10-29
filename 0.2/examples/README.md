@@ -41,3 +41,5 @@
  * [Components Example](./examples/helloComponents) - 10/28/2012
    * [Run it](http://curran.github.com/udcvis/0.2/examples/helloComponents/app.html)
    * A demonstration of the `components` module.
+ * [iPadDrumMachine](./examples/iPadDrumMachine) - 10/29/2012
+   * A work-in-progress collaborative drum sequencer for the browser and iPad.
