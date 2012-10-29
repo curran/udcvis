@@ -11,3 +11,4 @@ Here are the data sets:
    * [Small Subset](https://github.com/curran/udcvis/tree/gh-pages/0.2/data/UNPopulationSubset)
    * Full data set
  * [UN Millenium Development Goals Indicators](dataset_mdg.html)
+ * [Bureau of Labor Statistics Employment Data Set](dataset_bls.html)

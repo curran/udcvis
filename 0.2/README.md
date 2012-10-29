@@ -6,6 +6,7 @@
    * [Modules](modules.html)
    * [Data Sets](dataSets.html)
      * [Millenium Development Goals Indicators](dataset_mdg.html)
+     * [Bureau of Labor Statistics Employment Data](dataset_bls.html)
  * Source tree
    * [`lib`](https://github.com/curran/udcvis/tree/gh-pages/0.2/lib) - Third Party Libraries
    * [`modules`](https://github.com/curran/udcvis/tree/gh-pages/0.2/modules) - UDCViS Modules
