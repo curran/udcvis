@@ -1,3 +1,4 @@
+// TODO Document this.
 require(['udcvis/requestAnimFrame','udcvis/resizeCanvas',
          'udcvis/component','udcvis/container', 'underscore'], 
     function(requestAnimFrame, resize, component, container, _) {

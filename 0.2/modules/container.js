@@ -1,5 +1,10 @@
 define(['udcvis/component','underscore'],
     function(component, _){
+    // ## Example
+    //  * Click to toggle squares.
+    // <iframe width="450" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="../../examples/iPadDrumMachine/app.html"></iframe>
+    //  * [Source](https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/iPadDrumMachine/app.js)
+    //  * [Run Full Screen](../../examples/iPadDrumMachine/app.html)
   var create = function(orientation){
     if(orientation != 'vertical' && orientation != 'horizontal')
       throw new Error('orientation must be either'+
@@ -14,7 +19,7 @@ define(['udcvis/component','underscore'],
       _(children).each(addChild);
       return container;
     };
-
+    /* TODO Move this into a `bounds` pseudoclass. */
     function inside(bounds, x, y){
       return (x < (bounds.x + bounds.width))
           && (x > bounds.x)

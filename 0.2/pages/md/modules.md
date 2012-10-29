@@ -25,4 +25,4 @@
    * [Documentation](http://curran.github.com/udcvis/0.2/modules/docs/resizeCanvas.html)
    * Example
      * [Source in GitHub](https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/resizeCanvasExample/app.js)
-     * [Run it](/Users/curran/Dropbox/Curran-K/dissertation/udcvis/0.2/examples/resizeCanvasExample/app.html)
+     * [Run it](../examples/resizeCanvasExample/app.html)
