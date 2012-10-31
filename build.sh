@@ -30,4 +30,6 @@ echo "Building 0.2 docs."
 echo `pwd`
 cd 0.2/modules
 docco *.js
-cd ../../
+cd ash
+docco *.js
+cd ../../../

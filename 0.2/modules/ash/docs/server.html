@@ -1,0 +1,33 @@
+<!DOCTYPE html>  <html> <head>   <title>server.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="server.html">                 server.js               </a>                                           <a class="source" href="transaction.html">                 transaction.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               server.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>The client-side server API that ASH uses.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;lib/backbone&#39;</span><span class="p">,</span><span class="s1">&#39;udcvis/queue&#39;</span><span class="p">],</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">queue</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <ul>
+<li><code>server.commit(actions)</code> Sends an ASH 
+transaction to the server.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">dummy</span><span class="o">:</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="kd">var</span> <span class="nx">clientId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">queue</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+      <span class="kd">var</span> <span class="nx">resourceIdCounter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">txLog</span> <span class="o">=</span> <span class="p">[];</span>
+      <span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">commit</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+          <span class="nx">transaction</span><span class="p">.</span><span class="nx">clientId</span> <span class="o">=</span> <span class="nx">clientId</span><span class="p">;</span>
+          <span class="nx">txLog</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">transaction</span><span class="p">);</span>
+          <span class="nx">q</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="nx">transaction</span><span class="p">);</span>
+          <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <ul>
+<li><code>server.on('execute', function(transaction){})</code>
+This syntax sets up a callback function to execute
+when an <code>execute</code> message is received from the server.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">server</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;execute&#39;</span><span class="p">,</span> <span class="nx">q</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">());</span>
+          <span class="p">},</span> <span class="mi">500</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">genResourceId</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+          <span class="nx">callback</span><span class="p">(</span><span class="nx">resourceIdCounter</span><span class="o">++</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">txLog</span><span class="o">:</span> <span class="nx">txLog</span>
+      <span class="p">},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">server</span><span class="p">;</span>
+    <span class="p">})()</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

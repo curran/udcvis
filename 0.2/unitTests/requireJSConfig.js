@@ -1,6 +1,8 @@
 var require = {
-  baseUrl: '../lib',
+  baseUrl: './',
   paths: {
+    'underscore':'../lib/underscore',
+    'lib':'../lib',
     'spec':'../unitTests/spec',
     'udcvis': '../modules'
   },

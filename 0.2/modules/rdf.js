@@ -2,7 +2,7 @@
 //
 //  * Efficient querying
 //  * Incremental result iteration
-define(['collections/sorted-set', 'collections/iterator'], 
+define(['lib/collections/sorted-set', 'lib/collections/iterator'], 
     function(SortedSet, Iterator){
   // ## Private Variables
   // `cantor(a, b)` 
