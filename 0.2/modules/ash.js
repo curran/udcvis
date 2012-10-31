@@ -2,16 +2,41 @@
 define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
         'lib/backbone','underscore'],
     function(ashTransaction, ashServer, queue, Backbone, _){
+  // ## How ASH Looks
+  // Require the module as follows:
+  //
+  //     require(['udcvis/ash', function(ash){
+  //       var CIRCLE = 'http://the.url.of/some/js/file';
+  //       ash.create(CIRCLE, function(err, circle){
+  //         circle.x = 5;
+  //         circle.y = 25;
+  //       });
+  //     }]);
+  //
+  // ### Resources
+  //
+  // `ash.create(type, callback(resource))` Creates ASH resources.
+  //
+  // The `resource` object passed to the callback function:
+  //
+  //  * is a Backbone Model,
+  //  * does not have Backbone's `set(attributes)` method, but insead
+  //  * has properties backed by ASH getters and setters.
+  //    * `resource.ashProperties` contains the names of such properties.
+  //  * has the following properties:
+  //    * `id`
+  //    * `type`
   var ResourceProxy = Backbone.Model.extend({});
   var ResourceProxyCollection = Backbone.Collection.extend({
     model: ResourceProxy
   });
 
-  // `log` A boolean flag to toggle debug logging.
-  var log = false;
   // ## How ASH Works
   //
   // Private variables of the ASH singleton:
+
+  // `log` A boolean flag to toggle debug logging.
+  var log = false;
   //
   // `server` The server API. This is either:
   //
@@ -156,6 +181,7 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
         writable: false
       }
     };
+    var ashProperties = [];
     _(_(resource).keys()).each(function(property){
       if(_(resource).has(property)){
         properties[property] = {
@@ -166,8 +192,14 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
             return resource[property];
           }
         };
+        ashProperties.push(property);
       }
     });
+    properties.ashProperties = {
+      value: ashProperties,
+      writable: false,
+      configurable: false
+    };
     Object.defineProperties(proxy, properties);
     return proxy;
   };

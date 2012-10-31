@@ -3,15 +3,11 @@ define(["udcvis/ash", 'underscore'], function(ash, _) {
     var defaultCircle = {
       x: 0, y: 0, radius: 10
     };
-    function createCircle(){
-      var circle = _.clone(defaultCircle);
-      return circle;
-    }
     var circles = {};
     return {
       type: 'circle',
       create: function(id){
-        return circles[id] = createCircle();
+        return circles[id] = _.clone(defaultCircle);
       },
       destroy: function(id){
         delete(circles[id]);
@@ -36,6 +32,19 @@ define(["udcvis/ash", 'underscore'], function(ash, _) {
           expect(circle.x).toEqual(0);
           expect(circle.y).toEqual(0);
           expect(circle.radius).toEqual(10);
+          console.log(circle.ashProperties);
+          expect(
+            _.difference(
+              ["x", "y", "radius"],
+              circle.ashProperties
+            ).length
+          ).toEqual(0)
+          expect(
+            _.difference(
+              circle.ashProperties,
+              ["x", "y", "radius"]
+            ).length
+          ).toEqual(0)
         });
       });
       waitsFor(function() {

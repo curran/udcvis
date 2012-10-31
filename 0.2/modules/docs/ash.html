@@ -1,16 +1,44 @@
-<!DOCTYPE html>  <html> <head>   <title>ash.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="ash.html">                 ash.js               </a>                                           <a class="source" href="component.html">                 component.js               </a>                                           <a class="source" href="container.html">                 container.js               </a>                                           <a class="source" href="queue.html">                 queue.js               </a>                                           <a class="source" href="rdf.html">                 rdf.js               </a>                                           <a class="source" href="requestAnimFrame.html">                 requestAnimFrame.js               </a>                                           <a class="source" href="resizeCanvas.html">                 resizeCanvas.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               ash.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This modules provides collaboration and session history functionality.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;udcvis/ash/transaction&#39;</span><span class="p">,</span> <span class="s1">&#39;udcvis/ash/server&#39;</span><span class="p">,</span> <span class="s1">&#39;udcvis/queue&#39;</span><span class="p">],</span>
-    <span class="kd">function</span><span class="p">(</span><span class="nx">ashTransaction</span><span class="p">,</span> <span class="nx">ashServer</span><span class="p">,</span> <span class="nx">queue</span><span class="p">){</span>
-  <span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>How ASH Works</h2>
+<!DOCTYPE html>  <html> <head>   <title>ash.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="ash.html">                 ash.js               </a>                                           <a class="source" href="component.html">                 component.js               </a>                                           <a class="source" href="container.html">                 container.js               </a>                                           <a class="source" href="queue.html">                 queue.js               </a>                                           <a class="source" href="rdf.html">                 rdf.js               </a>                                           <a class="source" href="requestAnimFrame.html">                 requestAnimFrame.js               </a>                                           <a class="source" href="resizeCanvas.html">                 resizeCanvas.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               ash.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This modules provides collaboration and session history functionality.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;udcvis/ash/transaction&#39;</span><span class="p">,</span> <span class="s1">&#39;udcvis/ash/server&#39;</span><span class="p">,</span> <span class="s1">&#39;udcvis/queue&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lib/backbone&#39;</span><span class="p">,</span><span class="s1">&#39;underscore&#39;</span><span class="p">],</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">ashTransaction</span><span class="p">,</span> <span class="nx">ashServer</span><span class="p">,</span> <span class="nx">queue</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">,</span> <span class="nx">_</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>How ASH Looks</h2>
 
-<p>Private variables of the ASH singleton:</p>
+<p>Require the module as follows:</p>
 
-<p><code>server</code> The server API. This is either:</p>
+<pre><code>require(['udcvis/ash', function(ash){
+  var CIRCLE = 'http://the.url.of/some/js/file';
+  ash.create(CIRCLE, function(err, circle){
+    circle.x = 5;
+    circle.y = 25;
+  });
+}]);
+</code></pre>
+
+<h3>Resources</h3>
+
+<p><code>ash.create(type, callback(resource))</code> Creates ASH resources.</p>
+
+<p>The <code>resource</code> object passed to the callback function:</p>
+
+<ul>
+<li>is a Backbone Model,</li>
+<li>does not have Backbone's <code>set(attributes)</code> method, but insead</li>
+<li>has properties backed by ASH getters and setters.
+<ul><li><code>resource.ashProperties</code> contains the names of such properties.</li></ul></li>
+<li>has the following properties:
+<ul><li><code>id</code></li>
+<li><code>type</code></li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">ResourceProxy</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span>
+  <span class="kd">var</span> <span class="nx">ResourceProxyCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">model</span><span class="o">:</span> <span class="nx">ResourceProxy</span>
+  <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>How ASH Works</h2>
+
+<p>Private variables of the ASH singleton:</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><code>log</code> A boolean flag to toggle debug logging.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p><code>server</code> The server API. This is either:</p>
 
 <ul>
 <li>An API backed by a real server, or</li>
 <li>A dummy server for unit testing.</li>
 <li>For API details, see <a href="../ash/docs/server.html">ash server docs</a>.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">server</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><code>setServer(server)</code> initializes a server object.</p>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">server</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p><code>setServer(server)</code> initializes a server object.</p>
 
 <ul>
 <li>Called with a real server by default.</li>
@@ -21,12 +49,12 @@ for unit testing via <code>ash.useDummyServer()</code>.</li>
       <span class="nx">server</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s1">&#39;execute&#39;</span><span class="p">,</span> <span class="nx">execute</span><span class="p">);</span>
     <span class="nx">newServer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;execute&#39;</span><span class="p">,</span> <span class="nx">execute</span><span class="p">);</span>
     <span class="nx">server</span> <span class="o">=</span> <span class="nx">newServer</span><span class="p">;</span>
-  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><code>q</code> is the client's local transaction queue.</p>
+  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p><code>q</code> is the client's local transaction queue.</p>
 
 <ul>
 <li>Transactions on this queue have been sent to the
 server but not yet received back from the server.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">queue</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p><code>commit()</code> gets called when a transaction is locally executed.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">commit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">transaction</span><span class="p">){</span>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">queue</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p><code>commit()</code> gets called when a transaction is locally executed.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">commit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">transaction</span><span class="p">){</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ASH: Committing transaction: &#39;</span><span class="o">+</span>
                   <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">transaction</span><span class="p">));</span>
@@ -35,20 +63,20 @@ server but not yet received back from the server.</li>
       <span class="nx">_set</span><span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">property</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
     <span class="p">});</span>
     <span class="nx">server</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="nx">transaction</span><span class="p">);</span>
-  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p><code>execute</code> is called when an execute message
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p><code>execute</code> is called when an execute message
 is received from the server.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">execute</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">transaction</span><span class="p">){</span>
-    <span class="kd">var</span> <span class="nx">queuedTx</span> <span class="o">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <ul>
+    <span class="kd">var</span> <span class="nx">queuedTx</span> <span class="o">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <ul>
 <li>If there is a transaction in the local queue,</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">if</span><span class="p">(</span><span class="nx">queuedTx</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <ul>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">if</span><span class="p">(</span><span class="nx">queuedTx</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <ul>
 <li>Check if it matches the received transaction.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span><span class="p">(</span><span class="nx">transaction</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">queuedTx</span><span class="p">)){</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <ul>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span><span class="p">(</span><span class="nx">transaction</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">queuedTx</span><span class="p">)){</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <ul>
 <li>If it matches, do nothing, as it is
 already locally executed and has been dequeued.</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">if</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ASH: Dequeued transaction: &#39;</span><span class="o">+</span>
                       <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">transaction</span><span class="p">));</span>
       <span class="p">}</span>
-      <span class="k">else</span><span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <ul>
+      <span class="k">else</span><span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <ul>
 <li>If it does not match, rollback all queued
 transactions in inverse order. They will
 be executed later when they are received from the server.</li>
@@ -59,9 +87,9 @@ be executed later when they are received from the server.</li>
         <span class="p">}</span>
         <span class="nx">rollback</span><span class="p">(</span><span class="nx">queuedTx</span><span class="p">);</span>
       <span class="p">}</span>
-    <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <ul>
+    <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <ul>
 <li>If there is no queued transaction,</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">else</span><span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <ul>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">else</span><span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <ul>
 <li>Then execute the one from the server.</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span><span class="p">(</span><span class="nx">transaction</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;set&#39;</span><span class="p">){</span>
         <span class="k">if</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
@@ -77,28 +105,44 @@ be executed later when they are received from the server.</li>
   <span class="kd">var</span> <span class="nx">currentTransaction</span><span class="p">;</span>
 
   <span class="kd">var</span> <span class="nx">_set</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
-    <span class="nx">resources</span><span class="p">[</span><span class="nx">id</span><span class="p">][</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
-  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p><code>plugins</code> is an object that contains the registered plugins.</p>
+    <span class="kd">var</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">instances</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span>
+    <span class="nx">instance</span><span class="p">.</span><span class="nx">resource</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="nx">instance</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">attributes</span><span class="p">(</span><span class="nx">property</span><span class="p">,</span> <span class="nx">value</span><span class="p">));</span>
+  <span class="p">};</span>
+
+  <span class="kd">var</span> <span class="nx">attributes</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">property</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">attributes</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="nx">attributes</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">attributes</span><span class="p">;</span>
+  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p><code>plugins</code> is an object that contains the registered plugins.</p>
 
 <ul>
 <li>Keys are plugin type strings.</li>
 <li>Values are plugin objects
 <ul><li>Passed in from <code>registerPlugin()</code>.</li></ul></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p><code>resources</code></p>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p><code>instances</code></p>
 
 <ul>
 <li>Keys: resource id.</li>
-<li>Values: resources (not proxies, the real thing)</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">resources</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p><code>proxiesByType</code></p>
+<li>Values: objects with:
+<ul><li><code>resource</code> The original resource object
+<ul><li>Produced by the ASH plugin</li></ul></li>
+<li><code>proxy</code> The resource proxy object</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">instances</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p><code>proxiesByType</code></p>
 
 <ul>
 <li>Keys: plugin types</li>
 <li>Values: arrays of all resource proxy objects 
 created for the type.</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">proxiesByType</span> <span class="o">=</span> <span class="p">{};</span>
-        
-  <span class="kd">var</span> <span class="nx">indexProxy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">proxy</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="nx">indexInstance</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">){</span>
+    <span class="nx">instances</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">resource</span><span class="o">:</span> <span class="nx">resource</span><span class="p">,</span>
+      <span class="nx">proxy</span><span class="o">:</span> <span class="nx">proxy</span><span class="p">,</span>
+      <span class="nx">set</span><span class="o">:</span> <span class="nx">_</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">set</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="nx">proxy</span><span class="p">)</span>
+    <span class="p">};</span>
+
     <span class="kd">var</span> <span class="nx">proxies</span> <span class="o">=</span> <span class="nx">proxiesByType</span><span class="p">[</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">type</span><span class="p">];</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">proxies</span><span class="p">)</span>
       <span class="nx">proxiesByType</span><span class="p">[</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">proxy</span><span class="p">];</span>
@@ -107,6 +151,7 @@ created for the type.</li>
   <span class="p">};</span>
 
   <span class="kd">var</span> <span class="nx">createResourceProxy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">type</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ResourceProxy</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">properties</span> <span class="o">=</span> <span class="p">{</span>
       <span class="nx">id</span><span class="o">:</span><span class="p">{</span>
         <span class="nx">value</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span>
@@ -117,6 +162,7 @@ created for the type.</li>
         <span class="nx">writable</span><span class="o">:</span> <span class="kc">false</span>
       <span class="p">}</span>
     <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">ashProperties</span> <span class="o">=</span> <span class="p">[];</span>
     <span class="nx">_</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">resource</span><span class="p">).</span><span class="nx">keys</span><span class="p">()).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">property</span><span class="p">){</span>
       <span class="k">if</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">resource</span><span class="p">).</span><span class="nx">has</span><span class="p">(</span><span class="nx">property</span><span class="p">)){</span>
         <span class="nx">properties</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -127,10 +173,17 @@ created for the type.</li>
             <span class="k">return</span> <span class="nx">resource</span><span class="p">[</span><span class="nx">property</span><span class="p">];</span>
           <span class="p">}</span>
         <span class="p">};</span>
+        <span class="nx">ashProperties</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">property</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">});</span>
-    <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({},</span> <span class="nx">properties</span><span class="p">);</span>
-  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">ash</span> <span class="o">=</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p><code>ash.registerPlugin(plugin)</code> Registers an ASH plugin, which is
+    <span class="nx">properties</span><span class="p">.</span><span class="nx">ashProperties</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">value</span><span class="o">:</span> <span class="nx">ashProperties</span><span class="p">,</span>
+      <span class="nx">writable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nx">configurable</span><span class="o">:</span> <span class="kc">false</span>
+    <span class="p">};</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">proxy</span><span class="p">,</span> <span class="nx">properties</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">proxy</span><span class="p">;</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">ash</span> <span class="o">=</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p><code>ash.registerPlugin(plugin)</code> Registers an ASH plugin, which is
 an object that manages the lifecycle of a certain type of
 ASH resources.</p>
 
@@ -151,15 +204,16 @@ given id.</li>
     <span class="nx">createResource</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
       <span class="nx">server</span><span class="p">.</span><span class="nx">genResourceId</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
         <span class="kd">var</span> <span class="nx">resource</span> <span class="o">=</span> <span class="nx">plugins</span><span class="p">[</span><span class="nx">type</span><span class="p">].</span><span class="nx">create</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-        <span class="nx">resources</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">resource</span><span class="p">;</span>
         <span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">createResourceProxy</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">type</span><span class="p">);</span>
-        <span class="nx">indexProxy</span><span class="p">(</span><span class="nx">proxy</span><span class="p">);</span>
+        <span class="nx">indexInstance</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Disallow third party use of Backbone's 'set' method.
+It it used internally in ASH to trigger events at the right time,
+and should not be called by third party code.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">proxy</span><span class="p">.</span><span class="nx">set</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
         <span class="nx">callback</span><span class="p">(</span><span class="nx">proxy</span><span class="p">);</span>
       <span class="p">});</span>
     <span class="p">},</span>
     <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
       <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">currentTransaction</span><span class="p">){</span>
-        <span class="nx">currentTransaction</span> <span class="o">=</span> <span class="nx">ashTransaction</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>The JS event loop is used to delay execution.</p>
+        <span class="nx">currentTransaction</span> <span class="o">=</span> <span class="nx">ashTransaction</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>The JS event loop is used to delay execution.</p>
 
 <ul>
 <li>So multiple sequential calls to <code>ash.set()</code>
