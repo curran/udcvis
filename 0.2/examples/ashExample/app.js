@@ -4,5 +4,8 @@ require(['model','view','controller'],
     circle.x = 0.5;
     circle.y = 0.5
     circle.radius = 0.5;
+    circle.on('change', function(){
+      view.setGraphicsDirty();
+    });
   });
 });

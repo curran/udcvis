@@ -1,6 +1,7 @@
 // This modules provides collaboration and session history functionality.
-define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue'],
-    function(ashTransaction, ashServer, queue){
+define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
+        'lib/backbone'],
+    function(ashTransaction, ashServer, queue, Backbone){
   var log = false;
   // ## How ASH Works
   //
@@ -136,6 +137,8 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue'],
         properties[property] = {
           set: function(value){
             ash.set(id, property, value);
+            proxy.trigger('change');
+            proxy.trigger('change:'+property, value);
           },
           get: function(){
             return resource[property];
@@ -143,7 +146,9 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue'],
         };
       }
     });
-    return Object.create({}, properties);
+    var proxy = Object.create({}, properties);
+    _(proxy).extend(Backbone.Events);
+    return proxy;
   };
 
   // ## Public API
