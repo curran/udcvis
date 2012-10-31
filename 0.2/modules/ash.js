@@ -1,7 +1,13 @@
 // This modules provides collaboration and session history functionality.
 define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
-        'lib/backbone'],
-    function(ashTransaction, ashServer, queue, Backbone){
+        'lib/backbone','underscore'],
+    function(ashTransaction, ashServer, queue, Backbone, _){
+  var ResourceProxy = Backbone.Model.extend({});
+  var ResourceProxyCollection = Backbone.Collection.extend({
+    model: ResourceProxy
+  });
+
+  // `log` A boolean flag to toggle debug logging.
   var log = false;
   // ## How ASH Works
   //
@@ -89,8 +95,16 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
   var currentTransaction;
 
   var _set = function(id, property, value){
-    resources[id][property] = value;
+    var instance = instances[id];
+    instance.resource[property] = value;
+    instance.set(attributes(property, value));
   };
+
+  var attributes = function(property, value){
+    var attributes = {};
+    attributes[property] = value;
+    return attributes;
+  }
 
   // `plugins` is an object that contains the registered plugins.
   //
@@ -99,11 +113,15 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
   //    * Passed in from `registerPlugin()`.
   var plugins = {};
 
-  // `resources`
+  // `instances`
   //
   //  * Keys: resource id.
-  //  * Values: resources (not proxies, the real thing)
-  var resources = {};
+  //  * Values: objects with:
+  //    * `resource` The original resource object
+  //      * Produced by the ASH plugin
+  //    * `proxy` The resource proxy object
+  //    
+  var instances = {};
 
   // `proxiesByType`
   //
@@ -111,9 +129,14 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
   //  * Values: arrays of all resource proxy objects 
   //    created for the type.
   var proxiesByType = {};
-        
-  var indexProxy = function(proxy){
-    console.log(proxy);
+
+  var indexInstance = function(id, resource, proxy){
+    instances[id] = {
+      resource: resource,
+      proxy: proxy,
+      set: _(proxy.set).bind(proxy)
+    };
+
     var proxies = proxiesByType[proxy.type];
     if(!proxies)
       proxiesByType[proxy.type] = [proxy];
@@ -122,6 +145,7 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
   };
 
   var createResourceProxy = function(resource, id, type){
+    var proxy = new ResourceProxy;
     var properties = {
       id:{
         value: id,
@@ -137,8 +161,6 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
         properties[property] = {
           set: function(value){
             ash.set(id, property, value);
-            proxy.trigger('change');
-            proxy.trigger('change:'+property, value);
           },
           get: function(){
             return resource[property];
@@ -146,8 +168,7 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
         };
       }
     });
-    var proxy = Object.create({}, properties);
-    _(proxy).extend(Backbone.Events);
+    Object.defineProperties(proxy, properties);
     return proxy;
   };
 
@@ -173,9 +194,12 @@ define(['udcvis/ash/transaction', 'udcvis/ash/server', 'udcvis/queue',
     createResource: function(type, callback){
       server.genResourceId(function(id){
         var resource = plugins[type].create(id);
-        resources[id] = resource;
         var proxy = createResourceProxy(resource, id, type);
-        indexProxy(proxy);
+        indexInstance(id, resource, proxy);
+        // Disallow third party use of Backbone's 'set' method.
+        // It it used internally in ASH to trigger events at the right time,
+        // and should not be called by third party code.
+        proxy.set = null;
         callback(proxy);
       });
     },
