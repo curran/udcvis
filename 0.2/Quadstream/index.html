@@ -2,11 +2,12 @@
 <ul>
 <li>Outlined <a href="http://curran.github.com/udcvis/0.2/Quadstream/docs/pseudocode.html">pseudocode</a>.</li>
 <li>Downloaded Natural Earth Data<ul>
-<li>Highest resolution country boundaries, ~ 6MB.</li>
+<li><a href="http://www.naturalearthdata.com/downloads/10m-cultural-vectors/">Highest resolution country boundaries, ~ 6MB</a>.</li>
 </ul>
 </li>
 <li>Converted country boundaries to GeoJSON using GDAL.<ul>
 <li>Command: <code>ogr2ogr -f &quot;GeoJSON&quot; ../outFileName.json inFileName.shp inFileName</code></li>
+<li>See <a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/Quadstream/data/convertToGeoJSON.sh">actual build script</a></li>
 <li>See also:<ul>
 <li><a href="http://stackoverflow.com/questions/2223979/convert-a-shapefile-shp-to-xml-json">GDAL SHP to GeoJSON Conversion</a></li>
 <li><a href="http://www.bostongis.com/PrinterFriendly.aspx?content_name=ogr_cheatsheet">GDAL Cheatsheet</a>.</li>
