@@ -15,6 +15,11 @@
    * [`unitTests`](https://github.com/curran/udcvis/tree/gh-pages/0.2/unitTests) - [Jasmine](http://pivotal.github.com/jasmine/) Unit Tests
      * [Run unit tests](http://curran.github.com/udcvis/0.2/unitTests/SpecRunner.html) 
    * [`data`](https://github.com/curran/udcvis/tree/gh-pages/0.2/data) - RDF Data Sets
+   * [`Quadstream`](https://github.com/curran/udcvis/tree/gh-pages/0.2/Quadstream) - 
+     A project unto itself; a framework of algorithms and data structures
+     for implementing efficient multi-scale web-based choropleth 
+     maps with adaptive boundary resolution.
+     * [Journal of Progress](https://github.com/curran/udcvis/tree/gh-pages/0.2/Quadstream/index.html)
  * Related External Resources
    * Papers
      * [Multi-scale Visualization using Data Cubes](http://graphics.stanford.edu/papers/pan_zoom/paper.pdf)

@@ -1,0 +1,191 @@
+<!DOCTYPE html>  <html> <head>   <title>pseudocode.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               pseudocode.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3><code>preprocessVertices(polygons)</code></h3>
+
+<p>Usage:</p>
+
+<p><code>var polygons = readPolygonsFromFile('regions.json');
+</code>var vertices = preprocess(polygons);<code>
+</code>var files = quadstream(vertices);`</p>
+
+<p>Arguments:</p>
+
+<ul>
+<li><code>polygons</code> An array of polygons.
+<ul><li>Polygons are arrays of vertices.</li>
+<li>Vertices are objects with numeric <code>x</code> and <code>y</code> properties.</li></ul></li>
+</ul>
+
+<p>Returns:</p>
+
+<ul>
+<li>A <code>vertices</code> object.
+<ul><li>Keys are integer polygon ids, assigned to
+input polygons in the order they are encountered in the input.</li>
+<li>Values are <code>vertex</code> objects with:
+<ul><li><code>vertex.x</code> and <code>vertex.y</code> numeric coordinates,</li>
+<li><code>vertex.memberships</code> An array whose elements are vertex <code>membership</code> objects with:</li>
+<li><code>membership.polygonId</code></li>
+<li><code>membership.vertexId</code> These are assigned to vertices in the order they are encountered
+in the input, <code>polygons</code>.</li></ul></li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">preprocess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">polygons</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><code>verticesByLocation</code></p>
+
+<p>Keys:</p>
+
+<ul>
+<li>Strings of the form <code>x+"_"+y</code>.</li>
+</ul>
+
+<p>Values:</p>
+
+<ul>
+<li>Vertex objects
+<ul><li>see description of output for <code>preprocess(polygons)</code></li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">verticesByLocation</span> <span class="o">=</span> <span class="p">{}</span>
+
+  <span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">vertex</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">vertex</span><span class="p">.</span><span class="nx">x</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nx">vertex</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><code>vertices</code> The output object.
+   * see description of output for <code>preprocess(polygons)</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="kd">var</span> <span class="nx">polygonId</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">_</span><span class="p">(</span><span class="nx">polygons</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">polygon</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">vertexId</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">verticesOfPolygon</span> <span class="o">=</span> <span class="nx">vertices</span><span class="p">[</span><span class="nx">polygonId</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">_</span><span class="p">(</span><span class="nx">polygon</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">_vertex</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Resolve identical vertices in different polygons to the same object.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">var</span> <span class="nx">vertexLocation</span> <span class="o">=</span> <span class="nx">location</span><span class="p">(</span><span class="nx">_vertex</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">vertex</span> <span class="o">=</span> <span class="nx">vertices</span><span class="p">[</span><span class="nx">vertexLocation</span><span class="p">];</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Create the vertex object if it doesn't exist.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">vertex</span><span class="p">)</span>
+        <span class="nx">vertex</span> <span class="o">=</span> <span class="nx">vertices</span><span class="p">[</span><span class="nx">vertexLocation</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="nx">x</span><span class="o">:</span> <span class="nx">_vertex</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+          <span class="nx">y</span><span class="o">:</span> <span class="nx">_vertex</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+          <span class="nx">memberships</span><span class="o">:</span> <span class="p">[]</span>
+        <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Add a membership for each instance of the vertex.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">vertex</span><span class="p">.</span><span class="nx">memberships</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+        <span class="nx">polygonId</span><span class="o">:</span> <span class="nx">polygonId</span><span class="p">,</span>
+        <span class="nx">vertexId</span><span class="o">:</span> <span class="nx">vertexId</span>
+      <span class="p">});</span>
+      
+      <span class="nx">vertexId</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="p">});</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="nx">vertices</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">quadstream</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Arguments:</p>
+
+<ul>
+<li><code>vertices</code> The preprocessed vertices of the input polygon set.
+An array of objects with:
+<ul><li><code>x</code></li>
+<li><code>y</code></li>
+<li><code>memberships</code> An array of objects with:
+<ul><li><code>polygonId</code></li>
+<li><code>vertexId</code></li></ul></li></ul></li>
+<li><code>fileDepth</code> Is an integer that defines the number
+of quadtree levels traversed for defining the contents
+of each file.</li>
+<li><code>maxLevel</code> The maximum quadtree level to partition
+vertices into. </li>
+<li><code>bounds</code> The bounding box to use for the top-level
+quadtree node, an object with properties:
+<ul><li><code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code>.</li>
+<li>Each vertex in <code>vertices</code> must fall within this rectangle.</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">vertices</span><span class="p">,</span> <span class="nx">fileDepth</span><span class="p">,</span> <span class="nx">maxLevel</span><span class="p">,</span> <span class="nx">bounds</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p><code>spots</code> The addresses of representative vertices mapped
+        to the vertices.</p>
+
+<ul>
+<li>Keys: spot addresses
+<ul><li>of the form <code>level+"_"+i+"_"j</code></li></ul></li>
+<li>Values: vertex objects</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">spots</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p><code>spotAddress(level, i, j)</code> Returns a key that can be used
+to look up or store vertices in <code>spots</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">spotAddress</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">){</span>
+      <span class="k">return</span> <span class="p">[</span><span class="nx">level</span><span class="p">,</span><span class="nx">i</span><span class="p">,</span><span class="nx">j</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">);</span>
+    <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p><code>vertexSpotAddress(level, x, y)</code> Returns the spot address 
+of the given (x, y) point at the given level.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">addressOfVertex</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">gridSideLength</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">normalizedX</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">bounds</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span> <span class="o">/</span> <span class="nx">bounds</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">normalizedY</span> <span class="o">=</span> <span class="p">(</span><span class="nx">y</span> <span class="o">-</span> <span class="nx">bounds</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="o">/</span> <span class="nx">bounds</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">normalizedX</span> <span class="o">*</span> <span class="nx">gridSideLength</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">normalizedY</span> <span class="o">*</span> <span class="nx">gridSideLength</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">spotAddress</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">);</span>
+    <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p><code>stream(vertex)</code> Indexes the given vertex into <code>spots</code>
+ for all levels.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">vertex</span><span class="p">){</span>
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">level</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">level</span> <span class="o">&lt;</span> <span class="nx">maxLevel</span><span class="p">;</span> <span class="nx">level</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">vertexAddress</span> <span class="o">=</span> <span class="nx">addressOfVertex</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">vertex</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">vertex</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">spots</span><span class="p">[</span><span class="nx">vertexAddress</span><span class="p">])</span>
+          <span class="nx">spots</span><span class="p">[</span><span class="nx">vertexAddress</span><span class="p">]</span> <span class="o">=</span> <span class="nx">vertex</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">streamAll</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">vertices</span><span class="p">){</span>
+      <span class="nx">_</span><span class="p">(</span><span class="nx">vertices</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="nx">stream</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">criticalVertices</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Select vertices that close gap.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">return</span> <span class="nx">_</span><span class="p">(</span><span class="nx">vertices</span><span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vertex</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Assume the containing polygon is also a polygon.</p>
+
+<p>This assures that vertices along the outside border
+between two adjacent polygons <code>a</code> and <code>b</code> will have 
+three memberships:</p>
+
+<ol>
+<li><code>a</code></li>
+<li><code>b</code></li>
+<li>The outer polygon that contains all the others.</li>
+</ol>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">vertex</span><span class="p">.</span><span class="nx">memberships</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">streamCriticalVertices</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="nx">streamAll</span><span class="p">(</span><span class="nx">criticalVertices</span><span class="p">());</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">streamExtremeVertices</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Find vertices that define polygon bounding boxes.</p>
+
+<p>This is so clients can build bounding boxes from
+the vertices that are in file "1".</p>
+
+<p>Also at this stage, store the bounding box of the
+overall tree.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">streamOtherVertices</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>If <code>stream</code> is called twice with the same vertex,
+nothing happens.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">streamAll</span><span class="p">(</span><span class="nx">vertices</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">getVerticesForFile</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">file_level</span><span class="p">,</span> <span class="nx">file_i</span><span class="p">,</span> <span class="nx">file_j</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Save on object creation by re-using an empty array reference</p>
+
+<ul>
+<li>For base case of recursion, so used often
+<ul><li>in O(n)) where n is the number of .</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">var</span> <span class="nx">emptyArray</span> <span class="o">=</span> <span class="p">[];</span>
+      <span class="kd">var</span> <span class="nx">recurse</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">vertex</span> <span class="o">=</span> <span class="nx">spots</span><span class="p">[</span><span class="nx">spotAddress</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">)];</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Include all subtrees</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">if</span><span class="p">(</span> <span class="nx">file_level</span> <span class="o">===</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="o">?</span> <span class="p">[</span><span class="nx">vertex</span><span class="p">]</span> <span class="o">:</span> <span class="p">[];</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">vertex</span> <span class="o">&amp;&amp;</span> <span class="nx">level</span> <span class="o">&lt;</span> <span class="nx">file_level</span> <span class="o">+</span> <span class="nx">fileDepth</span><span class="p">){</span>
+
+          <span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>  <span class="nx">recurse</span><span class="p">(</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span>     <span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">j</span><span class="p">));</span>
+          <span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>  <span class="nx">recurse</span><span class="p">(</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">j</span><span class="p">));</span>
+          <span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>  <span class="nx">recurse</span><span class="p">(</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span>     <span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+          <span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>  <span class="nx">recurse</span><span class="p">(</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">,</span>   <span class="mi">2</span> <span class="o">*</span> <span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+
+          <span class="k">return</span> <span class="nx">vertices</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+          <span class="k">return</span> <span class="nx">emptyArray</span><span class="p">;</span>
+      <span class="p">};</span>
+      <span class="nx">recurse</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">buildFiles</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p><code>files</code> The output files.</p>
+
+<ul>
+<li>Keys: file names</li>
+<li>Values: Objects to be serialized as JSON</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">var</span> <span class="nx">files</span> <span class="o">=</span> <span class="p">{}</span>
+
+      <span class="k">return</span> <span class="nx">files</span><span class="p">;</span>
+    <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Assumption: it's all in memory.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">streamCriticalVertices</span><span class="p">();</span>
+    <span class="nx">streamExtremeVertices</span><span class="p">();</span>
+    <span class="nx">streamOtherVertices</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nx">buildFiles</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">})();</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
