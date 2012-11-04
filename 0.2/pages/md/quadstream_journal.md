@@ -1,4 +1,4 @@
-### Nov. 1
+## 11/1/2012
 
  * Outlined [pseudocode](http://curran.github.com/udcvis/0.2/Quadstream/docs/pseudocode.html).
  * Downloaded Natural Earth Data
@@ -11,7 +11,19 @@
      * [GDAL Cheatsheet](http://www.bostongis.com/PrinterFriendly.aspx?content_name=ogr_cheatsheet).
 
 <center>
-  <img src="data/GeoJSON_idea.png"></img>
-  A sample of the GeoJSON file.
+  <img src="images/GeoJSON_idea.png"></img>
+  <p>A sample of the GeoJSON file.</p>
 </center>
 
+## 11/4/2012
+Created quad subdivision test:
+
+ * Computes the quad subdivision of the plane (down 9 levels) to
+   accommodate a circle approximated by 300 points.
+ * Draws each subdivision as a transpatent black rectangle.
+ * The mouse controls the circle center.
+
+<center>
+<iframe src="../examples/quadSubdivision/app.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="512" height="512"></iframe>
+<a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/quadSubdivision/app.js">Source</a>
+</center>
