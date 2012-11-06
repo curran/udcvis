@@ -1,3 +1,6 @@
+# Quadstream Project Journal
+##### Curran Kelleher
+
 ## 11/1/2012
 
  * Outlined [pseudocode](http://curran.github.com/udcvis/0.2/Quadstream/docs/pseudocode.html).
