@@ -1,15 +1,21 @@
-// ### `preprocessVertices(polygons)`
+// ## preprocess(polygons)
 // Usage:
 //
-// `var polygons = readPolygonsFromFile('regions.json');
-// `var vertices = preprocess(polygons);`
-// `var files = quadstream(vertices);`
+//     var polygons = readPolygonsFromFile('regions.json');
+//     var vertices = preprocess(polygons);
+//     var files = quadstream(vertices);
 //
 // Arguments:
 // 
 //  * `polygons` An array of polygons.
 //    * Polygons are arrays of vertices.
 //    * Vertices are objects with numeric `x` and `y` properties.
+//  * Example of structure:
+//<pre>    var polygons = [
+//       [{ x: 5, y:4 }, {x: 10, y: 4}, {x: 1, y: 1}],
+//       [{ x: 5, y:4 }, {x: 10, y: 4}, {x: 15, y: 10}]
+//     ];
+//</pre>
 //
 // Returns:
 //
@@ -26,50 +32,63 @@ var preprocess = function(polygons){
 
   // `verticesByLocation`
   //
-  // Keys:
+  // * Keys:
   //
   //  * Strings of the form `x+"_"+y`.
   //
-  // Values:
+  // * Values:
   //
   //  * Vertex objects
   //    * see description of output for `preprocess(polygons)`
+  //
   var verticesByLocation = {}
 
   var location = function(vertex){
     return vertex.x+"_"+vertex.y;
   };
 
-  // `vertices` The output object.
-  //    * see description of output for `preprocess(polygons)`
+  // `vertices`
+  //
+  //  * An array of vertex objects.
+  //  * This is returned from the function.
+  //  * see description of output for `preprocess(polygons)`
   var vertices = [];
 
+  // ### Algorithm
+  //  * Maintain an incrementing integer `polygonId` for
+  //    assigning identifiers to input polygons.
+  //    * Starts at 0.
   var polygonId = 0;
   _(polygons).each(function(polygon){
+  //  * Maintain an incrementing integer `vertexId` for
+  //    assigning identifiers to input vertices.
+  //    * Starts at 0 for each polygon.
     var vertexId = 0;
+    //  * For each polygon, add an empty array
+    //    to the `vertices` variable, which will
+    //    laer be returned from the function.
     var verticesOfPolygon = vertices[polygonId++] = [];
     _(polygon).each(function(_vertex){
 
-      // Resolve identical vertices in different polygons to the same object.
+      //  * For each vertex:
+      //  * Resolve identical vertices in different polygons 
+      //    to the same object by finding previously processed
+      //    vertices based on their (x, y) coordinate values.
       var vertexLocation = location(_vertex);
       var vertex = vertices[vertexLocation];
-      //
-      // Create the vertex object if it doesn't exist.
-      //
       if(!vertex)
+      //    * Create the vertex object if it doesn't exist.
         vertex = vertices[vertexLocation] = {
           x: _vertex.x,
           y: _vertex.y,
           memberships: []
         };
-      //
-      // Add a membership for each instance of the vertex.
-      //
+      //    * Add a membership for each instance of the vertex.
       vertex.memberships.push({
         polygonId: polygonId,
         vertexId: vertexId
       });
-      
+      //    * Increment the `vertexId` counter.
       vertexId++;
 
     });
@@ -112,7 +131,7 @@ var quadstream = (function(){
       return [level,i,j].join('_');
     };
 
-    // `vertexSpotAddress(level, x, y)` Returns the spot address 
+    // `addressOfVertex(level, x, y)` Returns the spot address 
     // of the given (x, y) point at the given level.
     var addressOfVertex = function(level, x, y){
       var gridSideLength = Math.pow(2, level);
@@ -128,11 +147,41 @@ var quadstream = (function(){
     var stream = function(vertex){
       for(var level = 0; level < maxLevel; level++){
         var vertexAddress = addressOfVertex(level, vertex.x, vertex.y);
-        if(!spots[vertexAddress])
+        // * If the spot in which the vertex falls 
+        //   at the current level is occupied,
+        if(spots[vertexAddress]){
+          continue;
+          //   * Then go down another level in search of an empty spot.
+        }
+        else
+        {
+          // * Otherwise,
+          //   * Stuff the empty spot with this
+          //     vertex and stop looking.
           spots[vertexAddress] = vertex;
+          break;
+        }
       }
     };
 
+    // Calling `stream()` on a set of vertices constructs a 
+    // quadtree-like structure where each input vertex 
+    // becomes exactly one node in the output tree.
+    //
+    // * Except in the case that adjacent vertices are closer
+    //   than the maximum resolution of the quadtree determined
+    //   by `maxLevel`.
+    //
+    // Conceptually, the tree contains nodes with:
+    //
+    //  * `x`, `y`
+    //  * `level`, `i`, `j`
+    //  * `children`
+    //    * Can be computed as follows:
+    //      * `(level + 1,   2 * i     ,   2 * j)`
+    //      * `(level + 1,   2 * i + 1 ,   2 * j)`
+    //      * `(level + 1,   2 * i     ,   2 * j + 1)`
+    //      * `(level + 1,   2 * i + 1 ,   2 * j + 1)`
     var streamAll = function(vertices){
       _(vertices).each(stream);
     };
