@@ -25,5 +25,11 @@ Created quad subdivision test:
 
 <center>
 <iframe src="../examples/quadSubdivision/app.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="512" height="512"></iframe>
-<a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/quadSubdivision/app.js">Source</a>
+<p><a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/examples/quadSubdivision/app.js">Source</a></p>
 </center>
+
+This example demonstrates the fundamental approach of the Quadstream
+algorithm, where each input vertex becomes a node in a quadtree. Much
+of this example code can be re-used for the implementation of 
+the Quadstream algorithm in a command line tool for processing GeoJSON
+boundary files.
