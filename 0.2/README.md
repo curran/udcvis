@@ -4,7 +4,7 @@
 
  * [`pages`](https://github.com/curran/udcvis/tree/gh-pages/0.2/pages) - [Documentation Index](http://universaldatacube.org/0.2/pages/)
    * [Modules](modules.html)
-     * [Module Documentation (docco)](/Users/curran/Dropbox/Curran-K/dissertation/udcvis/0.2/modules/docs/rdf.html) - Click "jump to..." to see a list of all modules.
+     * [Module Documentation (docco)](http://curran.github.com/udcvis/0.2/modules/docs/rdf.html) - Click "jump to..." to see a list of all modules.
    * [Data Sets](dataSets.html)
      * [Millenium Development Goals Indicators](dataset_mdg.html)
      * [Bureau of Labor Statistics Employment Data](dataset_bls.html)

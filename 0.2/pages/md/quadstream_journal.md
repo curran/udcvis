@@ -15,7 +15,7 @@
   <p>A sample of the GeoJSON file.</p>
 </center>
 
-## 11/4/2012
+## 11/6/2012
 Created quad subdivision test:
 
  * Computes the quad subdivision of the plane (down 9 levels) to
