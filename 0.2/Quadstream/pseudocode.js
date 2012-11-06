@@ -175,9 +175,14 @@ var quadstream = (function(){
     // Conceptually, the tree contains nodes with:
     //
     //  * `x`, `y`
+    //  * `memberships`
+    //    * `polygonId`
+    //    * `vertexId`
+    //      * Ascending `vertexId` values define order of traversal
+    //        for drawing the polygons later.
     //  * `level`, `i`, `j`
     //  * `children`
-    //    * Can be computed as follows:
+    //    * Can be computed by looking up nodes that match the following:
     //      * `(level + 1,   2 * i     ,   2 * j)`
     //      * `(level + 1,   2 * i + 1 ,   2 * j)`
     //      * `(level + 1,   2 * i     ,   2 * j + 1)`

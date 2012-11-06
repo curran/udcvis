@@ -166,9 +166,14 @@ by <code>maxLevel</code>.</li>
 
 <ul>
 <li><code>x</code>, <code>y</code></li>
+<li><code>memberships</code>
+<ul><li><code>polygonId</code></li>
+<li><code>vertexId</code>
+<ul><li>Ascending <code>vertexId</code> values define order of traversal
+for drawing the polygons later.</li></ul></li></ul></li>
 <li><code>level</code>, <code>i</code>, <code>j</code></li>
 <li><code>children</code>
-<ul><li>Can be computed as follows:
+<ul><li>Can be computed by looking up nodes that match the following:
 <ul><li><code>(level + 1,   2 * i     ,   2 * j)</code></li>
 <li><code>(level + 1,   2 * i + 1 ,   2 * j)</code></li>
 <li><code>(level + 1,   2 * i     ,   2 * j + 1)</code></li>
