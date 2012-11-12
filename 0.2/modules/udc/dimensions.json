@@ -1,0 +1,49 @@
+[
+{
+  name: 'Time',
+  levels: [
+    {
+      name: 'Years',
+      members: [
+        '1990',
+        '1991',
+        ...
+      ]
+    }
+  ]
+},
+{
+  name: 'Space',
+  levels: [
+    {
+      name: 'Planets'
+      members: [
+        'Earth'
+      ]
+    },
+    {
+      name: 'Continents'
+      members: [
+        'Africa',
+        'Oceana',
+        'Eurasia',
+        'North America',
+        'South America'
+      ]
+    },
+    {
+      name: 'Countries',
+      members: [ ... ]
+    }
+  ]
+},
+{
+  name: 'Disease',
+  members: [
+    'Cancer',
+    'Obesity',
+    'Heart Problems',
+    'Depression'
+  ]
+}
+]

@@ -107,8 +107,13 @@ define(['lib/collections/sorted-set', 'lib/collections/iterator'],
     wiq: {}
   };
 
+  var prefixes = {
+    'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'
+  };
+
   // ## Public API
-  return {
+  var rdf = {
     // `rdf.id(value)`
     //
     // * Returns a unique integer id for each unique `value`.
@@ -236,6 +241,13 @@ define(['lib/collections/sorted-set', 'lib/collections/iterator'],
             throw StopIteration;
         }
       };
+    },
+    qn: function(qName){
+      var arr = qName.split(':'),
+          prefix = arr[0],
+          localPart = arr[1];
+      return rdf.id(prefixes[prefix] + localPart);
     }
   };
+  return rdf;
 });
