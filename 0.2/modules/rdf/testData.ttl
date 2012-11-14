@@ -1,0 +1,12 @@
+@prefix Hello: <Goodbye> .
+@prefix Another: <Version> .
+<subject> <type> <object> .
+<subject> rdf:type <object> .
+the:qname <type> <foo> .
+<joe>
+  dc:title "Joe" .
+<jane>
+  dc:title "Jane" ;
+  foo:age 25 .
+<jack>
+  a "Moron".
