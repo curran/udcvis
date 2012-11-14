@@ -22,9 +22,13 @@ var directory = (function(){
   var spawn = require('child_process').spawn;
   return {
     list: function(callback){
-      var findProcess = spawn('find', ['.']);
+      var findProcess = spawn('find', ['.', '-maxdepth', '4']);
+
       var stringChunks = [];
       findProcess.stdout.on('data',function(data){
+        stringChunks.push(data.toString());
+      });
+      findProcess.stderr.on('data',function(data){
         stringChunks.push(data.toString());
       });
       findProcess.on('exit',function(err){
@@ -34,15 +38,22 @@ var directory = (function(){
           '<html>',
           '<body>',
           '<ul>',
-          _.map(lines, function(line){
+          _.map(_.filter( lines, function(line){
+            return line.substring(0, 3) != './.'
+                   && line.length != 0
+                   && line != '.';
+          }), function(line){
+            console.log(line.length+" "+line)
             return [
               '<li>',
-              line,
+              '<a href="'+line.substring(2)+'">',
+              line.substr(2),
+              '</a>',
               '</li>'
             ].join('');
-          }).join(''),
+          }).join('\n'),
           '</ul>'
-        ].join(''));
+        ].join('\n'));
       });
     }
   };
@@ -50,6 +61,7 @@ var directory = (function(){
 
 app.get('/directory', function(req, res){
   res.setHeader('Content-Type', 'text/html');
+  var ext = req.params.fileExtension;
   directory.list(function(page){
     res.end(page);
   });
