@@ -1,0 +1,62 @@
+
+body
+{
+  margin-top:0;
+  margin-bottom:0;
+  margin-right:0;
+  margin-left:0;
+  text-align:justify;
+  font-family:"Times New Roman";
+  font-size:30px;
+}
+h1
+/* LaTeX title */
+{
+  text-align:center;
+  font-size:60px;
+  margin-bottom: 30px;
+  font-weight:normal;
+}
+h5
+/* LaTeX subtitle */
+{
+  text-align:center;
+  font-size:25px;
+  margin-bottom: 25px;
+  font-weight:normal;
+}
+h2
+/* LaTeX section */
+{
+  text-align:left;
+  font-size:35px;
+  letter-spacing:1.5px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-weight:normal;
+}
+h3
+/* LaTeX subsection */
+{
+  text-align:left;
+  font-size:20px;
+  letter-spacing:1.5px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-weight:normal;
+}
+p
+{
+  margin-top: 0px;
+  margin-bottom: 25px;
+  text-indent:0px;
+}
+pre
+{
+  font-size:15px;
+}
+
+.step {
+    position: relative;
+    width: 500px;
+}
