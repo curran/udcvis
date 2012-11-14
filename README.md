@@ -6,6 +6,7 @@
  * Planned to be completed by 2014.
  * Open source code: [UDCViS GitHub Repo](https://github.com/curran/udcvis).
  * Running live: [UniversalDataCube.org](http://universaldatacube.org).
+   * [Directory](http://universaldatacube.org/directory)
  * Mirrored at [curran.github.com/udcvis/](http://curran.github.com/udcvis/).
 
 The versioning scheme is as follows:
