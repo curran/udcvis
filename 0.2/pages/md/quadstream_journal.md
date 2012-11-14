@@ -36,3 +36,13 @@ algorithm, where each input vertex becomes a node in a quadtree. Much
 of this example code can be re-used for the implementation of 
 the Quadstream algorithm in a command line tool for processing GeoJSON
 boundary files.
+
+## 11/11/2012
+Created this figure that illustrates the quadtree addressing scheme used by QuadStream:
+
+<div>
+<iframe src="../Quadstream/figures/keys/index.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="1040" height="257"></iframe>
+<p><a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/Quadstream/figures/keys/script.js">Source</a></p>
+</div>
+
+

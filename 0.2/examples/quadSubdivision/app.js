@@ -33,9 +33,6 @@ require(['udcvis/requestAnimFrame','udcvis/resizeCanvas',
 
  function drawSpots(){
     c.fillStyle = 'rgba(0,0,0,0.1)';
-      console.log("here");
-      console.log("spots = "+_(spots).keys().length);
-      console.log("canvas.width = "+canvas.width);
     _(_(spots).keys()).each(function(address){
       parseAddress(address, function(level, i, j){
         var gridSize = Math.pow(2, level),
