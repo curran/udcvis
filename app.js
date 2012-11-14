@@ -3,7 +3,7 @@
 var express = require('express');
 var _ = require('underscore');
 var app = express();
-var port = 8080;
+var port = 80;
 app.use(express.static(__dirname));
 app.use(express.directory(__dirname));
 app.listen(port);
@@ -43,7 +43,6 @@ var directory = (function(){
                    && line.length != 0
                    && line != '.';
           }), function(line){
-            console.log(line.length+" "+line)
             return [
               '<li>',
               '<a href="'+line.substring(2)+'">',
