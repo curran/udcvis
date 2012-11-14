@@ -8,3 +8,4 @@
    * [Quadtree](http://en.wikipedia.org/wiki/Quadtree)
    * [KD-Tree](http://en.wikipedia.org/wiki/K-d_tree)
    * [Douglas-Peuker Algorithm](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm)
+ * [Source code for this presentaiton](https://github.com/curran/udcvis/tree/gh-pages/0.2/Quadstream/presentations/2012_11_14_Progress).

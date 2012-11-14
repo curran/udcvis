@@ -73,13 +73,13 @@ scale(0.35, function(){
   steps.push(step('introduction', p));
   translate(halfPage, 0);
   scale(0.5, function(){
-    translate(0, -halfPage );
+    translate(0, -halfPage * 1.3);
     steps.push(step('publicData', p));
     translate(0, halfPage);
     steps.push(step('choropleth', p));
-    translate(0, halfPage);
+    translate(0, halfPage * 1.1);
     steps.push(step('webVis', p));
-    translate(0, -halfPage);
+    translate(0, -halfPage );
   });
   translate(-halfPage, halfPage * 1.5);
   steps.push(step('priorArt', p));
@@ -95,7 +95,7 @@ scale(0.35, function(){
   });
   translate(-halfPage, halfPage * 1.5);
   steps.push(step('solution', p));
-  translate(0, halfPage * 1.5);
+  translate(0, halfPage * 1.4);
   steps.push(step('refs', p));
 });
 
