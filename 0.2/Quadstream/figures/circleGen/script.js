@@ -8,8 +8,6 @@ var squareSize = Math.pow(2, 8),
 
 canvas.width = squareSize * numSquares + padding * (numSquares - 1) + 1;
 canvas.height = squareSize + 1;
-console.log("to embed keys figure, use: ");
-console.log('<iframe src="http://curran.github.com/udcvis/0.2/Quadstream/figures/keys/index.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="'+canvas.width+'" height="'+canvas.height+'"></iframe>');
 
 c.font = '40pt Calibri';
 c.textAlign = 'center';
@@ -87,8 +85,8 @@ var drawSquare = function(level, x, y, width, height){
 
 var drawSquares = function(){
   var i, x, y = 0;
-  for(i = 0; i < numSquares; i++){
-    x = (squareSize + padding) * i;
+  for(i = 1; i < numSquares + 1; i++){
+    x = (squareSize + padding) * (i - 1);
     drawSquare(i, x, y, squareSize, squareSize);
   }
 };
