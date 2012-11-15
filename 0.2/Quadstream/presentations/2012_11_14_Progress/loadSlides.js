@@ -6,7 +6,6 @@ function addStep(title, params, callback){
       .attr('id', title)
       .attr('data-x', params.x)
       .attr('data-y', params.y)
-      .attr('data-width', 2000)
       .attr('data-scale', params.scale)
       .addClass('step')
       .html(slideHTML);
@@ -112,5 +111,8 @@ scale(0.35, function(){
 });
 
 async.series(steps, function(err, results){
+  $('#impress')
+    .attr('data-min-scale', 1)
+    .attr('data-max-scale', 1);
   impress().init();
 });
