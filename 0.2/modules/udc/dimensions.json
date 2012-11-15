@@ -45,5 +45,59 @@
     'Heart Problems',
     'Depression'
   ]
+},
+{
+  name: 'World Heritage Sites',
+  members: [
+    
+  ]
+}
+{
+  name: 'Layers of the Earth',
+  source:'National Geographic Visual Atlas of the World',
+  members: [
+    {
+      name: 'Lithosphere',
+      milesThick:'1-120'
+    },
+    {
+      name: 'Asthenosphere',
+      milesthick:'60-400'
+    },
+    {
+      name: 'Upper Mantle',
+      milesthick:'400'
+    },
+    {
+      name: 'Lower Mantle',
+      milesthick:'1400'
+    },
+    {
+      name: 'Outer Core',
+      milesthick:'1400'
+    },
+    {
+      name: 'Inner Core',
+      milesthick:'60-400'
+    }
+  ]
+},
+{
+  name: 'Causes of Death',
+  source:'National Geographic Visual Atlas of the World',
+  members: [
+    'Cardiovascular Diseases',
+    'Infectious & Parasitic Diseases',
+    'Cancers',
+    'Respiratory Infections',
+    'Respiratory Diseases',
+    'Unintentional Injuries',
+    'Perinatal Conditions',
+    'Digestive Diseases',
+    'Intentional Injuries',
+    'Neuropsychiatric Disorders',
+    'Diabetes Mellitus',
+    'Other'
+  ]
 }
 ]

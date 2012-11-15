@@ -8,6 +8,7 @@ do
   cat header.txt > $htmlFile
   cat md/$FILE_NAME | marked >> $htmlFile
   ## Set the page ID for Disqus comments
+  cat analytics.txt >> $htmlFile
   sed -e "s/\${pageId}/udcvis_02_${FILE_NAME%.*}/g" footer.txt >> $htmlFile
 done
 rm ./md/index.md

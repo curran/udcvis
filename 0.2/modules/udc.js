@@ -1,6 +1,18 @@
 // This first version of the UDC API substitutes
-// hard-code values for dimension and measure definitions
-// that will eventually be represented as RDF.
+// hard-coded values for dimension and measure definitions
+// that will eventually be:
+//
+//   * represented as [RDF](http://en.wikipedia.org/wiki/Resource_Description_Framework),
+//   * stored on disk as [TTL](http://www.w3.org/TR/turtle/) files,
+//   * published using [CORS](http://enable-cors.org/),
+//   * consumable by clients using the UDC library.
+//
+// A collection of UDC data sets will initially be hosted at
+// [universaldatacube.org](http://universaldatacube.org/),
+// however it is my hope that individuals, organizations, and
+// institutions begin to host their own data sets in conformance
+// with the UDC specification.
+//
 define(['udcvis/rdf'],function(rdf){
 
   // Variables are used to store the integer Ids
@@ -78,6 +90,30 @@ define(['udcvis/rdf'],function(rdf){
       rdf.insert(year1990, label, 'Earth');
       rdf.insert(year1990, type, member);
       rdf.insert(year1990, inLevel, years);
+
+      var causesOfDeath = id(dimensions + 'Causes_of_Death');
+      rdf.insert(causesOfDeath, label, 'Causes of Death');
+      rdf.insert(causesOfDeath, type, dimension);
+
+      var addCauseOfDeath = function(name){
+        var cause = id(members + '#Causes_of_Death/'+name);
+        rdf.insert(cause, label, name);
+        rdf.insert(cause, type, member);
+        rdf.insert(cause, inDimension, causesOfDeath);
+      };
+
+      addCauseOfDeath('Cardiovascular Diseases');
+      addCauseOfDeath('Infectious & Parasitic Diseases');
+      addCauseOfDeath('Cancers');
+      addCauseOfDeath('Respiratory Infections');
+      addCauseOfDeath('Respiratory Diseases');
+      addCauseOfDeath('Unintentional Injuries');
+      addCauseOfDeath('Perinatal Conditions');
+      addCauseOfDeath('Digestive Diseases');
+      addCauseOfDeath('Intentional Injuries');
+      addCauseOfDeath('Neuropsychiatric Disorders');
+      addCauseOfDeath('Diabetes Mellitus');
+      addCauseOfDeath('Other');
     })();
   };
 
