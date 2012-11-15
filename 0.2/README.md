@@ -20,6 +20,7 @@
      for implementing efficient multi-scale web-based choropleth 
      maps with adaptive boundary resolution.
      * [Journal of Progress](https://github.com/curran/udcvis/tree/gh-pages/0.2/Quadstream/index.html)
+     * [Mid-project Presentation](http://universaldatacube.org/0.2/Quadstream/presentations/2012_11_14_Progress/)
  * Related External Resources
    * Papers
      * [Multi-scale Visualization using Data Cubes](http://graphics.stanford.edu/papers/pan_zoom/paper.pdf)
