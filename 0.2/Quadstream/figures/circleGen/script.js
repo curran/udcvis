@@ -3,12 +3,12 @@ var canvas = document.getElementById('canvas'),
 
 var squareSize = Math.pow(2, 8),
     padding = 5,
-    numSquares = 4,
-    circleSize = 0.3;
+    numSquares = 2,
+    circleSize = 0;
 
 canvas.width = squareSize * numSquares + padding * (numSquares - 1) + 1;
-canvas.height = squareSize + 1;
-
+canvas.height = canvas.width;
+console.log("width and height = "+canvas.width);
 c.font = '40pt Calibri';
 c.textAlign = 'center';
 c.textBaseline = 'middle';
@@ -84,10 +84,17 @@ var drawSquare = function(level, x, y, width, height){
 };
 
 var drawSquares = function(){
-  var i, x, y = 0;
+  var i, x, y, level;
   for(i = 1; i < numSquares + 1; i++){
-    x = (squareSize + padding) * (i - 1);
-    drawSquare(i, x, y, squareSize, squareSize);
+    for(j = 1; j < numSquares + 1; j++){
+      x = (squareSize + padding) * (i - 1);
+      y = (squareSize + padding) * (j - 1);
+      if(j === 1)
+        level = i;
+      else
+        level = 5 - i;
+      drawSquare(level, x, y, squareSize, squareSize);
+    }
   }
 };
 

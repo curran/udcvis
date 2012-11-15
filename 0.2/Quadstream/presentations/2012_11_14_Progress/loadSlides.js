@@ -6,6 +6,7 @@ function addStep(title, params, callback){
       .attr('id', title)
       .attr('data-x', params.x)
       .attr('data-y', params.y)
+      .attr('data-width', 2000)
       .attr('data-scale', params.scale)
       .addClass('step')
       .html(slideHTML);
@@ -95,6 +96,17 @@ scale(0.35, function(){
   });
   translate(-halfPage, halfPage * 1.5);
   steps.push(step('solution', p));
+  translate(halfPage, 0);
+  scale(0.5, function(){
+    var height = halfPage * 1.2;
+    translate(0, - height / 2);
+    steps.push(step('quadSubdivision', p));
+    translate(0, height);
+    steps.push(step('circleGen', p));
+    translate(0, - height / 2);
+  });
+  translate(-halfPage, 0);
+
   translate(0, halfPage * 1.4);
   steps.push(step('refs', p));
 });
