@@ -1,0 +1,106 @@
+<!DOCTYPE html>  <html> <head>   <title>model.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="controller.html">                 controller.js               </a>                                           <a class="source" href="interpolate.html">                 interpolate.js               </a>                                           <a class="source" href="model.html">                 model.js               </a>                                           <a class="source" href="rectangle.html">                 rectangle.js               </a>                                           <a class="source" href="vertex.html">                 vertex.js               </a>                                           <a class="source" href="view.html">                 view.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               model.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This script contains the model of the application - the 
+data that encapsulates the state of the application.</p>
+
+<p>To listen for changes to the model, use</p>
+
+<ul>
+<li><code>model.on('change', function(){ ... })</code></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;underscore&#39;</span><span class="p">,</span><span class="s1">&#39;lib/backbone&#39;</span><span class="p">,</span><span class="s1">&#39;./rectangle&#39;</span><span class="p">,</span> <span class="s1">&#39;./vertex&#39;</span><span class="p">],</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">,</span> <span class="nx">rectangle</span><span class="p">,</span> <span class="nx">vertex</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><code>vertexBounds</code> is the bounding box for the vertices.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">vertexBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><code>viewBounds</code> is the bounding box of the viewport.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">viewBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><code>canvasBounds</code> is the bounding box of the canvas, 
+ set by the controller.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">canvasBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p><code>pan</code> is the state of the panning.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">pan</span> <span class="o">=</span> <span class="nx">vertex</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p><code>scale</code> is the state of the zooming.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">scale</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p><code>vertices</code> is an array of vertex objects
+that are drawn as a polygon.</p>
+
+<p>TODO replace this array with a multi-scale data structure.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[];</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p><code>computeViewBounds()</code> sets the value of
+<code>viewBounds</code> based on</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">computeViewBounds</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <ul>
+<li>the value of <code>scale</code> and <code>pan</code>,</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span>
+      <span class="nx">vertexBounds</span><span class="p">.</span><span class="nx">x</span> <span class="o">*</span> <span class="nx">scale</span> <span class="o">+</span> <span class="nx">pan</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+      <span class="nx">vertexBounds</span><span class="p">.</span><span class="nx">y</span> <span class="o">*</span> <span class="nx">scale</span> <span class="o">+</span> <span class="nx">pan</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+      <span class="nx">vertexBounds</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="nx">scale</span><span class="p">,</span>
+      <span class="nx">vertexBounds</span><span class="p">.</span><span class="nx">height</span> <span class="o">*</span> <span class="nx">scale</span>
+    <span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <ul>
+<li>the value of canvasBounds
+<ul><li>to "squarify" the projection.</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nx">canvasBounds</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+        <span class="nx">h</span> <span class="o">=</span> <span class="nx">canvasBounds</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+        <span class="nx">aspectRatio</span> <span class="o">=</span> <span class="nx">w</span> <span class="o">/</span> <span class="nx">h</span><span class="p">,</span>
+        <span class="nx">newWidth</span><span class="p">,</span> <span class="nx">newHeight</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">aspectRatio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>
+      <span class="nx">newWidth</span> <span class="o">=</span> <span class="nx">aspectRatio</span> <span class="o">*</span> <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+      <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">x</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">viewBounds</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">newWidth</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">newWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+      <span class="nx">newHeight</span> <span class="o">=</span> <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="nx">aspectRatio</span><span class="p">;</span>
+      <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">y</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">viewBounds</span><span class="p">.</span><span class="nx">height</span> <span class="o">-</span> <span class="nx">newHeight</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="nx">viewBounds</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">newHeight</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">getScale</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">scale</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setScale</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newScale</span><span class="p">){</span>
+      <span class="nx">scale</span> <span class="o">=</span> <span class="nx">newScale</span><span class="p">;</span>
+      <span class="nx">computeViewBounds</span><span class="p">();</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">getPan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">pan</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setPan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">){</span>
+      <span class="nx">pan</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+      <span class="nx">computeViewBounds</span><span class="p">();</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">addVertex</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">vertex</span><span class="p">){</span>
+      <span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">vertex</span><span class="p">);</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p><code>getVertices()</code> returns an iterator with</p>
+
+<ul>
+<li><code>hasNext()</code> returns true when there is a next value, and</li>
+<li><code>next()</code> returns the next value.</li>
+</ul>
+
+<p>Usage:</p>
+
+<ul>
+<li><code>var it = model.getVertices(), v;</code></li>
+<li><code>while(it.hasNext()){ v = it.next() ... }</code></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">getVertices</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">hasNext</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+          <span class="k">return</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">vertices</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">next</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+          <span class="k">return</span> <span class="nx">vertices</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">};</span>
+    <span class="p">},</span>
+    <span class="nx">setCanvasBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">){</span>
+      <span class="nx">canvasBounds</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
+      <span class="nx">computeViewBounds</span><span class="p">();</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">getCanvasBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">canvasBounds</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setVertexBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">){</span>
+      <span class="nx">vertexBounds</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
+      <span class="nx">computeViewBounds</span><span class="p">();</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">getVertexBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">vertexBounds</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">getViewBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">viewBounds</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Backbone events are used.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Initialize the viewport by setting the scale.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">model</span><span class="p">.</span><span class="nx">setScale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">model</span><span class="p">;</span>
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

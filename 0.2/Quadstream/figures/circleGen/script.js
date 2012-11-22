@@ -4,7 +4,8 @@ var canvas = document.getElementById('canvas'),
 var squareSize = Math.pow(2, 8),
     padding = 5,
     numSquares = 2,
-    circleSize = 0;
+    circleSize = 0,
+    circleWobble = 0;
 
 canvas.width = squareSize * numSquares + padding * (numSquares - 1) + 1;
 canvas.height = canvas.width;
@@ -60,10 +61,12 @@ var drawCircle = function(level, x, y, width, height){
     return spotAddress(level, i, j);
   };
   var v = {x:0, y:0}, 
-      n = 300,
-      r = width * circleSize;
+      n = 300, r, wobble;
   c.beginPath();
   for(var i = 0; i < n; i++){
+    wobble = Math.sin((i / n) * circleWobble);
+    wobble *= circleSize * circleWobble / 2;
+    r = width * circleSize + wobble;
     v.x = Math.sin(i / n * Math.PI * 2)*r + x + width / 2;
     v.y = Math.cos(i / n * Math.PI * 2)*r + y + height / 2;
     var key = addressOfVertex(level, v.x, v.y);
@@ -100,7 +103,12 @@ var drawSquares = function(){
 
 drawSquares();
 canvas.addEventListener('mousemove', function(e){
-  circleSize = e.pageX / 200;
+  var wobbleHeight = canvas.height / 2;
+  circleSize = e.pageX / 800;
+  if(e.pageY < wobbleHeight)
+    circleWobble = 0;
+  else
+    circleWobble = (e.pageY - wobbleHeight) / 3;
   c.clearRect(0,0,canvas.width, canvas.height);
   drawSquares();
 });
