@@ -4,19 +4,19 @@ var express = require('express');
 var _ = require('underscore');
 var app = express();
 var port = 80;
-app.use(express.static(__dirname));
-app.use(express.directory(__dirname));
-app.listen(port);
-console.log('Listening on port '+port);
-
-
 // Enable Cross Origin Resource Sharing (CORS)
 // Code snippet from [Enable-Cors.org](http://enable-cors.org/#how-expressJS)
-app.all('/', function(req, res, next) {
+app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
+
+app.use(express.static(__dirname));
+app.use(express.directory(__dirname));
+
+app.listen(port);
+console.log('Listening on port '+port);
 
 var directory = (function(){
   var spawn = require('child_process').spawn;
