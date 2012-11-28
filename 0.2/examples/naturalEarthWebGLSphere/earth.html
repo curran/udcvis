@@ -1,5 +1,5 @@
 
-<!-- saved from url=(0060)file://localhost/Users/curran/Downloads/jsbin.ivoyet.54.html -->
+<!-- saved from url=(0060)file://localhost/Users/curran/Downloads/jsbin.ivoyet.56.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><style id="jsbin-css"></style><script id="vertex-shader" type="x-shader/x-vertex">
 attribute  vec4 vPosition;
 attribute  vec2 sphereCoords;
@@ -32,7 +32,7 @@ main()
 
 <!--
   Created using jsbin.com
-  Source can be edited via http://jsbin.com/ivoyet/54/edit
+  Source can be edited via http://jsbin.com/ivoyet/56/edit
 -->
 
 
@@ -45,9 +45,11 @@ main()
 
 
   <body style="margin:0;">
-<canvas id="gl-canvas" width="658" height="658">
-Oops ... your browser doesn't support the HTML5 canvas element
-</canvas>
+    <center>
+      <canvas id="gl-canvas" width="658" height="658">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+    </center>
 <script>
 // Textured Sphere Example
 // Curran Kelleher 11/27/2012
@@ -122,12 +124,12 @@ function initTexture() {
     render();
   }
   //image from http://www.naturalearthdata.com/
-  texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/naturalEarth.png";
+  texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/naturalEarth.jpg";
 }
 
 function initVertices(){
   var i, j, 
-      theta, phi, rho = 0.9,
+      theta, phi, rho = .95,
       x, y, z, vertex, index;
   for(j = 0; j <= gridHeight; j++){
     for(i = 0; i <= gridWidth; i++){

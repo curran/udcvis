@@ -2,27 +2,24 @@ define(['jquery','./model',
     'udcvis/resizeCanvas'],
     function($, model, resize) {
   var canvas = $('#canvas')[0],
+      sensitivity = {
+        pan: 0.0005,
+        zoom: 0.001
+      },
+      dampening = {
+        pan: 0.95,
+        zoom: 0.95
+      },
+      epsilon = 0.0001,
       velocity = {
         scale: 0,
         x: 0,
         y: 0
       },
-      sensitivity = {
-        pan: 0.01,
-        zoom: 0.01
-      },
-      dampening = {
-        pan: 0.9,
-        zoom: 0.8
-      },
-      epsilon = 0.0001,
       keys = {
-        up: 38,
-        down: 40,
-        left: 37,
-        right: 39,
-        c: 67,
-        d: 68
+        up: 38, down: 40, left: 37, right: 39,
+        c: 67, d: 68,
+        h: 72, j: 74, k: 75, l: 76
       },
       keysDown = {};
       actions = {};
@@ -38,16 +35,28 @@ define(['jquery','./model',
   actions[keys.left] = function(){
     velocity.x -= sensitivity.pan;
   };
+  actions[keys.h] = function(){
+    velocity.x -= sensitivity.pan;
+  };
 
   actions[keys.right] = function(){
+    velocity.x += sensitivity.pan;
+  };
+  actions[keys.l] = function(){
     velocity.x += sensitivity.pan;
   };
 
   actions[keys.up] = function(){
     velocity.y -= sensitivity.pan;
   };
+  actions[keys.k] = function(){
+    velocity.y -= sensitivity.pan;
+  };
 
   actions[keys.down] = function(){
+    velocity.y += sensitivity.pan;
+  };
+  actions[keys.j] = function(){
     velocity.y += sensitivity.pan;
   };
 
@@ -87,10 +96,11 @@ define(['jquery','./model',
           scale * (1 + velocity.scale)
         );
 
-        var pan = model.getPan();
+        var pan = model.getPan(),
+            viewSize = model.getViewBounds().width;
         model.setPan(
-          pan.x + velocity.x * scale,
-          pan.y + velocity.y * scale
+          pan.x + velocity.x * viewSize,
+          pan.y + velocity.y * viewSize
         );
 
         velocity.scale *= dampening.zoom;

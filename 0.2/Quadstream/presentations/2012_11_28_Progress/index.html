@@ -1,0 +1,67 @@
+<p><link href="styles.css" rel="stylesheet" />
+<br><br><br><br><br><br><br><br><br>
+</p>
+<h1>Quadstream Progress</h1>
+<h5>Curran Kelleher</h5>
+<h5>11/28/2012</h5>
+<p><br><br><br><br><br><br><br><br>
+</p>
+<h2>Test Data:</h2>
+<ul>
+<li>Circle of 500 points</li>
+<li>The Koch Curve (down 6 levels)</li>
+<li><a href="http://www.naturalearthdata.com/">Natural Earth</a><ul>
+<li><a href="http://www.naturalearthdata.com/downloads/50m-raster-data/50m-natural-earth-1/">Image</a></li>
+<li><a href="http://www.naturalearthdata.com/downloads/10m-cultural-vectors/">Country Polygons</a><ul>
+<li>Originally available as an <a href="http://en.wikipedia.org/wiki/Shapefile">ESRI Shapefile</a></li>
+<li>Converted to <a href="http://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> with <a href="http://www.gdal.org/">GDAL - Geospatial Data Abstraction Library</a><ul>
+<li><a href="../../data/ne_10m_admin_0_countries.json">Resulting file</a> ~25MB.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br><br><br><br><br><br><br><br>
+</p>
+<h2>Demos:</h2>
+<ul>
+<li><a href="../../../examples/naturalEarthWebGLSphere/earth.html">Natural Earth WebGL Globe</a><ul>
+<li>Orthographic projection</li>
+<li>Interaction techniques</li>
+</ul>
+</li>
+<li><a href="../../../examples/panZoom/app.html">Quadstream Prototype</a><ul>
+<li>Controls:<ul>
+<li>h, j, k, l, arrows = pan</li>
+<li>c, d = zoom</li>
+<li>s = set to Circle</li>
+<li>e = set to Koch Curve</li>
+<li>w, a = scroll through countries </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+</p>
+<h2>Outstanding Issues:</h2>
+<ul>
+<li>Indepence of aspect ratio from input data</li>
+<li>Clipping to the viewing rectangle<ul>
+<li>Offscreen vertices are currently rendered</li>
+<li>Demands rectangle - polygon intersection computation</li>
+</ul>
+</li>
+<li>Distributing the output among files</li>
+<li>Fetching and integrating files on demand</li>
+<li>Using multi-scale data structures for integration and rendering<ul>
+<li>R-Tree</li>
+<li>BLG Tree
+<br><br><br><br><br><br><br><br><br></li>
+</ul>
+</li>
+</ul>
+

@@ -10,6 +10,12 @@ define(['underscore'], function(_){
       this.y = y;
       this.width = width;
       this.height = height;
+    },
+    contains: function(vertex){
+      return (vertex.x > this.x &&
+              vertex.y > this.y && 
+              vertex.x < this.x + this.width &&
+              vertex.y < this.y + this.height)
     }
   };
 
@@ -56,6 +62,16 @@ define(['underscore'], function(_){
           },
           set: function(y2){
             rect.height = y2 - rect.y;
+          }
+        },
+        centerX: {
+          get: function(){
+            return rect.x + rect.width / 2;
+          }
+        },
+        centerY: {
+          get: function(){
+            return rect.y + rect.height / 2;
           }
         }
       });

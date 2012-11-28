@@ -34,11 +34,12 @@ define(['underscore','lib/backbone','./rectangle', './vertex'],
   //
   var computeViewBounds = function(){
     //  * the value of `scale` and `pan`,
+    var viewWidth = vertexBounds.width * scale,
+        viewHeight = vertexBounds.height * scale;
     viewBounds.set(
-      vertexBounds.x * scale + pan.x,
-      vertexBounds.y * scale + pan.y,
-      vertexBounds.width * scale,
-      vertexBounds.height * scale
+      pan.x - viewWidth / 2,
+      pan.y - viewHeight / 2,
+      viewWidth, viewHeight
     );
 
     //  * the value of canvasBounds
@@ -102,6 +103,9 @@ define(['underscore','lib/backbone','./rectangle', './vertex'],
         }
       };
     },
+    clearVertices: function(){
+      vertices = [];
+    },
     setCanvasBounds: function(x, y, width, height){
       canvasBounds.set(x, y, width, height);
       computeViewBounds();
@@ -112,6 +116,7 @@ define(['underscore','lib/backbone','./rectangle', './vertex'],
     },
     setVertexBounds: function(x, y, width, height){
       vertexBounds.set(x, y, width, height);
+      pan.set(vertexBounds.centerX, vertexBounds.centerY);
       computeViewBounds();
       model.trigger('change');
     },
