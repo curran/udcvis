@@ -1,6 +1,6 @@
 # The Universal Data Cube <br>Visualization System<br>(UDCViS)
 ##### [Curran Kelleher](http://universalvisualization.org/?page_id=2)
-##### October 2012
+##### November 2012
 
  * An early-stage research project.
  * Planned to be completed by 2014.

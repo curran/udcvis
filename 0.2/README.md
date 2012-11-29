@@ -15,12 +15,18 @@
    * [`unitTests`](https://github.com/curran/udcvis/tree/gh-pages/0.2/unitTests) - [Jasmine](http://pivotal.github.com/jasmine/) Unit Tests
      * [Run unit tests](http://curran.github.com/udcvis/0.2/unitTests/SpecRunner.html) 
    * [`data`](https://github.com/curran/udcvis/tree/gh-pages/0.2/data) - RDF Data Sets
-   * [`Quadstream`](http://curran.github.com/udcvis/0.2/Quadstream/index.html) - 
+   * [`Quadstream`]()
      A project unto itself; a framework of algorithms and data structures
      for implementing efficient multi-scale web-based choropleth 
      maps with adaptive boundary resolution.
-     * [Journal of Progress](https://github.com/curran/udcvis/tree/gh-pages/0.2/Quadstream/index.html)
-     * [Mid-project Presentation](http://universaldatacube.org/0.2/Quadstream/presentations/2012_11_14_Progress/)
+     * [Journal of Progress](quadstream_journal.html)
+     * [Mid-project Presentation 1](../Quadstream/presentations/2012_11_14_Progress/)
+       * [Pseudocode](../Quadstream/docs/pseudocode.html)
+       * [Circle Generalization Demo with Addresses](../Quadstream/figures/circleGen/)
+       * [Quadtree Subdivision Demo](../examples/quadSubdivision/app.html)
+     * [Mid-project Presentation 2](../Quadstream/presentations/2012_11_28_Progress/)
+       * [3D Earth Demo](../examples/naturalEarthWebGLSphere/earth.html)
+       * [Pan Zoom Demo](../examples/panZoom/app.html)
  * Related External Resources
    * Papers
      * [Multi-scale Visualization using Data Cubes](http://graphics.stanford.edu/papers/pan_zoom/paper.pdf)

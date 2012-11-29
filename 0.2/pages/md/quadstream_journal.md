@@ -49,8 +49,12 @@ Created this figure that illustrates the quadtree addressing scheme used by Quad
 Created this interactive figure that illustrates Quadstream generalization of a circle.
 
 <div>
-<iframe src="../Quadstream/figures/circleGen/index.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="1040" height="257"></iframe>
+<iframe src="../Quadstream/figures/circleGen/index.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="520" height="520"></iframe>
 <p><a href="https://github.com/curran/udcvis/blob/gh-pages/0.2/Quadstream/figures/circleGen/script.js">Source</a></p>
 </div>
 
+Presented [Mid-project Presentation 1](../Quadstream/presentations/2012_11_14_Progress/)
 
+## 11/28/2012
+
+Presented [Mid-project Presentation 2](../Quadstream/presentations/2012_11_28_Progress/)
