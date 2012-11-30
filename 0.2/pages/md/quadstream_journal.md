@@ -58,3 +58,9 @@ Presented [Mid-project Presentation 1](../Quadstream/presentations/2012_11_14_Pr
 ## 11/28/2012
 
 Presented [Mid-project Presentation 2](../Quadstream/presentations/2012_11_28_Progress/)
+
+## 11/30/2012
+
+Discovered a flaw in the algorithm that causes edges to cross for the Vietnam boundary:
+
+<img src="../Quadstream/figures/errorInVietnam.png"></img>

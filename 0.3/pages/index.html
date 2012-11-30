@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link href="style.css" rel="stylesheet" />
+    <script src="../modules/lib/underscore.js"></script>
+    <script src="../modules/lib/jquery.js"></script>
+    <script src="../modules/lib/marked.js"></script>
+    <script src="../modules/lib/async.js"></script>
+    <script src="../modules/lib/coffee-script.js"></script>
+    <script src="../modules/lib/coffeecup.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      function initDisqus(disqus_identifier){
+        var disqus_shortname = 'udcvis';
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (
+          document.getElementsByTagName('head')[0] || 
+          document.getElementsByTagName('body')[0]
+        ).appendChild(dsq);
+      }
+    </script>
+    <script type="text/javascript">
+      (function(){
+        var hash = window.location.hash,
+            pageName = ( hash ?  hash.substr(1) : 'index');
+            pageId = '0.3_'+pageName;
+        initDisqus(pageId);
+        $.get('../'+pageName+'.coffee', function(data){
+          $("#content").html(coffeecup.render(data));
+        });
+      })();
+    </script>
+  </body>
+</html>
