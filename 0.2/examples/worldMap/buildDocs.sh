@@ -1,0 +1,1 @@
+docco scripts/* 

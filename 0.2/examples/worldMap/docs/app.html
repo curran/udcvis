@@ -1,0 +1,44 @@
+<!DOCTYPE html>  <html> <head>   <title>app.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="blgTree.html">                 blgTree.js               </a>                                           <a class="source" href="controller.html">                 controller.js               </a>                                           <a class="source" href="geoJSONLoader.html">                 geoJSONLoader.js               </a>                                           <a class="source" href="model.html">                 model.js               </a>                                           <a class="source" href="renderLoop.html">                 renderLoop.js               </a>                                           <a class="source" href="view.html">                 view.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               app.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>The top-level script for the Quadstream World Map application.</p>
+
+<p><small>By Curran Kelleher, December 2012</small></p>
+
+<p>The main components of the app are:</p>
+
+<ul>
+<li><a href="./model.html">Model</a> - The state model of the application.</li>
+<li><a href="./view.html">View</a> - Responsible for rendering the model.</li>
+<li><a href="./controller.html">Controller</a> - Responsible for defining user interactions.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">require</span><span class="p">([</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">,</span> <span class="s1">&#39;controller&#39;</span><span class="p">,</span> 
+         <span class="s1">&#39;renderLoop&#39;</span><span class="p">,</span> <span class="s1">&#39;geoJSONLoader&#39;</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">,</span> 
+         <span class="s1">&#39;quadstream/preprocess&#39;</span><span class="p">,</span> 
+         <span class="s1">&#39;quadstream/buildTree&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;quadstream/partitionFiles&#39;</span><span class="p">],</span><span class="kd">function</span><span class="p">(</span>
+    <span class="nx">model</span><span class="p">,</span> <span class="nx">view</span><span class="p">,</span> <span class="nx">controller</span><span class="p">,</span> <span class="nx">renderLoop</span><span class="p">,</span> <span class="nx">geoJSONLoader</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span>
+    <span class="nx">preprocess</span><span class="p">,</span> <span class="nx">buildTree</span><span class="p">,</span> <span class="nx">partitionFiles</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Initialization</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <ul>
+<li>Load the geoJSON file using 
+the <a href="./geoJSONLoader.html">geoJSONLoader</a> module.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">fileName</span> <span class="o">=</span> <span class="s1">&#39;../../Quadstream/data/ne_10m_admin_0_countries.json&#39;</span><span class="p">;</span>
+  <span class="nx">geoJSONLoader</span><span class="p">.</span><span class="nx">loadPolygons</span><span class="p">(</span><span class="nx">fileName</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">polygons</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">maxDepth</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="nx">fileDepth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nx">vertices</span> <span class="o">=</span> <span class="nx">preprocess</span><span class="p">(</span><span class="nx">polygons</span><span class="p">),</span>
+        <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">buildTree</span><span class="p">(</span><span class="nx">vertices</span><span class="p">,</span> <span class="nx">maxDepth</span><span class="p">),</span>
+        <span class="nx">files</span> <span class="o">=</span> <span class="nx">partitionFiles</span><span class="p">(</span><span class="nx">nodes</span><span class="p">,</span> <span class="nx">fileDepth</span><span class="p">);</span>
+
+    <span class="nx">_</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">files</span><span class="p">).</span><span class="nx">keys</span><span class="p">()).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">files</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>console.log(key+" "+file.length);
+console.log(file);</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">model</span><span class="p">.</span><span class="nx">loadFile</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
+
+    <span class="p">});</span>
+  <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <ul>
+<li>Define and start the rendering loop.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">renderLoop</span><span class="p">.</span><span class="nx">addFrameSteps</span><span class="p">([</span>
+    <span class="nx">controller</span><span class="p">.</span><span class="nx">executeFrame</span><span class="p">,</span>
+    <span class="nx">view</span><span class="p">.</span><span class="nx">executeFrame</span>
+  <span class="p">]);</span>
+
+  <span class="nx">renderLoop</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

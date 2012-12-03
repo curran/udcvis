@@ -1,0 +1,76 @@
+<!DOCTYPE html>  <html> <head>   <title>model.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="blgTree.html">                 blgTree.js               </a>                                           <a class="source" href="controller.html">                 controller.js               </a>                                           <a class="source" href="geoJSONLoader.html">                 geoJSONLoader.js               </a>                                           <a class="source" href="model.html">                 model.js               </a>                                           <a class="source" href="renderLoop.html">                 renderLoop.js               </a>                                           <a class="source" href="view.html">                 view.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               model.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This module defines the state of the Quadstream 
+World Map application.</p>
+
+<p>Clients to the model can listen for changes using</p>
+
+<ul>
+<li><code>model.on('change', function(){...})</code></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;lib/backbone&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry/vector&#39;</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">,</span> <span class="s1">&#39;blgTree&#39;</span><span class="p">],</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">vector</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">blgTree</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>The model consists of:</p>
+
+<ul>
+<li><code>pan</code> An (x,y) <code>vector</code> that defines the 
+panning state of the world map. 
+Default is (0,0).</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">pan</span> <span class="o">=</span> <span class="nx">vector</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <ul>
+<li><code>zoom</code> A number that defines the scaling factor
+(or "zoom") of the world map. Default is 1.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">zoom</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <ul>
+<li><p><code>polygons</code> A collection of BLG trees.</p>
+
+<ul><li>Keys: polygon Ids (integers)</li>
+<li>Values: BLG trees</li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">polygons</span> <span class="o">=</span> <span class="p">{},</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <ul>
+<li><code>vertexBounds</code> is the bounding box for the vertices.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">vertexBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">(),</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <ul>
+<li><code>viewBounds</code> is the bounding box of the viewport.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">viewBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">(),</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <ul>
+<li><code>canvasBounds</code> is the bounding box of the canvas, 
+set by the controller.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">canvasBounds</span> <span class="o">=</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">create</span><span class="p">(),</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h2>Private Members</h2>
+
+<ul>
+<li><code>getPolygon</code> Looks up a polygon by id,
+creating new polygons when necessary.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">getPolygon</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">polygonId</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">polygons</span><span class="p">[</span><span class="nx">polygonId</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">polygon</span><span class="p">)</span>
+          <span class="k">return</span> <span class="nx">polygon</span><span class="p">;</span>
+        <span class="k">else</span>
+          <span class="k">return</span> <span class="nx">polygons</span><span class="p">[</span><span class="nx">polygonId</span><span class="p">]</span> <span class="o">=</span> <span class="nx">blgTree</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+      <span class="p">},</span>
+      <span class="nx">model</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">getPan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">pan</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setPan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">){</span>
+      <span class="nx">pan</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">getZoom</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">zoom</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setZoom</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newZoom</span><span class="p">){</span>
+      <span class="nx">zoom</span> <span class="o">=</span> <span class="nx">newZoom</span><span class="p">;</span>
+      <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">loadFile</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">file</span><span class="p">){</span>
+      <span class="nx">_</span><span class="p">(</span><span class="nx">file</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vertex</span><span class="p">){</span>
+        <span class="nx">_</span><span class="p">(</span><span class="nx">vertex</span><span class="p">.</span><span class="nx">memberships</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">membership</span><span class="p">){</span>
+          <span class="nx">getPolygon</span><span class="p">(</span><span class="nx">membership</span><span class="p">.</span><span class="nx">polygonId</span><span class="p">).</span><span class="nx">insert</span><span class="p">(</span>
+            <span class="nx">vertex</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">vertex</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+            <span class="nx">membership</span><span class="p">.</span><span class="nx">vertexId</span><span class="p">,</span>
+            <span class="nx">vertex</span><span class="p">.</span><span class="nx">level</span>
+          <span class="p">);</span>
+        <span class="p">});</span>
+      <span class="p">});</span>
+      <span class="nx">_</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">polygons</span><span class="p">).</span><span class="nx">keys</span><span class="p">()).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>var polygon = polygons[key];
+console.log(key);
+polygon.print();</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Backbone events are used.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">model</span><span class="p">;</span>
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

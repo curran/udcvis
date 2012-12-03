@@ -29,8 +29,8 @@
             pageName = ( hash ?  hash.substr(1) : 'index');
             pageId = '0.3_'+pageName;
         initDisqus(pageId);
-        $.get('../'+pageName+'.coffee', function(data){
-          $("#content").html(coffeecup.render(data));
+        $.get('../'+pageName+'.md', function(data){
+          $("#content").html(marked(data));
         });
       })();
     </script>

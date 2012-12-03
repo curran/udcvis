@@ -137,6 +137,7 @@ define(['jquery', './model', './interpolate'],
     //draw the polygon from the model's vertices
     c.beginPath();
     var count = 1, originalCount = 0;
+    var previousKey;
     while(it.hasNext()){
       originalCount++;
       vertex = it.next();
@@ -150,14 +151,30 @@ define(['jquery', './model', './interpolate'],
         var level = getLevelForCurrentView(),
             key = addressOfVertex(level, vertex.x, vertex.y);
 
+        // First Approach - "assign" the spots
+        // -- leads to non-simple generalized polygons
+        //if(first){
+        //  c.moveTo(x, y);
+        //  spots[key] = vertex;
+        //  first = false;
+        //}
+        //else if(!spots[key]){
+        //  c.lineTo(x, y);
+        //  spots[key] = vertex;
+        //  if(viewBounds.contains(vertex))
+        //    count++;
+        //}
+
+        // Second approach - add vertex when key changes
+        // --- Eliminates some errors but not all
         if(first){
           c.moveTo(x, y);
-          spots[key] = vertex;
+          previousKey = key;
           first = false;
         }
-        else if(!spots[key]){
+        else if(key != previousKey){
           c.lineTo(x, y);
-          spots[key] = vertex;
+          previousKey = key;
           if(viewBounds.contains(vertex))
             count++;
         }

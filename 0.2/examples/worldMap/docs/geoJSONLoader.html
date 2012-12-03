@@ -1,0 +1,66 @@
+<!DOCTYPE html>  <html> <head>   <title>geoJSONLoader.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="blgTree.html">                 blgTree.js               </a>                                           <a class="source" href="controller.html">                 controller.js               </a>                                           <a class="source" href="geoJSONLoader.html">                 geoJSONLoader.js               </a>                                           <a class="source" href="model.html">                 model.js               </a>                                           <a class="source" href="renderLoop.html">                 renderLoop.js               </a>                                           <a class="source" href="view.html">                 view.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               geoJSONLoader.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This module loads polygons from GEOJSON files.</p>
+
+<p>Example use:</p>
+
+<pre><code>geoJSONLoader.loadPolygons(fileName, function(err, polygons){
+  if(err)
+    throw err;
+  var n = 0;
+  _(polygons).each(function(polygon){
+    console.log(polygon.name);
+    _(polygon.vertices).each(function(vector){
+      n++;
+    })
+  });
+  console.log('Loaded '+n+' vertices');
+});
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;jquery&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry/vector&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry/rectangle&#39;</span><span class="p">],</span> 
+    <span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">vector</span><span class="p">,</span> <span class="nx">rectangle</span><span class="p">){</span>
+  <span class="k">return</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><code>loadPolygons(fileName, callback(err, polygons))</code> Loads the
+specified GEOJSON file, then calls the callback with</p>
+
+<ul>
+<li><code>err</code> The error that occurred, or null.</li>
+<li><code>polygons</code> An array of polygon objects with:
+<ul><li><code>name</code> The human-readable name of the polygon.</li>
+<li><code>vertices</code> An array of vector objects that defines
+the polygon boundary.
+<ul><li>See <code>vector.create()</code></li></ul></li></ul></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">loadPolygons</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fileName</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+      <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">fileName</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">polygons</span> <span class="o">=</span> <span class="p">[],</span>
+            <span class="nx">loadPolygon</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">coordinates</span><span class="p">){</span>
+              <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span>
+                <span class="nx">vertices</span><span class="o">:</span> <span class="p">[]</span>
+              <span class="p">};</span>
+              <span class="nx">_</span><span class="p">(</span><span class="nx">coordinates</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">point</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="nx">y</span> <span class="o">=</span> <span class="nx">point</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+                <span class="nx">polygon</span><span class="p">.</span><span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">vector</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">));</span>
+              <span class="p">});</span>
+              <span class="nx">polygons</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">polygon</span><span class="p">);</span>
+            <span class="p">};</span>
+        <span class="nx">_</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">features</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">feature</span><span class="p">){</span>
+          <span class="nx">_</span><span class="p">(</span><span class="nx">feature</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">coordinates</span><span class="p">){</span>
+            <span class="nx">loadPolygon</span><span class="p">(</span><span class="nx">feature</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">ADMIN</span><span class="p">,</span> <span class="nx">coordinates</span><span class="p">);</span>
+          <span class="p">});</span>
+        <span class="p">});</span>
+        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">polygons</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">},</span>
+    <span class="nx">printPolygonAnalysis</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">polygons</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Polygon Names:&#39;</span><span class="p">);</span>
+      <span class="nx">_</span><span class="p">(</span><span class="nx">polygons</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">polygon</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">polygon</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">(</span><span class="nx">polygon</span><span class="p">.</span><span class="nx">vertices</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vector</span><span class="p">){</span>
+          <span class="nx">n</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">})</span>
+      <span class="p">});</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Loaded &#39;</span><span class="o">+</span><span class="nx">n</span><span class="o">+</span><span class="s1">&#39; vertices&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
