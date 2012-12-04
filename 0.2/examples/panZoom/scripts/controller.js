@@ -61,7 +61,9 @@ define(['jquery','./model',
   };
 
   $(document).keydown(function(event) {
-    keysDown[event.which] = true;
+    var action = actions[event.which];
+    if(action)
+      action();
   });
 
   $(document).keyup(function(event) {

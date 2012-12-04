@@ -17,8 +17,21 @@ define([], function(){
 
   return {
     create: function(){
-      var root;
-
+      // `rootParent` is a sentinel node pointing to the root of the tree.
+      var rootParent = {
+            //  * Having level -1 guarantees that all inserted nodes
+            //    will be under rootParent, as the lowest encountered
+            //    level for inserted nodes is 0;
+            level: -1,
+            //  * Having vertexId -1 guarantees that only
+            //    `rootParent.rightChild` will ever pe populated, as the
+            //    lowest vertex id for any inserted node is at least 0.
+            vertexId: -1
+          },
+          root = function(){
+            return rootParent.rightChild;
+          };
+      //
       // ### `blgInsert()`
       //
       // `node` is a node to be inserted into the tree
@@ -30,16 +43,17 @@ define([], function(){
       //    * `vertex.level` contains the level the vertex was assigned to
       //      in the quadtree (see `quadstream/buildTree.js`).
       function blgInsert(node){
-        // `tree` is a root of a subtree of the existing tree,
-        // initialized to the root node.
-        var tree = root,
-        // `treeParent` keeps track of the parent node of `tree`.
-            treeParent,
-        // `new` and `old` `Subtree` are used for temporarily storing a subtree
-        //  (a child of treeParent) during insertion.
-            newSubtree, oldSubtree;
         //
         // ## Insertion Algorithm
+        //
+        // `tree` is a root of a subtree of the existing tree,
+        // initialized to the sentinel root node parent.
+        var tree = rootParent,
+        // `treeParent` keeps track of the parent node of `tree`.
+        treeParent,
+        // `new` and `old` `Subtree` temporarily store a subtree
+        //  (a child of treeParent) during insertion.
+        newSubtree, oldSubtree;
         do {
           //
           // When inserting a node `node` into a subtree `tree`,
@@ -69,17 +83,6 @@ define([], function(){
               }
             }
           } else{
-            /* TODO handle this case using a sentinel
-            // sentinel = vertex.create({
-            //   
-            // });
-            // treeParent = treePointer
-            if(!treeParent){
-              oldSubtree = root;
-              ...
-              root = newSubtree;
-            }
-            */
             // * If the level of `node is less than
             //   the level of `tree`,
             //   * then `tree` should be a child of `node`.
@@ -87,39 +90,9 @@ define([], function(){
             //     * setting the parent node of `tree`
             //       to contain `node` as a child
             //       in place of `tree`.
-            //if(treeParent.leftChild === tree){
-            //  oldSubtree = treeParent.leftChild;
-            //  //...
-            //  treeParent.leftChild = newSubtree;
-            //}
-            //else if(treeParent.rightChild === tree){
-            //  oldSubtree = treeParent.rightChild;
-            //  ///...
-            //  treeParent.rightChild = newSubtree;
-            //}
           }
-
         } while(true);
       }
-//        do {
-//          if(node.vertexId < tree.vertexId){
-//            if(tree.leftChild){
-//              tree = tree.leftChild;
-//            } else{
-//              tree.leftChild = node;
-//              break;
-//            }
-//          }
-//          else if(node.vertexId > tree.vertexId){
-//            if(tree.rightChild){
-//              tree = tree.rightChild;
-//            } else{
-//              tree.rightChild = node;
-//              break;
-//            }
-//          }
-//        } while(true);
-//      }
 
       function blgPrint(tree, indent){
         if(tree.leftChild)
@@ -144,16 +117,15 @@ define([], function(){
       return {
         insert: function(x, y, vertexId, importance){
           var node = makeNode(x, y, vertexId, importance);
-          if(!root)
-            root = node;
-          else
-            blgInsert(node);
+          blgInsert(node);
         },
         print: function(){
-          blgPrint(root, "");
+          if(root())
+            blgPrint(root(), "");
         },
         traverse: function(callback, maxImportance){
-          blgTraverse(callback, maxImportance, root);
+          if(root())
+            blgTraverse(callback, maxImportance, root());
         }
       };
     }
