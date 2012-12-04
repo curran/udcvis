@@ -15,19 +15,29 @@ define(['quadstream/nodeAddress'], function(nodeAddress){
           return nodeAddress(level, i, j);
         };
 
+    /*var n = 0;*/
     _(vertices).each(function(vertex){
       var address, level, key;
+      /*
+      if(vertex.memberships.length > 2)
+        n++;
+      */
       for(level = 0; level < maxLevel; level++){
         key = addressOf(vertex, level);
         if(nodes[key])
           continue;
         else{
-          vertex.level = level;
+          // Noise added to avoid sharp jumps in 
+          // the number of vertices drawn.
+          vertex.level = level + Math.random();
           nodes[key] = vertex;
           break;
         }
       }
     });
+    /*
+    console.log(n+" critical vertices");
+    */
     return nodes;
   }
 });

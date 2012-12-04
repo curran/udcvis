@@ -64,3 +64,21 @@ Presented [Mid-project Presentation 2](../Quadstream/presentations/2012_11_28_Pr
 Discovered a flaw in the algorithm that causes edges to cross for the Vietnam boundary:
 
 <img src="../Quadstream/figures/errorInVietnam.png"></img>
+
+## 12/3/2012
+
+Got basic version of a World Map working.
+
+ * Indroduced noise to vertex level assignment to avoid sharp jumps in the number of vertices displayed.
+   * Add a random number between 0 and 1 to the assigned vertex level during preprocessing.
+
+Realized it is absolutely necessary to include the following vertices as highest priority:
+
+ * Vertices that close gaps between multiple polygons
+   * This is true when the vertex is a member of more than 2 polygons
+   * This is also true when two polygons come together
+     * Harder to compute
+
+Realized that when the bounding box of a polygon is smaller than the smallese visible size, it should not be drawn at all. This should have a big impact on performance.
+
+Florida is chopped out. Is this because nearby islands are occupying the quadtree nodes? This would imply that the island polygons come before the mainland polygon in the input data. This issue could be solved if each multipolygon in the input file is sorted by decreasing area before building the quadtree. i.e. prioritize polygons by area before building the tree. Intuitively this makes sense as polygons with larger area are visually more important than small islands. Note - ordering by area is not the same as ordering by number of vertices.

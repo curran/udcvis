@@ -5,11 +5,9 @@ define(['model', 'interpolate'], function(model, interpolate){
       viewLevelOffset = 6;
 
   function getLevelForCurrentView(){
-    var viewBounds = model.getViewBounds(),
-        vertexBounds = model.getVertexBounds();
-    return Math.floor(log2(
-      vertexBounds.width / viewBounds.width
-    )) + viewLevelOffset;
+    var viewWidth = model.getViewBounds().width,
+        vertexWidth = model.getVertexBounds().width;
+    return log2(vertexWidth / viewWidth) + viewLevelOffset;
   }
 
   function log2(x){

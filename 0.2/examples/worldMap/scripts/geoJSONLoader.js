@@ -37,15 +37,20 @@ define(['jquery', 'geometry/vector', 'geometry/rectangle'],
               };
               _(coordinates).each(function(point){
                 var x = point[0],
-                    y = point[1];
+                    y = -point[1];
                 polygon.vertices.push(vector.create(x, y));
               });
               polygons.push(polygon);
             };
         _(data.features).each(function(feature){
-          _(feature.geometry.coordinates).each(function(coordinates){
-            loadPolygon(feature.properties.ADMIN, coordinates);
-          });
+          if(feature.geometry.type === "Polygon"){
+            loadPolygon(feature.properties.ADMIN, feature.geometry.coordinates[0]);
+          }
+          else if(feature.geometry.type === "MultiPolygon"){
+            _(feature.geometry.coordinates).each(function(coordinates){
+              loadPolygon(feature.properties.ADMIN, coordinates[0]);
+            });
+          }
         });
         callback(null, polygons);
       });
