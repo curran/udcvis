@@ -80,12 +80,20 @@ function setTextureImage(imageName){
 
 function initVertices(){
   var i, j, 
-      theta, phi, rho = .95,
+      theta, phi,
+      // .95 is chosen as the diameter of the Earth
+      // so it fits comfortably within the display.
+      rho = .95,
       x, y, z, vertex, index;
   for(j = 0; j <= gridHeight; j++){
     for(i = 0; i <= gridWidth; i++){
       theta = i / (gridWidth - 1) * Math.PI;
       phi = j / (gridHeight - 1) * Math.PI * 2;
+
+      // Uncommenting this line with make the earth a crazy shape
+      //rho = 0.7 + Math.sin(theta * 10)/10 + Math.sin(phi * 6)/10;
+
+      // from http://en.wikipedia.org/wiki/Spherical_coordinate_system
       x = rho * Math.sin(theta) * Math.cos(phi);
       y = rho * Math.sin(theta) * Math.sin(phi);
       z = rho * Math.cos(theta);
@@ -95,6 +103,7 @@ function initVertices(){
       vertices[index] = vertex;
       sphericalCoords[index] = [
         j / (gridWidth - 1), 
+        // inverted coordinate here so the world is not upside down
         -i / (gridHeight - 1)
       ];
     }
@@ -190,8 +199,10 @@ var render = function(){
     gl.drawArrays( gl.TRIANGLE_STRIP, 0, pointsArray.length );
   }
     
-  for(var i = 0; i < 3; i++)
-    theta[i] += (thetaVelocity[i] *= dampening);
+  for(var i = 0; i < 3; i++){
+    thetaVelocity[i] *= dampening;
+    theta[i] += thetaVelocity[i];
+  }
   
   requestAnimFrame(render);
 }
@@ -200,6 +211,7 @@ function setUpInteraction(){
   var mouseIsDown = false;
   var mouseSensitivity = 0.001;
   var previousX, previousY;
+
   canvas.addEventListener('mousedown', function(e){
     mouseIsDown = true;
     previousX = e.pageX;

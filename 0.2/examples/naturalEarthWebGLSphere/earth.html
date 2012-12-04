@@ -24,10 +24,13 @@
         
       uniform sampler2D uSampler;
 
-      void
-      main()
+      void main()
       {
         gl_FragColor = texture2D(uSampler,vTextureCoord);
+//        if(gl_FragColor.r - 0.98 < 0.001 &&
+//           gl_FragColor.g - 0.98 < 0.001 &&
+//           gl_FragColor.b - 0.98 < 0.001)
+//         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
       }
     </script>
     <script type="text/javascript" src="./earth_files/webgl-utils.js"></script>
