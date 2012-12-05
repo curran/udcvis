@@ -75,7 +75,8 @@ function initTexture() {
 
 function setTextureImage(imageName){
   console.log("initializing "+imageName);
-  texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/"+imageName+".jpg";
+  //texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/"+imageName+".jpg";
+  texture.image.src = "./images/"+imageName+".jpg";
 }
 
 function initVertices(){
@@ -273,6 +274,10 @@ function init() {
   gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
   
   gl.enable(gl.DEPTH_TEST);
+  //gl.disable(gl.DEPTH_TEST);
+  //gl.enable(gl.BLEND);
+  //gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA  );
+  //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
   gl.enable(gl.POLYGON_OFFSET_FILL);
   
   program = initShaders( gl, "vertex-shader", "fragment-shader" );

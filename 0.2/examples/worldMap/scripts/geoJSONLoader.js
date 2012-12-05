@@ -31,15 +31,31 @@ define(['jquery', 'geometry/vector', 'geometry/rectangle'],
       $.get(fileName, function(data){
         var polygons = [],
             loadPolygon = function(name, coordinates){
-              var polygon = {
-                name: name,
-                vertices: []
-              };
+              var xMin = Number.MAX_VALUE, yMin = Number.MAX_VALUE,
+                  xMax = -Number.MAX_VALUE, yMax = -Number.MAX_VALUE,
+                  expandBounds = function(x, y){
+                    if(x < xMin)
+                      xMin = x;
+                    if(x > xMax)
+                      xMax = x;
+                    if(y < yMin)
+                      yMin = y;
+                    if(y > yMax)
+                      yMax = y;
+                  },
+                  polygon = {
+                    name: name,
+                    vertices: []
+                  };
               _(coordinates).each(function(point){
                 var x = point[0],
                     y = -point[1];
                 polygon.vertices.push(vector.create(x, y));
+                expandBounds(x, y);
               });
+              polygon.bounds = rectangle.create(
+                xMin, yMin, xMax - xMin, yMax - yMin
+              );
               polygons.push(polygon);
             };
         _(data.features).each(function(feature){
@@ -48,7 +64,8 @@ define(['jquery', 'geometry/vector', 'geometry/rectangle'],
           }
           else if(feature.geometry.type === "MultiPolygon"){
             _(feature.geometry.coordinates).each(function(coordinates){
-              loadPolygon(feature.properties.ADMIN, coordinates[0]);
+              if(coordinates[0].length > 200)
+                loadPolygon(feature.properties.ADMIN, coordinates[0]);
             });
           }
         });

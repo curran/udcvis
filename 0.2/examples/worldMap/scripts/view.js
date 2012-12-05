@@ -2,7 +2,7 @@ define(['model', 'interpolate'], function(model, interpolate){
   var canvas = $('#canvas')[0],
       c = canvas.getContext('2d'),
       graphicsDirty = true,
-      viewLevelOffset = 6;
+      viewLevelOffset = 8;
 
   function getLevelForCurrentView(){
     var viewWidth = model.getViewBounds().width,

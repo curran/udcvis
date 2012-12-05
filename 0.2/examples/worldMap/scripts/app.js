@@ -20,7 +20,7 @@ require(['model', 'view', 'controller',
   // the [geoJSONLoader](./geoJSONLoader.html) module.
   var fileName = '../../Quadstream/data/ne_10m_admin_0_countries.json';
   geoJSONLoader.loadPolygons(fileName, function(err, polygons){
-    var maxDepth = 14,
+    var maxDepth = 16,
         fileDepth = 4,
         vertices = preprocess(polygons),
         vertexBounds = vertices.bounds,

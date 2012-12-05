@@ -1,9 +1,9 @@
 define([], function(){
-  function makeNode(x, y, vertexId, importance){
+  function makeNode(x, y, vertexId, level){
     return {
       x: x, y: y,
       vertexId: vertexId,
-      importance: importance
+      level: level
     };
   }
 
@@ -11,7 +11,7 @@ define([], function(){
     return ['(',
       node.x,',', node.y,',',
       node.vertexId,',',
-      node.importance,',',
+      node.level,',',
     ')'].join('');
   }
 
@@ -28,8 +28,25 @@ define([], function(){
             //    lowest vertex id for any inserted node is at least 0.
             vertexId: -1
           },
-          root = function(){
+          getRoot = function(){
             return rootParent.rightChild;
+          },
+          setRoot = function(newRoot){
+            rootParent.rightChild = newRoot;
+          },
+          preorderWalk = function(tree, callback){
+            if(tree){
+              callback(tree);
+              preorderWalk(tree.leftChild, callback);
+              preorderWalk(tree.rightChild, callback);
+            }
+          },
+          reinsert = function(tree){
+            preorderWalk(tree, function(node){
+              node.leftChild = null;
+              node.rightChild = null;
+              blgInsert(node);
+            });
           };
       //
       // ### `blgInsert()`
@@ -48,48 +65,75 @@ define([], function(){
         //
         // `tree` is a root of a subtree of the existing tree,
         // initialized to the sentinel root node parent.
-        var tree = rootParent,
+        var tree = getRoot(),
         // `treeParent` keeps track of the parent node of `tree`.
-        treeParent,
-        // `new` and `old` `Subtree` temporarily store a subtree
+            treeParent = rootParent,
+        // `oldSubtree` temporarily stores a subtree
         //  (a child of treeParent) during insertion.
-        newSubtree, oldSubtree;
+            oldSubtree;
+        // If there is no root, set the root.
+        if(!tree){
+          setRoot(node);
+          return;
+        }
         do {
           //
           // When inserting a node `node` into a subtree `tree`,
           //
           // * If the level of `node` is greater than
           //   the level of `tree`, 
-          if(true){//node.level > tree.level){
+          if(true){//node.level >= tree.level){
             //   * then `node` is suitable to insert
             //     as a child of `tree` using the insertion
             //     algorithm for a binary search tree.
             if(node.vertexId < tree.vertexId){
               if(tree.leftChild){
-                treeParent = tree;
-                tree = tree.leftChild;
+                if(node.level >= tree.leftChild.level){
+                  treeParent = tree;
+                  tree = tree.leftChild;
+                } else{
+                  oldSubtree = tree.leftChild;
+                  tree.leftChild = node;
+                  reinsert(oldSubtree);
+                  break;
+                }
               } else{
                 tree.leftChild = node;
                 break;
               }
             }
-            else if(node.vertexId > tree.vertexId){
+            else{
               if(tree.rightChild){
-                treeParent = tree;
-                tree = tree.rightChild;
+                if(node.level >= tree.rightChild.level){
+                  treeParent = tree;
+                  tree = tree.rightChild;
+                } else {
+                  oldSubtree = tree.rightChild;
+                  tree.rightChild = node;
+                  reinsert(oldSubtree);
+                  break;
+                }
               } else{
                 tree.rightChild = node;
                 break;
               }
             }
           } else{
-            // * If the level of `node is less than
+            // * If the level of `node` is less than
             //   the level of `tree`,
-            //   * then `tree` should be a child of `node`.
+            //   * then `node` should take the place of `tree`.
             //   * this can be accomplished by:
-            //     * setting the parent node of `tree`
-            //       to contain `node` as a child
-            //       in place of `tree`.
+            //     * removing the old subtree
+            if(treeParent.leftChild === tree){
+              treeParent.leftChild = node;
+            }
+            else if(treeParent.rightChild === tree){
+              treeParent.rightChild = node;
+            }
+            //     * then recursively inserting each node 
+            //       of the old subtree
+            preorderWalk(tree, blgInsert);
+            break;
           }
         } while(true);
       }
@@ -103,7 +147,7 @@ define([], function(){
       }
 
       function blgTraverse(callback, maxImportance, tree){
-        if(tree.importance > maxImportance)
+        if(tree.level > maxImportance)
           callback(tree.x, tree.y);
         else{
           if(tree.leftChild)
@@ -115,8 +159,8 @@ define([], function(){
       }
 
       return {
-        insert: function(x, y, vertexId, importance){
-          var node = makeNode(x, y, vertexId, importance);
+        insert: function(x, y, vertexId, level){
+          var node = makeNode(x, y, vertexId, level);
           blgInsert(node);
         },
         print: function(){
@@ -124,8 +168,9 @@ define([], function(){
             blgPrint(root(), "");
         },
         traverse: function(callback, maxImportance){
-          if(root())
-            blgTraverse(callback, maxImportance, root());
+          var root = getRoot();
+          if(root)
+            blgTraverse(callback, maxImportance, root);
         }
       };
     }

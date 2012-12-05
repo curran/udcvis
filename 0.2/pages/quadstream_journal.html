@@ -76,6 +76,35 @@ boundary files.
 
 </p>
 <p><img src="../Quadstream/figures/errorInVietnam.png"></img>
+
+</p>
+<h2>12/3/2012</h2>
+<p>Got basic version of a World Map working.
+
+</p>
+<ul>
+<li>Indroduced noise to vertex level assignment to avoid sharp jumps in the number of vertices displayed.<ul>
+<li>Add a random number between 0 and 1 to the assigned vertex level during preprocessing.</li>
+</ul>
+</li>
+</ul>
+<p>Realized it is absolutely necessary to include the following vertices as highest priority:
+
+</p>
+<ul>
+<li>Vertices that close gaps between multiple polygons<ul>
+<li>This is true when the vertex is a member of more than 2 polygons</li>
+<li>This is also true when two polygons come together<ul>
+<li>Harder to compute</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Realized that when the bounding box of a polygon is smaller than the smallese visible size, it should not be drawn at all. This should have a big impact on performance.
+
+</p>
+<p>Florida is chopped out. Is this because nearby islands are occupying the quadtree nodes? This would imply that the island polygons come before the mainland polygon in the input data. This issue could be solved if each multipolygon in the input file is sorted by decreasing area before building the quadtree. i.e. prioritize polygons by area before building the tree. Intuitively this makes sense as polygons with larger area are visually more important than small islands. Note - ordering by area is not the same as ordering by number of vertices.
 </p>
 
 
