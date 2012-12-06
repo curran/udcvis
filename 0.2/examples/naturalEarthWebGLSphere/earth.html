@@ -1,47 +1,6 @@
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <script id="vertex-shader" type="x-shader/x-vertex">
-      attribute  vec4 vPosition;
-      attribute  vec2 sphereCoords;
-        
-      varying vec2 vTextureCoord;
-
-      uniform mat4 ModelView;
-      uniform mat4 Projection;
-      void main()
-      {
-          gl_Position = Projection * ModelView * vPosition;
-          vTextureCoord = sphereCoords;
-      }
-    </script>
-    <script id="fragment-shader" type="x-shader/x-fragment">
-      #ifdef GL_ES
-      precision highp float;
-      #endif
-
-      varying vec2 vTextureCoord;
-        
-      uniform sampler2D uSampler;
-
-      void main()
-      {
-        gl_FragColor = texture2D(uSampler,vTextureCoord);
-//        gl_FragColor.a = gl_FragColor.r;
-//        if(gl_FragColor.r - 0.98 < 0.001){
-//           gl_FragColor.g - 0.98 < 0.001 &&
-//           gl_FragColor.b - 0.98 < 0.001){
- //       }
-      }
-    </script>
-    <script type="text/javascript" src="./earth_files/webgl-utils.js"></script>
-    <script type="text/javascript" src="./earth_files/initShaders.js"></script>
-    <script type="text/javascript" src="./earth_files/glMatrixEA.js"></script>
-  </head>
-  <body style="margin:0;">
-    <center>
-      <canvas id="gl-canvas" width="658" height="658"></canvas>
-    </center>
-    <script src="app.js"> </script>
-  </body>
+<head>
+<meta http-equiv="REFRESH" content="0;url=http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/head/earth.html"></head>
+<body>
+</body>
 </html>

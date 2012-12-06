@@ -27,6 +27,8 @@
      * [Mid-project Presentation 2](../Quadstream/presentations/2012_11_28_Progress/)
        * [3D Earth Demo](../examples/naturalEarthWebGLSphere/earth.html)
        * [Pan Zoom Demo](../examples/panZoom/app.html)
+     * [Final Presentation](../Quadstream/presentations/2012_12_05_Final/)
+       * [World Map Demo](../examples/worldMap/app.html)
  * Related External Resources
    * Papers
      * [Multi-scale Visualization using Data Cubes](http://graphics.stanford.edu/papers/pan_zoom/paper.pdf)
