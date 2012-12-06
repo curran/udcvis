@@ -24,11 +24,13 @@ function step(title, params){
 var steps = [];
 
 var slideWidth = 400,
-    slideHeight = 500,
+    slideHeight = 550,
     childCount = function(node){
-      return _(node).filter(function(child){
-        return typeof child === 'string';
-      }).length;
+      return Math.max(
+        _(node).filter(function(child){
+          return typeof child === 'string';
+        }).length
+      );
     };
 
 function addOutline(params, node){

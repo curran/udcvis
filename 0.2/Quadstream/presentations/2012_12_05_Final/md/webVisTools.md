@@ -4,3 +4,8 @@
  * [D3](http://bl.ocks.org/4060606)
  * [CNN Economy Tracker](http://www.cnn.com/SPECIALS/map.economy/)
  * [Weave](http://www.oicweave.org/)
+
+All of the above use either
+
+ * fixed generalization, or 
+ * image tiles.

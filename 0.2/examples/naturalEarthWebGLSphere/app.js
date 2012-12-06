@@ -11,6 +11,9 @@ var gridSize = 100;
 var gridWidth = gridSize;
 var gridHeight = gridSize;
 
+var time = 0,
+    timeIncrement = 0.01;
+
 // The arrays 'vertices'
 // contains a grid of vertices and their corresponding normals.
 // These are flattened 2D arrays indexed as follows:
@@ -92,7 +95,9 @@ function initVertices(){
       phi = j / (gridHeight - 1) * Math.PI * 2;
 
       // Uncommenting this line with make the earth a crazy shape
-      //rho = 0.7 + Math.sin(theta * 10)/10 + Math.sin(phi * 6)/10;
+      rho -= (
+        0.7 + Math.sin(theta * 10)/10 + Math.sin(phi * 6)/10
+      ) * time;
 
       // from http://en.wikipedia.org/wiki/Spherical_coordinate_system
       x = rho * Math.sin(theta) * Math.cos(phi);
