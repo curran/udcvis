@@ -1,6 +1,8 @@
-A simple viewer for low-resolution raster data from [Natural Earth](http://www.naturalearthdata.com/). WebGL is used to map the images to a 3D sphere.
+# Computing Vertex Positions On the GPU
 
-[Run it.](http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/earth.html)
+Here is an example that computes the position of the vertices based on a time-varying mathematical function in the vertex shader. It allows a large chunk of CPU code to be eliminated. Enjoy!
+
+ * [Run it](http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/morphing/earth.html)
 
 Controls:
 
@@ -9,7 +11,7 @@ Controls:
 
 You can embed this into your Web page using the following HTML snippet:
 
-    <iframe width="500" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/earth.html"></iframe>
+    <iframe width="500" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/morphing/earth.html"></iframe>
 
 Enjoy!
 
