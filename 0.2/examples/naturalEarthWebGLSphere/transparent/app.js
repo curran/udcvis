@@ -319,10 +319,10 @@ function init() {
     false, projection);
   
   initTexture();
-  setTextureImage("NE2_50M_SR_W");
+  setTextureImage("NE1_50M_SR_W");
   initArrowKeyListener([
-    "NE2_50M_SR_W",
     "NE1_50M_SR_W",
+    "NE2_50M_SR_W",
     "GRAY_50M_SR_OB",
     "HYP_50M_SR",
     "OB_50M",
