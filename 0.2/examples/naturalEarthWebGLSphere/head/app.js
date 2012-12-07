@@ -19,6 +19,7 @@ var time = 0,
 //  * `uniforms.modelView`
 //  * `uniforms.projection`
 //  * `uniforms.time`
+//  * `uniforms.renderPass`
 var uniforms = {};
 
 // The arrays 'vertices'
@@ -86,7 +87,7 @@ function initTexture() {
 function setTextureImage(imageName){
   console.log("initializing "+imageName);
   //texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/"+imageName+".jpg";
-  texture.image.src = "./images/"+imageName+".jpg";
+  texture.image.src = "../v0.1/images/"+imageName+".jpg";
 }
 
 function initVertices(){
@@ -186,12 +187,18 @@ var render = function(){
   // Pass the time uniform to the GPU
   gl.uniform1f( uniforms.time, time );
   
+  var BACK = -1;
+  var FRONT = 1;
+
   if(textureInitialized){
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     var uSamplerID = gl.getUniformLocation(program, "uSampler");
     gl.uniform1i(uSamplerID, 0);
     
+    gl.uniform1f( uniforms.renderPass, BACK );
+    gl.drawArrays( gl.TRIANGLE_STRIP, 0, pointsArray.length );
+    gl.uniform1f( uniforms.renderPass, FRONT );
     gl.drawArrays( gl.TRIANGLE_STRIP, 0, pointsArray.length );
   }
     
@@ -268,11 +275,10 @@ function init() {
   gl.viewport( 0, 0, canvas.width, canvas.height );
   gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
   
-  gl.enable(gl.DEPTH_TEST);
-  //gl.disable(gl.DEPTH_TEST);
-  //gl.enable(gl.BLEND);
-  //gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA  );
-  //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+  //gl.enable(gl.DEPTH_TEST);
+  gl.disable(gl.DEPTH_TEST);
+  gl.enable(gl.BLEND);
+  gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA  );
   gl.enable(gl.POLYGON_OFFSET_FILL);
   
   program = initShaders( gl, "vertex-shader", "fragment-shader" );
@@ -301,11 +307,12 @@ function init() {
   gl.enableVertexAttribArray( sphereCoordsId );
   
   uniforms.time = gl.getUniformLocation(program, "time"); 
+  uniforms.renderPass = gl.getUniformLocation(program, "renderPass"); 
   uniforms.modelView = gl.getUniformLocation(program, "ModelView");
   
   viewer_pos = point3.create([ 0.0, 0.0, -10.0] );
   
-  projection = mat4.ortho(-1, 1, -1, 1, -100, 100);
+  projection = mat4.ortho(-1, 1, -1, 1, -1, 1);
   
   gl.uniformMatrix4fv(
     gl.getUniformLocation(program, "Projection"), 

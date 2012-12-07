@@ -6,15 +6,10 @@
         
       varying vec2 vTextureCoord;
 
-      const int BACK = 0;
-      const int FRONT = 1;
-      // `renderPass` gets either FRONT or BACK
-      uniform int renderPass;
-
       uniform mat4 ModelView;
       uniform mat4 Projection;
       uniform float time;
-      const float PI = 3.14159265359;
+      float PI = 4.0 * acos(1.0/sqrt(2.0));
       void main()
       {
           // use (1 - ...) here so the world is not upside down
@@ -28,7 +23,8 @@
           float c = cos(phi * frequency + waveOffset);
           float p = sin(time) / 2.0 + 0.5;
           float horizontalRidges = p*s / 10.0;
-          float rho = 0.8 + horizontalRidges + (1.0-p)*c/10.0;
+          float verticalRidges = (1.0-p)*c/10.0;
+          float rho = 0.8 + horizontalRidges + verticalRidges;
 
           // from http://en.wikipedia.org/wiki/Spherical_coordinate_system
           float x = rho * sin(theta) * cos(phi);

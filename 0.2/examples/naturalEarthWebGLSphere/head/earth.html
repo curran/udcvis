@@ -6,10 +6,15 @@
         
       varying vec2 vTextureCoord;
 
-      const int BACK = 0;
-      const int FRONT = 1;
+      const float BACK = -1.0;
+      const float FRONT = 1.0;
       // `renderPass` gets either FRONT or BACK
-      uniform int renderPass;
+      uniform float renderPass;
+      // `draw` gets set depending on the position of the vertex.
+      //
+      // * if `renderPass` is BACK, `draw` is true for back facing vertices.
+      // * if `renderPass` is FRONT, `draw` is true for front facing vertices.
+      varying float draw;
 
       uniform mat4 ModelView;
       uniform mat4 Projection;
@@ -44,6 +49,7 @@
           float z = rho * cos(theta);
           vec4 point = vec4(x, y, z, 1);
           gl_Position = Projection * ModelView * point;
+          draw = renderPass * gl_Position.z / gl_Position.w;
           vTextureCoord = sphereCoords;
       }
     </script>
@@ -53,22 +59,40 @@
       #endif
 
       varying vec2 vTextureCoord;
-        
+      varying float draw;
       uniform sampler2D uSampler;
+      uniform float time;
+
+      const float transparentKey = 250.0/255.0;
+      const float transparencyThreshold = 0.001;
+      const float OPAQUE = 1.0;
+      const float SEMI_TRANSPARENT = 0.05;
+      const float fadeFactor = 0.1;
 
       void main()
       {
-        gl_FragColor = texture2D(uSampler,vTextureCoord);
-//        gl_FragColor.a = gl_FragColor.r;
-//        if(gl_FragColor.r - 0.98 < 0.001){
-//           gl_FragColor.g - 0.98 < 0.001 &&
-//           gl_FragColor.b - 0.98 < 0.001){
- //       }
+        vec4 color = texture2D(uSampler,vTextureCoord);
+        if(draw < 0.0){
+          // Visible
+          float dr = color.r - transparentKey;
+          float dg = color.g - transparentKey;
+          float db = color.b - transparentKey;
+          float distance = dr * dr + dg * dg + db * db;
+          // Threshold picked to optimize the ocean-land split
+          if(distance < transparencyThreshold){
+            color.a = -draw * fadeFactor;
+          }
+        }
+        else{
+          // Not visible
+          color.a = 0.0;
+        }
+        gl_FragColor = color;
       }
     </script>
-    <script type="text/javascript" src="./earth_files/webgl-utils.js"></script>
-    <script type="text/javascript" src="./earth_files/initShaders.js"></script>
-    <script type="text/javascript" src="./earth_files/glMatrixEA.js"></script>
+    <script type="text/javascript" src="../v0.1/earth_files/webgl-utils.js"></script>
+    <script type="text/javascript" src="../v0.1/earth_files/initShaders.js"></script>
+    <script type="text/javascript" src="../v0.1/earth_files/glMatrixEA.js"></script>
   </head>
   <body style="margin:0;">
     <center>
