@@ -87,7 +87,7 @@ function initTexture() {
 function setTextureImage(imageName){
   console.log("initializing "+imageName);
   //texture.image.src = "http://universaldatacube.org/0.2/examples/naturalEarthWebGLSphere/images/"+imageName+".jpg";
-  texture.image.src = "../v0.1/images/"+imageName+".jpg";
+  texture.image.src = "../images/"+imageName+".jpg";
 }
 
 function initVertices(){
@@ -322,11 +322,12 @@ function init() {
   setTextureImage("NE2_50M_SR_W");
   initArrowKeyListener([
     "NE2_50M_SR_W",
-    "NE1_50M_SR_W",
+    "nasaBlackMarble",
     "GRAY_50M_SR_OB",
     "HYP_50M_SR",
     "OB_50M",
-    "SR_50M"
+    "SR_50M",
+    "NE1_50M_SR_W",
   ]);
   render();
 }
