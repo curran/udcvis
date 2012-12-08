@@ -49,12 +49,13 @@ Multi-scale data structures and algorithms have been devised to cope with data a
 
 The quadtree data structure recursively subdivides a bounding box into four quadrants, or "buckets". For a point quadtree, each bucket is subdivided as long as it contains above a certain threshold number of vertices.
 
-<img class="figure" width="400" src="../../figures/quadTree.png"></img>
+<img class="figure" width="400" src="images/quadTree.png"></img>
+
 <p class="caption">An example point quadtree, from [Wikipedia](http://en.wikipedia.org/wiki/Quadtree).</p>
 
 The R-Tree data structure is a rectangle-based tree structure designed to support efficient rectangle intersection or containment testing.
 
-<img class="figure" width="600" src="../../figures/rTree.svg"></img>
+<img class="figure" width="600" src="images/rTree.svg"></img>
 <p class="caption">An example R-Tree, from [Wikipedia](http://en.wikipedia.org/wiki/R-tree).</p>
 
 The [Reactive Tree](http://www.mapcontext.com/autocarto/proceedings/auto-carto-10/pdf/the-reactive-tree-a-storage-structure-for-a-seamless.pdf) data structure aims to provide a multi-scale solution for dynamic generalization using simplification (removal of vertices in lines and polygons), aggregation (summarizing many features with fewer), symbolization (representing polygons with lines or points), and selection (omission of features). 
