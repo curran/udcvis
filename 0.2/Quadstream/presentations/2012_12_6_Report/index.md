@@ -49,7 +49,7 @@ Multi-scale data structures and algorithms have been devised to cope with data a
 
 The quadtree data structure recursively subdivides a bounding box into four quadrants, or "buckets". For a point quadtree, each bucket is subdivided as long as it contains above a certain threshold number of vertices.
 
-<img class="figure" width="400" src="images/quadTree.png"></img>
+<img class="figure" width="400" src="images/quadtree.png"></img>
 
 <p class="caption">An example point quadtree, from [Wikipedia](http://en.wikipedia.org/wiki/Quadtree).</p>
 
