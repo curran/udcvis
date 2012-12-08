@@ -1,0 +1,81 @@
+body
+{
+  margin-top:100px;
+  margin-bottom:100px;
+  margin-right:20%;
+  margin-left:20%;
+  text-align:justify;
+  font-family:"Times New Roman";
+  font-size:18px;
+}
+h1
+/* LaTeX title */
+{
+  text-align:center;
+  font-size:40px;
+  margin-bottom: 30px;
+  font-weight:normal;
+}
+h5
+/* LaTeX subtitle */
+{
+  text-align:center;
+  font-size:25px;
+  margin-bottom: 25px;
+  font-weight:normal;
+}
+h2
+/* LaTeX section */
+{
+  text-align:left;
+  font-size:35px;
+  letter-spacing:1.5px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-weight:normal;
+}
+h2.subtitle
+{
+  text-align:center;
+}
+h3
+/* LaTeX subsection */
+{
+  text-align:left;
+  font-size:25px;
+  letter-spacing:1.5px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-weight:normal;
+}
+p
+{
+  margin-top: 0px;
+  margin-bottom: 25px;
+  text-indent:0px;
+}
+p.caption
+{
+  text-align:center;
+  font-size:15px;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+img.figure
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+pre
+{
+  font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; 
+  color: #000000; 
+  background-color: #eee;
+  border: 1px dashed #999999;
+  font-size:20px;
+  line-height: 25px;
+  padding: 5px; 
+  overflow: auto; 
+  width: 100%
+}
