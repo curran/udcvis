@@ -2,7 +2,14 @@
 ##### The Universal Data Cube Visualization System
 ##### Curran Kelleher - December 2012
 
-## Table of Contents
+## Design
+
+Version 0.3 will follow these design decisions:
+
+ * There is no server-side software except a SPARQL endpoint and static file servers.
+ * SPARQL will be leveraged to compute query results
+
+## Envisioned Table of Contents
 
  * The Universal Data Cube
    * Dimensions
@@ -21,4 +28,9 @@
      * CIA World Factbook
      * US Census
  * Modules
+   * Visualizations
+     * Bar Chart
+     * Choropleth Map
+   * Quadstream
  * Examples
+   * Module Use Examples

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://raw.github.com/antoniogarrote/rdfstore-js/master/dist/browser/rdf_store_min.js"></script>
+</head>
+<body>
+  <script>
+    // This script is an example of how RDF data in the form of a .ttl file
+    // can be loaded into a client-resident triplestore and queried using SPARQL.
+    //
+    // Using Antonio Garrote's rdfstore-js library.
+    // 
+    // https://github.com/antoniogarrote/rdfstore-js
+    
+    var ttlFileURL = [
+      'http://universaldatacube.org/',
+      '0.1/udc/UN_Population/',
+      'UN_Population_World.ttl'
+    ].join('');
+    
+    var loadQuery = [
+      'LOAD <'+ttlFileURL+'>',
+      'INTO GRAPH <local>'
+    ].join(' ');
+    
+    var query = [
+      'PREFIX qb: <http://purl.org/linked-data/cube#>',
+      'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>',
+      'SELECT ?label',
+      'FROM <local>',
+      'WHERE {',
+      '  ?dataSet a qb:DataSet.',
+      '  ?dataSet rdfs:label ?label',
+      '}'
+    ].join(' ');
+    
+    rdfstore.create(function(store) {
+      store.execute(loadQuery, function() {
+        store.execute(query,function(success, results) {
+          $(results).each(function(row){
+            console.log(row.label.value);
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
