@@ -1,0 +1,12 @@
+@prefix rdf:             <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qb:              <http://purl.org/linked-data/cube#> .
+@prefix udc:             <http://universaldatacube.org/#> .
+
+udc:population  a rdf:Property, qb:MeasureProperty;
+      rdfs:label "population"@en;
+      rdfs:comment "The count of people."@en.
+
+udc:lifeExpectancy  a rdf:Property, qb:MeasureProperty;
+      rdfs:label "life expectancy"@en;
+      rdfs:comment "The average age of death."@en.

@@ -18,6 +18,9 @@ Version 0.3 will follow these design decisions:
 
 ## Envisioned Table of Contents
 
+ * Examples
+   * [helloSPARQL](../examples/helloSPARQL) An example of client-side SPARQL evaluation over TTL RDF data.
+   * [udcOutliner](../examples/udcOutliner) A program that generates an HTML outline from UDC metadata.
  * The Universal Data Cube
    * Dimensions
    * Measures
@@ -39,5 +42,3 @@ Version 0.3 will follow these design decisions:
      * Bar Chart
      * Choropleth Map
    * Quadstream
- * Examples
-   * Module Use Examples
