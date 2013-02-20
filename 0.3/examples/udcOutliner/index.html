@@ -19,14 +19,14 @@
       listMeasures: [
         'PREFIX qb: <http://purl.org/linked-data/cube#>',
         'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>',
-        'SELECT ?label, ?comment',
+        'SELECT ?label ?comment',
         'FROM <local>',
         'WHERE {',
         '  ?s a qb:MeasureProperty.',
         '  ?s rdfs:label ?label.',
         '  ?s rdfs:comment ?comment',
         '}'
-      ].join(' ')
+      ].join('\n')
     };
     
     rdfstore.create(function(store) {
@@ -37,8 +37,9 @@
                 html.push('<li>'+text+'</li>');
               };
           
+          html.push('Measures');
           html.push('<ul>');
-          $(results).each(function(row){
+          $(results).each(function(i, row){
             li(row.label.value+' - '+row.comment.value);
           });
           html.push('</ul>');

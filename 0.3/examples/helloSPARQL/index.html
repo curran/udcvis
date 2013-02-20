@@ -39,8 +39,8 @@
     rdfstore.create(function(store) {
       store.execute(loadQuery, function() {
         store.execute(query,function(success, results) {
-          $(results).each(function(row){
-            console.log(row.label.value);
+          $(results).each(function(i, row){
+            document.write(row.label.value);
           });
         });
       });

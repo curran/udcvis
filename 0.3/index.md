@@ -1,15 +1,13 @@
 # UDCViS v0.3
-##### The Universal Data Cube Visualization System
-##### Curran Kelleher - December 2012
+##### The Universal Data Cube Visualization System<br>Curran Kelleher - December 2012
 
-Licensed under the GNU Lesser General Public License Version 3 (LGPLV3)](http://www.gnu.org/licenses/lgpl.html), copyright Curran Kelleher 2012-2013.
+<center>Licensed under [LGPLV3](http://www.gnu.org/licenses/lgpl.html)</center>
 
 ## Design
 
 Version 0.3 will follow these design decisions:
 
- * There is no server-side software, only files
-   * hosted on the Web
+ * There is no server-side software, only files hosted on the Web
    * using [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) for cross-domain support
  * [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) will be leveraged for code modularity
    * using [Require.js](http://requirejs.org/)
@@ -19,8 +17,9 @@ Version 0.3 will follow these design decisions:
 ## Envisioned Table of Contents
 
  * Examples
-   * [helloSPARQL](../examples/helloSPARQL) An example of client-side SPARQL evaluation over TTL RDF data.
-   * [udcOutliner](../examples/udcOutliner) A program that generates an HTML outline from UDC metadata.
+   * [HelloModules](../examples/helloModules) - An example of how a combination of libraries and local modules can be required using Require.js.
+   * [HelloSPARQL](../examples/helloSPARQL) - An example of client-side SPARQL evaluation.
+   * [UdcOutliner](../examples/udcOutliner) - Generates an HTML outline from UDC metadata.
  * The Universal Data Cube
    * Dimensions
    * Measures
