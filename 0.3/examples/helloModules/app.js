@@ -1,14 +1,13 @@
 require(["jquery", "underscore", "backbone", "async", 
-         "collections/sorted-set", "myModule"],
+         "collections/sorted-set", "jquery.csv", "app/myModule"],
         function($, _, Backbone, async, 
-                 SortedSet, myModule) {
+                 SortedSet, csv, myModule) {
   var log = function(str){
     console.log(str);
     document.write(str+"<br>");
   };
   $(function() {
     log("jQuery is go");
-    console.log(_);
     _.each(["go"], function(elem){
       log("Underscore is "+elem);
       var o = {};
@@ -25,6 +24,9 @@ require(["jquery", "underscore", "backbone", "async",
             return Math.random() - .5;
           }).forEach(function (value) {
             log("collections is go");
+
+            log($.csv.toArray("jquery.csv,is,go").join(" "));
+            
             myModule.speak(log);
           });
         });
