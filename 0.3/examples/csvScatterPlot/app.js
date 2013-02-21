@@ -1,6 +1,6 @@
 // The simplest possible code to 
 // draw a scatter plot from CSV data.
-require(["jquery.csv","text!iris.csv"], function(csv, data){
+require(["jquery.csv","text!../../data/iris.csv"], function(csv, data){
   var table = ($.csv.toArrays(data)),
       canvas = document.getElementById("canvas"),
       c = canvas.getContext("2d");
