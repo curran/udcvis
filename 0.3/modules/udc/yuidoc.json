@@ -1,0 +1,11 @@
+{
+  "name": "The UDCViS API",
+  "description": "A library for interactive graphics and visualization.",
+  "version": "0.3.0",
+  "url": "http://universaldatacube.org/",
+  "options": {
+    "outdir": "../../apidocs",
+    "linkNatives": "false",
+    "ignorePaths": [ "lib" ]
+  }
+}

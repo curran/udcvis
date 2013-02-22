@@ -1,0 +1,197 @@
+{
+    "project": {
+        "name": "The UDCViS API",
+        "description": "A library for interactive graphics and visualization.",
+        "version": "0.3.0",
+        "url": "http://universaldatacube.org/"
+    },
+    "files": {
+        "Interval.js": {
+            "name": "Interval.js",
+            "modules": {},
+            "classes": {
+                "Interval": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Rectangle.js": {
+            "name": "Rectangle.js",
+            "modules": {},
+            "classes": {
+                "Rectangle": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Interval": {
+            "name": "Interval",
+            "shortname": "Interval",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Interval.js",
+            "line": 1,
+            "description": "A numeric interval between two values `a` and `b`.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "a",
+                    "description": "The beginning of the interval.",
+                    "type": "Number"
+                },
+                {
+                    "name": "b",
+                    "description": "The end of the interval.",
+                    "type": "Number"
+                }
+            ]
+        },
+        "Rectangle": {
+            "name": "Rectangle",
+            "shortname": "Rectangle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Rectangle.js",
+            "line": 1,
+            "description": "A 2D rectangle `(x, y, width, height)`.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "w",
+                    "description": "Width",
+                    "type": "Number"
+                },
+                {
+                    "name": "h",
+                    "description": "Height",
+                    "type": "Number"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "Interval.js",
+            "line": 10,
+            "description": "The beginning of the interval.",
+            "itemtype": "property",
+            "name": "a",
+            "type": "Number",
+            "class": "Interval"
+        },
+        {
+            "file": "Interval.js",
+            "line": 15,
+            "description": "The end of the interval.",
+            "itemtype": "property",
+            "name": "b",
+            "type": "Number",
+            "class": "Interval"
+        },
+        {
+            "file": "Interval.js",
+            "line": 22,
+            "itemtype": "method",
+            "name": "getSpan",
+            "return": {
+                "description": "`b-a`.",
+                "type": "Number"
+            },
+            "class": "Interval"
+        },
+        {
+            "file": "Interval.js",
+            "line": 29,
+            "description": "Modifies `b` such that `b-a = span`.",
+            "itemtype": "method",
+            "name": "setSpan",
+            "params": [
+                {
+                    "name": "span",
+                    "description": "The new value for `b-a`.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "`b-a`.",
+                "type": "Number"
+            },
+            "class": "Interval"
+        },
+        {
+            "file": "Interval.js",
+            "line": 38,
+            "itemtype": "method",
+            "name": "min",
+            "return": {
+                "description": "`min(b,a)`.",
+                "type": "Number"
+            },
+            "class": "Interval"
+        },
+        {
+            "file": "Interval.js",
+            "line": 45,
+            "itemtype": "method",
+            "name": "max",
+            "return": {
+                "description": "`max(b,a)`.",
+                "type": "Number"
+            },
+            "class": "Interval"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 18,
+            "itemtype": "method",
+            "name": "diagonal",
+            "return": {
+                "description": "The length of the diagonal of this rectangle, `sqrt(w^2+h^2)`.",
+                "type": "Number"
+            },
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 27,
+            "itemtype": "method",
+            "name": "x1",
+            "return": {
+                "description": "`x+w`",
+                "type": "Number"
+            },
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 34,
+            "itemtype": "method",
+            "name": "y1",
+            "return": {
+                "description": "`y+w`",
+                "type": "Number"
+            },
+            "class": "Rectangle"
+        }
+    ],
+    "warnings": []
+}
