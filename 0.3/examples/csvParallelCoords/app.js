@@ -7,7 +7,7 @@ require(["jquery.csv","text!../../data/iris.csv"], function(csv, data){
 
   function computeMetadata(){
     var i, j, row, str, val, meta,
-        columns = [4, 0, 1, 2, 3],
+        columns = [4, 2, 3, 0, 1],
         columnsMetadata = [],
         createMetadata = function(columnIndex){
           var meta = {
