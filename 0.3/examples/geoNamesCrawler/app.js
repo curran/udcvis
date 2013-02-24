@@ -5,9 +5,7 @@ require(["jquery", "underscore", "async"], function($, _, async){
     this.children = [];
   }
 
-  function createEarth(){
-    return new Node("6295630", "Earth");
-  }
+  var earth = new Node("6295630", "Earth");
 
   function childrenURL(id){
     return [
@@ -16,12 +14,6 @@ require(["jquery", "underscore", "async"], function($, _, async){
       id ,"&username=currankelleher&style=full"
     ].join("");
   };
-
-  //function nameWithLang(alternateNames, lang){
-  //  return _.find(alternateNames, function(name){
-  //    return name.lang == "en";
-  //  });
-  //}
 
   function buildTree(node, depth, callback){
     $.get(childrenURL(node.id), function(data){
@@ -46,22 +38,21 @@ require(["jquery", "underscore", "async"], function($, _, async){
             }
           });
         });
-        async.parallel(subtasks, callback)
+        async.parallel(subtasks, callback);
       }
     });
   }
 
   $("#geoTree").html("loading...");
   var depth = 3,
-      tree = createEarth(),
       message = "<br>still loading...";
-  buildTree(tree, depth, function cb(){
+  buildTree(earth, depth, function(){
     message = "<br>Finished loading.";
-    console.log(JSON.stringify(tree));
+    console.log(JSON.stringify(earth));
   });
 
   setInterval(function(){
-    var htmlTree = treeToHTML(tree);
+    var htmlTree = treeToHTML(earth);
     $("#geoTree").html(htmlTree + message);
   }, 1000);
 
