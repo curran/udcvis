@@ -38,6 +38,39 @@ define([], function(){
     */
     y1: function(){
       return this.y + this.h;
+    },
+    /**
+    Side effect: expands this rectangle
+    to fit the given rectangle.
+    @method expandToFit
+    */
+    expandToFit: function(rect){
+      if(rect.x < this.x){
+        this.w += this.x - rect.x;
+        this.x = rect.x;
+      }
+      if(rect.y < this.y){
+        this.h += this.y - rect.y;
+        this.y = rect.y;
+      }
+      if(rect.x1() > this.x1())
+        this.w = rect.x1() - this.x;
+      if(rect.y1() > this.y1())
+        this.h = rect.y1() - this.y;
+    },
+    /**
+    Tests whether or not the given rectangle
+    intersects this rectangle, returns a Boolean.
+    @method intersects
+    @param {Rectangle} rect
+    */
+    intersects:function(rect){
+      return (
+        this.x1() > rect.x &&
+        this.x < rect.x1() &&
+        this.y1() > rect.y &&
+        this.y < rect.y1()
+      );
     }
   };
   return Rectangle;

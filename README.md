@@ -19,7 +19,7 @@ The versioning scheme is as follows:
    * A first prototype of the UDCViS modules
    * Example applications
    * Technology tests
- * Version 0.3: January - March 2012
+ * [Version 0.3](http://curran.github.com/udcvis/0.3/pages/): January - March 2012
   * A refactoring of UDCViS modules.
  * Versions 0.4 ... 0.9
    * Continual refinement of modules, architecture, and example applications.
