@@ -2,6 +2,7 @@ var require = {
   // These libraries are made available as
   // modules to every application.
   paths: {
+    'udc':          '../../modules/udc',
     'underscore':   '../../modules/lib/underscore',
     'backbone':     '../../modules/lib/backbone',
     'async':        '../../modules/lib/async',
@@ -13,7 +14,8 @@ var require = {
     'impress':      '../../modules/lib/impress',
     'marked':       '../../modules/lib/marked',
     'jquery.csv':   '../../modules/lib/jquery.csv',
-    'text':         '../../modules/lib/text'
+    'text':         '../../modules/lib/text',
+    'requestAnimFrame':'../../modules/lib/requestAnimFrame'
   },
   urlArgs: "cacheBust=" +  (new Date()).getTime()
 };

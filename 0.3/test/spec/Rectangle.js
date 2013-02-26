@@ -7,13 +7,9 @@ define(["udc/Rectangle"], function(Rectangle) {
       expect(rectangle.w).toEqual(30);
       expect(rectangle.h).toEqual(40);
     });
-    it("should compute x1, y1", function(){
-      expect(rectangle.x1()).toEqual(10 + 30);
-      expect(rectangle.y1()).toEqual(20 + 40);
-    });
     it("should compute diagonal", function(){
       var d = Math.sqrt(30*30 + 40*40);
-      expect(rectangle.diagonal()).toEqual(d);
+      expect(rectangle.diagonal).toEqual(d);
     });
     it("should expand to fit", function(){
       var a = new Rectangle(0, 0, 1, 1),
@@ -37,6 +33,20 @@ define(["udc/Rectangle"], function(Rectangle) {
 
       expect(a.intersects(b)).toEqual(true);
       expect(a.intersects(c)).toEqual(false);
+    });
+    it("should compute x1, y1, x2, y2", function(){
+      expect(rectangle.x1).toEqual(rectangle.x);
+      expect(rectangle.y1).toEqual(rectangle.y);
+      expect(rectangle.x2).toEqual(10 + 30);
+      expect(rectangle.y2).toEqual(20 + 40);
+
+      rectangle.x2 = rectangle.x2 + 10;
+      rectangle.y2 += 20;
+
+      expect(rectangle.x2).toEqual(10 + 30 + 10);
+      expect(rectangle.y2).toEqual(20 + 40 + 20);
+      expect(rectangle.w).toEqual(30 + 10);
+      expect(rectangle.h).toEqual(40 + 20);
     });
   });
 });
