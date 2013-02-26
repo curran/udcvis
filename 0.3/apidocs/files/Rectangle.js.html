@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/FullScreenCanvas.html">FullScreenCanvas</a></li>
+            
                 <li><a href="..&#x2F;classes/Interval.html">Interval</a></li>
             
                 <li><a href="..&#x2F;classes/Rectangle.html">Rectangle</a></li>
@@ -88,47 +90,116 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&#x2F;**
-A 2D rectangle &#x60;(x, y, width, height)&#x60;.
+define([], function(){
+  &#x2F;**
+  A 2D rectangle &#x60;(x, y, width, height)&#x60;.
 
-@class Rectangle
-@constructor 
-@param {Number} x
-@param {Number} y
-@param {Number} w Width
-@param {Number} h Height
-*&#x2F;
-function Rectangle(x, y, w, h)
-  this.x = x;
-  this.y = y;
-  this.w = w;
-  this.h = h;
-}
-Rectangle.prototype = {
-  &#x2F;**
-  @method diagonal
-  @return {Number} The length of the diagonal of this rectangle, &#x60;sqrt(w^2+h^2)&#x60;.
+  @class Rectangle
+  @constructor 
+  @param {Number} x
+  @param {Number} y
+  @param {Number} w Width
+  @param {Number} h Height
   *&#x2F;
-  diagonal: function(){
-    var ww = this.w * this.w;
-    var hh = this.h * this.h;
-    return Math.sqrt(ww + hh);
-  },
-  &#x2F;**
-  @method x1
-  @return {Number} &#x60;x+w&#x60;
-  *&#x2F;
-  x1: function(){
-    return this.x + this.w;
-  },
-  &#x2F;**
-  @method y1
-  @return {Number} &#x60;y+w&#x60;
-  *&#x2F;
-  y1: function(){
-    return this.y + this.h;
+  function Rectangle(x, y, w, h){
+    &#x2F;**
+    The x coordinate of the rectangle.
+    @property x {Number}
+    *&#x2F;
+    this.x = x;
+    &#x2F;**
+    The y coordinate of the rectangle.
+    @property y {Number}
+    *&#x2F;
+    this.y = y;
+    &#x2F;**
+    The width of the rectangle.
+    @property w {Number}
+    *&#x2F;
+    this.w = w;
+    &#x2F;**
+    The height of the rectangle.
+    @property h {Number}
+    *&#x2F;
+    this.h = h;
   }
-};
+  Rectangle.prototype = {
+    &#x2F;**
+    The length of the diagonal of this rectangle, &#x60;sqrt(w^2+h^2)&#x60;.
+    @property diagonal {Number}
+    *&#x2F;
+    get diagonal(){
+      var ww = this.w * this.w;
+      var hh = this.h * this.h;
+      return Math.sqrt(ww + hh);
+    },
+    &#x2F;**
+    The first x coordinate of the rectangle.
+    Same as &#x60;x&#x60;.
+    @property x1 {Number}
+    *&#x2F;
+    get x1(){ return this.x; },
+    set x1(x1){ this.x = x1; },
+    &#x2F;**
+    The second x coordinate of the rectangle.
+    Equal to &#x60;x+w&#x60;.
+    @property x2 {Number}
+    *&#x2F;
+    get x2(){ return this.x + this.w; },
+    set x2(x2){ this.w = x2 - this.x; },
+    &#x2F;**
+    The first y coordinate of the rectangle.
+    Same as &#x60;y&#x60;.
+    @property y1 {Number}
+    *&#x2F;
+    get y1(){ return this.y; },
+    set y1(y1){ this.y = y1; },
+    &#x2F;**
+    The second y coordinate of the rectangle.
+    Equal to &#x60;y+h&#x60;.
+    @property y2 {Number}
+    *&#x2F;
+    get y2(){ return this.y + this.h; },
+    set y2(y2){ this.h = y2 - this.y; },
+    &#x2F;**
+    Side effect: expands this rectangle
+    to fit the given rectangle.
+    @method expandToFit
+    *&#x2F;
+    expandToFit: function(rect){
+      var a = this, b = rect;
+      if(b.x &lt; a.x){
+        a.w += a.x - b.x;
+        a.x = b.x;
+      }
+      if(b.y &lt; a.y){
+        a.h += a.y - b.y;
+        a.y = b.y;
+      }
+      if(b.x2 &gt; a.x2){
+        a.w += b.x2 - a.x2;
+      }
+      if(b.y2 &gt; a.y2){
+        a.h += b.y2 - a.y2;
+      }
+    },
+    &#x2F;**
+    Tests whether or not the given rectangle
+    intersects this rectangle, returns a Boolean.
+    @method intersects
+    @param {Rectangle} rect
+    *&#x2F;
+    intersects:function(rect){
+      return (
+        this.x2 &gt; rect.x1 &amp;&amp;
+        this.x1 &lt; rect.x2 &amp;&amp;
+        this.y2 &gt; rect.y1 &amp;&amp;
+        this.y1 &lt; rect.y2
+      );
+    }
+  };
+  return Rectangle;
+});
 
     </pre>
 </div>

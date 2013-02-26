@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Interval.js - The UDCViS API</title>
+    <title>FullScreenCanvas.js - The UDCViS API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -86,65 +86,83 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: Interval.js</h1>
+                        <h1 class="file-heading">File: FullScreenCanvas.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-define([],function(){
-  &#x2F;**
-  A numeric interval between two values &#x60;a&#x60; and &#x60;b&#x60;.
+&#x2F;**
+A module for defining canvas-based apps
+that fill the entire page. This module assumes
+there is a canvas on the page whose id is &quot;canvas&quot;
 
-  @class Interval
-  @constructor 
-  @param {Number} a The beginning of the interval.
-  @param {Number} b The end of the interval.
-  *&#x2F;
-  function Interval(a, b){
-    &#x2F;**
-    The beginning of the interval.
-    @property a {Number}
-    *&#x2F;
-    this.a = a;
-    &#x2F;**
-    The end of the interval.
-    @property b {Number}
-    *&#x2F;
-    this.b = b;
+Usage example:
+
+    function render(canvasBounds, canvasContext, resized){
+      if(resized){ redrawStuff(); }
+    }
+    FullScreenCanvas.init(render);&#x60;
+
+@class FullScreenCanvas
+ *&#x2F;
+define(function(require) {
+  var requestAnimFrame = require(&#x27;requestAnimFrame&#x27;),
+      Rectangle = require(&#x27;udc&#x2F;Rectangle&#x27;),
+      canvasBounds = new Rectangle(0,0,0,0),
+      canvas = document.getElementById(&#x27;canvas&#x27;),
+      c = canvas.getContext(&#x27;2d&#x27;),
+      &#x2F;&#x2F; the callback passed in to &#x60;init&#x60;.
+      renderCallback;
+
+  function executeFrame(){
+    renderCallback(canvasBounds, c, resize(canvas));
+    requestAnimFrame(executeFrame);
   }
-  Interval.prototype = {
+
+  function resize(canvas){
+    if(!((canvas.width === window.innerWidth) &amp;&amp; 
+         (canvas.height === window.innerHeight))){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      canvasBounds.w = canvas.width;
+      canvasBounds.h = canvas.height;
+
+      return true;
+    }
+    return false;
+  }
+
+  return {
     &#x2F;**
-    @method span
-    @return {Number} &#x60;b-a&#x60;.
+    Initializes the rendering function and starts the
+    animation loop.
+    @method init
+    @param render 
+      {function(canvasBounds, canvasContext, resized)} 
+      The render callback, which takes as arguments:
+
+     * &#x60;canvasBounds&#x60; A 
+       {{#crossLink &quot;Rectangle&quot;}}{{&#x2F;crossLink}} that contains 
+       the bounding box of the canvas.
+     * &#x60;canvasContext&#x60; The 2D drawing context of the canvas.
+     * &#x60;resized&#x60; A boolean, whether or not the canvas has
+       been resized this frame (as a result of initialization
+       or a user resizing the page).
     *&#x2F;
-    span: function(){
-      return this.b - this.a;
-    },
-    &#x2F;**
-    Modifies &#x60;b&#x60; such that &#x60;b-a = span&#x60;.
-    @method setSpan
-    @param {Number} span The new value for &#x60;b-a&#x60;.  
-    @return {Number} &#x60;b-a&#x60;.
-    *&#x2F;
-    setSpan: function(span){
-      this.b = this.a + span;
-    },
-    &#x2F;**
-    @method min
-    @return {Number} &#x60;min(b,a)&#x60;.
-    *&#x2F;
-    min: function(){
-      return Math.min(this.a, this.b);
-    },
-    &#x2F;**
-    @method max
-    @return {Number} &#x60;max(b,a)&#x60;.
-    *&#x2F;
-    max: function(){
-      return Math.max(this.a, this.b);
+    init: function(render){
+      if(renderCallback){
+        throw Error(&quot;Render callback already defined.&quot;);
+      }
+      else{
+
+        &#x2F;&#x2F; store the callback
+        renderCallback = render;
+
+        &#x2F;&#x2F; kick off the animation loop
+        executeFrame();
+      }
     }
   };
-
-  return Interval;
 });
 
     </pre>

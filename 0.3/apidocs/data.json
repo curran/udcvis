@@ -6,6 +6,15 @@
         "url": "http://universaldatacube.org/"
     },
     "files": {
+        "FullScreenCanvas.js": {
+            "name": "FullScreenCanvas.js",
+            "modules": {},
+            "classes": {
+                "FullScreenCanvas": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "Interval.js": {
             "name": "Interval.js",
             "modules": {},
@@ -27,6 +36,18 @@
     },
     "modules": {},
     "classes": {
+        "FullScreenCanvas": {
+            "name": "FullScreenCanvas",
+            "shortname": "FullScreenCanvas",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "FullScreenCanvas.js",
+            "line": 1,
+            "description": "A module for defining canvas-based apps\nthat fill the entire page. This module assumes\nthere is a canvas on the page whose id is \"canvas\"\n\nUsage example:\n\n    function render(canvasBounds, canvasContext, resized){\n      if(resized){ redrawStuff(); }\n    }\n    FullScreenCanvas.init(render);`"
+        },
         "Interval": {
             "name": "Interval",
             "shortname": "Interval",
@@ -36,7 +57,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "Interval.js",
-            "line": 1,
+            "line": 2,
             "description": "A numeric interval between two values `a` and `b`.",
             "is_constructor": 1,
             "params": [
@@ -61,7 +82,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "Rectangle.js",
-            "line": 1,
+            "line": 2,
             "description": "A 2D rectangle `(x, y, width, height)`.",
             "is_constructor": 1,
             "params": [
@@ -90,8 +111,23 @@
     },
     "classitems": [
         {
+            "file": "FullScreenCanvas.js",
+            "line": 44,
+            "description": "Initializes the rendering function and starts the\nanimation loop.",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "render",
+                    "description": "\n   \n  The render callback, which takes as arguments:\n\n * `canvasBounds` A \n   {{#crossLink \"Rectangle\"}}{{/crossLink}} that contains \n   the bounding box of the canvas.\n * `canvasContext` The 2D drawing context of the canvas.\n * `resized` A boolean, whether or not the canvas has\n   been resized this frame (as a result of initialization\n   or a user resizing the page).",
+                    "type": "Function(canvasBounds, canvasContext, resized)"
+                }
+            ],
+            "class": "FullScreenCanvas"
+        },
+        {
             "file": "Interval.js",
-            "line": 10,
+            "line": 11,
             "description": "The beginning of the interval.",
             "itemtype": "property",
             "name": "a",
@@ -100,7 +136,7 @@
         },
         {
             "file": "Interval.js",
-            "line": 15,
+            "line": 16,
             "description": "The end of the interval.",
             "itemtype": "property",
             "name": "b",
@@ -109,9 +145,9 @@
         },
         {
             "file": "Interval.js",
-            "line": 22,
+            "line": 23,
             "itemtype": "method",
-            "name": "getSpan",
+            "name": "span",
             "return": {
                 "description": "`b-a`.",
                 "type": "Number"
@@ -120,7 +156,7 @@
         },
         {
             "file": "Interval.js",
-            "line": 29,
+            "line": 30,
             "description": "Modifies `b` such that `b-a = span`.",
             "itemtype": "method",
             "name": "setSpan",
@@ -139,7 +175,7 @@
         },
         {
             "file": "Interval.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "method",
             "name": "min",
             "return": {
@@ -150,7 +186,7 @@
         },
         {
             "file": "Interval.js",
-            "line": 45,
+            "line": 46,
             "itemtype": "method",
             "name": "max",
             "return": {
@@ -161,35 +197,106 @@
         },
         {
             "file": "Rectangle.js",
+            "line": 13,
+            "description": "The x coordinate of the rectangle.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
             "line": 18,
-            "itemtype": "method",
+            "description": "The y coordinate of the rectangle.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 23,
+            "description": "The width of the rectangle.",
+            "itemtype": "property",
+            "name": "w",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 28,
+            "description": "The height of the rectangle.",
+            "itemtype": "property",
+            "name": "h",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 35,
+            "description": "The length of the diagonal of this rectangle, `sqrt(w^2+h^2)`.",
+            "itemtype": "property",
             "name": "diagonal",
-            "return": {
-                "description": "The length of the diagonal of this rectangle, `sqrt(w^2+h^2)`.",
-                "type": "Number"
-            },
+            "type": "Number",
             "class": "Rectangle"
         },
         {
             "file": "Rectangle.js",
-            "line": 27,
-            "itemtype": "method",
+            "line": 44,
+            "description": "The first x coordinate of the rectangle.\nSame as `x`.",
+            "itemtype": "property",
             "name": "x1",
-            "return": {
-                "description": "`x+w`",
-                "type": "Number"
-            },
+            "type": "Number",
             "class": "Rectangle"
         },
         {
             "file": "Rectangle.js",
-            "line": 34,
-            "itemtype": "method",
+            "line": 51,
+            "description": "The second x coordinate of the rectangle.\nEqual to `x+w`.",
+            "itemtype": "property",
+            "name": "x2",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 58,
+            "description": "The first y coordinate of the rectangle.\nSame as `y`.",
+            "itemtype": "property",
             "name": "y1",
-            "return": {
-                "description": "`y+w`",
-                "type": "Number"
-            },
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 65,
+            "description": "The second y coordinate of the rectangle.\nEqual to `y+h`.",
+            "itemtype": "property",
+            "name": "y2",
+            "type": "Number",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 72,
+            "description": "Side effect: expands this rectangle\nto fit the given rectangle.",
+            "itemtype": "method",
+            "name": "expandToFit",
+            "class": "Rectangle"
+        },
+        {
+            "file": "Rectangle.js",
+            "line": 94,
+            "description": "Tests whether or not the given rectangle\nintersects this rectangle, returns a Boolean.",
+            "itemtype": "method",
+            "name": "intersects",
+            "params": [
+                {
+                    "name": "rect",
+                    "description": "",
+                    "type": "Rectangle"
+                }
+            ],
             "class": "Rectangle"
         }
     ],

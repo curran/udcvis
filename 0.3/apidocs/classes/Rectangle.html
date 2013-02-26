@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/FullScreenCanvas.html">FullScreenCanvas</a></li>
+            
                 <li><a href="..&#x2F;classes/Interval.html">Interval</a></li>
             
                 <li><a href="..&#x2F;classes/Rectangle.html">Rectangle</a></li>
@@ -92,7 +94,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;Rectangle.js.html#l1"><code>Rectangle.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;Rectangle.js.html#l2"><code>Rectangle.js:2</code></a>
         </div>
     
 
@@ -170,7 +172,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l1"><code>Rectangle.js:1</code></a>
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l2"><code>Rectangle.js:2</code></a>
         
         </p>
 
@@ -270,6 +272,8 @@
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
         
         
     </ul>
@@ -285,21 +289,87 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_diagonal">diagonal</a>
+                                <a href="#method_expandToFit">expandToFit</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_x1">x1</a>
+                                <a href="#method_intersects">intersects</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_y1">y1</a>
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_diagonal">diagonal</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_h">h</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_w">w</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_x">x</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_x1">x1</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_x2">x2</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_y">y</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_y1">y1</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_y2">y2</a>
 
                                 
                                 
@@ -312,8 +382,6 @@
             
 
             
-
-            
         </div>
 
         
@@ -321,22 +389,426 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_diagonal" class="method item">
-    <h3 class="name"><code>diagonal</code></h3>
+                    <div id="method_expandToFit" class="method item">
+    <h3 class="name"><code>expandToFit</code></h3>
 
     
         <span class="paren">()</span>
     
 
     
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-        </span>
+
+    
+
     
 
     
 
     
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l72"><code>Rectangle.js:72</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Side effect: expands this rectangle
+to fit the given rectangle.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_intersects" class="method item">
+    <h3 class="name"><code>intersects</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>rect</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l94"><code>Rectangle.js:94</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Tests whether or not the given rectangle
+intersects this rectangle, returns a Boolean.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">rect</code>
+                        <span class="type"><a href="../classes/Rectangle.html" class="crosslink">Rectangle</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_diagonal" class="property item">
+    <h3 class="name"><code>diagonal</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l35"><code>Rectangle.js:35</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The length of the diagonal of this rectangle, <code>sqrt(w^2+h^2)</code>.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_h" class="property item">
+    <h3 class="name"><code>h</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l28"><code>Rectangle.js:28</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The height of the rectangle.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_w" class="property item">
+    <h3 class="name"><code>w</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l23"><code>Rectangle.js:23</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The width of the rectangle.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_x" class="property item">
+    <h3 class="name"><code>x</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l13"><code>Rectangle.js:13</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The x coordinate of the rectangle.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_x1" class="property item">
+    <h3 class="name"><code>x1</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l44"><code>Rectangle.js:44</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The first x coordinate of the rectangle.
+Same as <code>x</code>.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_x2" class="property item">
+    <h3 class="name"><code>x2</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l51"><code>Rectangle.js:51</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The second x coordinate of the rectangle.
+Equal to <code>x+w</code>.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_y" class="property item">
+    <h3 class="name"><code>y</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
     
 
@@ -361,124 +833,26 @@
         
         </p>
 
-
         
 
         
     </div>
 
     <div class="description">
-        
+        <p>The y coordinate of the rectangle.</p>
     </div>
 
     
 
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
-                    
-                    The length of the diagonal of this rectangle, <code>sqrt(w^2+h^2)</code>.
-                
-            </div>
-        </div>
     
 
     
 </div>
 
                 
-                    <div id="method_x1" class="method item">
-    <h3 class="name"><code>x1</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l27"><code>Rectangle.js:27</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
-                    
-                    <code>x+w</code>
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_y1" class="method item">
+                    <div id="property_y1" class="property item">
     <h3 class="name"><code>y1</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-        </span>
-    
-
-    
-
-    
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
     
 
@@ -499,10 +873,9 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l34"><code>Rectangle.js:34</code></a>
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l58"><code>Rectangle.js:58</code></a>
         
         </p>
-
 
         
 
@@ -510,24 +883,57 @@
     </div>
 
     <div class="description">
-        
+        <p>The first y coordinate of the rectangle.
+Same as <code>y</code>.</p>
     </div>
 
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
 
-            <div class="returns-description">
+    
+</div>
+
                 
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
-                    
-                    <code>y+w</code>
+                    <div id="property_y2" class="property item">
+    <h3 class="name"><code>y2</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
                 
-            </div>
-        </div>
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;Rectangle.js.html#l65"><code>Rectangle.js:65</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The second y coordinate of the rectangle.
+Equal to <code>y+h</code>.</p>
+    </div>
+
+    
+
     
 
     
@@ -535,8 +941,6 @@
 
                 
             </div>
-        
-
         
 
         
