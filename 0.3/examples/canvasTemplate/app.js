@@ -1,7 +1,7 @@
 require(['udc/FullScreenCanvas'], function(FullScreenCanvas) {
 
   // `render` is called 60 times per second.
-  function render(canvasBounds, canvasContext, resized){
+  function render(canvasContext, canvasBounds, resized){
     if(resized){
       console.log("Resized!");
       drawX(canvasContext, canvasBounds);

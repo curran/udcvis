@@ -5,7 +5,7 @@ there is a canvas on the page whose id is "canvas"
 
 Usage example:
 
-    function render(canvasBounds, canvasContext, resized){
+    function render(canvasContext, canvasBounds, resized){
       if(resized){ redrawStuff(); }
     }
     FullScreenCanvas.init(render);`
@@ -22,7 +22,7 @@ define(function(require) {
       renderCallback;
 
   function executeFrame(){
-    renderCallback(canvasBounds, c, resize(canvas));
+    renderCallback(c, canvasBounds, resize(canvas));
     requestAnimFrame(executeFrame);
   }
 
@@ -46,13 +46,13 @@ define(function(require) {
     animation loop.
     @method init
     @param render 
-      {function(canvasBounds, canvasContext, resized)} 
+      {function(canvasContext, canvasBounds, resized)} 
       The render callback, which takes as arguments:
 
+     * `canvasContext` The 2D drawing context of the canvas.
      * `canvasBounds` A 
        {{#crossLink "Rectangle"}}{{/crossLink}} that contains 
        the bounding box of the canvas.
-     * `canvasContext` The 2D drawing context of the canvas.
      * `resized` A boolean, whether or not the canvas has
        been resized this frame (as a result of initialization
        or a user resizing the page).
@@ -62,7 +62,6 @@ define(function(require) {
         throw Error("Render callback already defined.");
       }
       else{
-
         // store the callback
         renderCallback = render;
 
