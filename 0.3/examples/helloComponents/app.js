@@ -1,9 +1,15 @@
 // An outline of a Component concept
-require(['udc/FullScreenCanvas', 'app/ColoredXComponent'], 
-    function(FullScreenCanvas, ColoredXComponent){
+require(['udc/FullScreenCanvas', 
+         'app/ColoredXComponent', 
+         'app/SquareComponent'], 
+    function(FullScreenCanvas, 
+             ColoredXComponent,
+             SquareComponent){
 
 //  var rootComponent = new XComponent();
-  var rootComponent = new ColoredXComponent('red');
+  var rootComponent = new SquareComponent(
+    new ColoredXComponent('red')
+  );
 
   // `render` is called 60 times per second.
   function render(c, box, resized){

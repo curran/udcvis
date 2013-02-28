@@ -1,15 +1,15 @@
 // A ColoredXComponent is an XComponent with
 // a background color.
 define(['app/XComponent'], function(XComponent){
-  var proto = new XComponent(),
-      parent = XComponent.prototype,
-      superConstructor = XComponent;
+  var superConstructor = XComponent,
+      proto = new superConstructor(),
+      parent = superConstructor.prototype;
 
-  function constructor(color){
+  function ColoredXComponent(color){
     superConstructor.call(this);
     this.color = color;
   }
-  constructor.prototype = proto;
+  ColoredXComponent.prototype = proto;
   
   proto.draw = function(c, box){
     // Draw the colored boxackground
@@ -21,5 +21,5 @@ define(['app/XComponent'], function(XComponent){
     parent.draw.call(this, c, box);
   };
 
-  return constructor;
+  return ColoredXComponent;
 });
