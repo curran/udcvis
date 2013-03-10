@@ -68,6 +68,7 @@ define(function(require) {
         // kick off the animation loop
         executeFrame();
       }
-    }
+    },
+    canvas: canvas
   };
 });

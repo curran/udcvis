@@ -28,11 +28,27 @@ define(['app/Component','udc/Rectangle'],
     var i, n = this.children.length, child,
         childSize, totalSize = 0, sizeSoFar = 0, 
         p1, p2;
+
+    // Sum sizes
     for(i = 0; i < n; i++){
       child = this.children[i];
-      childSize = child.options.size;
+      if(!child.options.aspectRatio)
+        childSize = child.options.size;
       totalSize += childSize;
     }
+
+    // Handle fixed aspect ratio
+    for(i = 0; i < n; i++){
+      child = this.children[i];
+      if(child.options.aspectRatio){
+//        if(this.orientation == 'horizontal'){
+//          child.options.size = child.options.aspectRatio - box.h / box.w;
+//        }
+        childSize = child.options.size;
+        totalSize += childSize;
+      }
+    }
+
     for(i = 0; i < n; i++){
       child = this.children[i];
       childSize = child.options.size;
