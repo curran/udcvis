@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <canvas width="150" height="150" id="canvas" ></canvas>
+  <script>
+var c = canvas.getContext('2d');
+
+c.fillStyle = 'rgba(0,0,0,0.5)';
+c.fillRect(0, 0, 100, 100);
+
+var buffer = document.createElement('canvas');
+buffer.width = 150;
+buffer.height = 150;
+var bc = buffer.getContext('2d');
+
+bc.fillStyle = 'rgba(0,0,0,0.5)';
+bc.fillRect(50, 50, 100, 100);
+
+c.drawImage(buffer, 0, 0);
+  </script>
+</body>
+</html>
