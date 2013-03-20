@@ -1,6 +1,6 @@
-define ['Component'] (Component) ->
+define ['Component', 'underscore'], (Component, _) ->
   class Container extends Component
-    constructor: -> super; @children = []
+    constructor: -> super(); @children = []
     addChild: (component, options) ->
       child =
         component: component

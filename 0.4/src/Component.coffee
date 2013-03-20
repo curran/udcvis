@@ -1,3 +1,3 @@
-define ['Backbone'], (Backbone) ->
+define ['backbone', 'underscore'], (Backbone, _) ->
   class Component
-    constructor: -> _.extend(@, Backbone.Events);
+    constructor: -> _.extend(@, Backbone.Events)
