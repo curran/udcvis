@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>A Language of Types for CoffeeScript</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>A Language of Types for CoffeeScript</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2>Types</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <ul>
+<li>Numbers<ul>
+<li>Integers</li>
+</ul>
+</li>
+<li>Strings</li>
+<li>Arrays</li>
+<li>Objects<ul>
+<li>as a set of named and typed properties</li>
+<li>as a Map<KeyType, ValueType></li>
+</ul>
+</li>
+</ul>
+<h2>Typed Things</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <ul>
+<li>Variables</li>
+<li>Functions<ul>
+<li>Arguments</li>
+<li>Return Values</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>types = [
+  <span class="string">'Number'</span>,
+  <span class="string">'Integer'</span>,
+  <span class="string">'String'</span>,
+  <span class="string">'Array'</span>,
+  <span class="string">'Object'</span>
+]
+
+typedThings = [
+  <span class="string">'Variables'</span>,
+  <span class="string">'Arguments'</span>,
+  <span class="string">'Return Values'</span>
+]
+
+<span class="keyword">for</span> type <span class="keyword">in</span> types
+  <span class="keyword">for</span> thing <span class="keyword">in</span> typedThings
+    console.log <span class="string">" * <span class="subst">#{type}</span> <span class="subst">#{thing}</span>"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Aim: consistency - use <code>&lt;T&gt;</code> for type.</p>
+<h2>Examples</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <ul>
+<li>Number Variables</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>x &lt;Number&gt; = <span class="number">3.14</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <ul>
+<li>Number Arguments</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="title">print</span></span> = (x &lt;Number&gt;) -&gt; console.log x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <ul>
+<li>Number Return Values</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>square = (x &lt;Number&gt;)&lt;Number&gt; -&gt; x*x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <ul>
+<li>Integer Variables</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>x &lt;Integer&gt; = <span class="number">5</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <ul>
+<li>Integer Arguments</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="title">print</span></span> = (x &lt;Integer&gt;) -&gt; console.log x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <ul>
+<li>Integer Return Values</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>square = (x &lt;Integer&gt;)&lt;Integer&gt; -&gt; x*x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <ul>
+<li>String Variables</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>x &lt;String&gt; = <span class="string">"Hello"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <ul>
+<li>String Arguments</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="title">print</span></span> = (x &lt;String&gt;) -&gt; console.log x</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <ul>
+<li>String Return Values</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>concat = (x &lt;String&gt;, y &lt;String&gt;)&lt;String&gt; -&gt; x + y</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <ul>
+<li>Array Variables</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>x &lt;Array&gt; = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">"Hello"</span>]
+y &lt;Array&lt;Number&gt;&gt; = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]
+z &lt;Array&lt;String&gt;&gt; = [<span class="string">"Hello"</span>, <span class="string">"World"</span>]</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <ul>
+<li>Array Arguments</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="title">print</span></span> = (xs &lt;Array&gt;) -&gt; console.log x <span class="keyword">for</span> x <span class="keyword">in</span> xs</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <ul>
+<li>Array Return Values</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>square = (xs &lt;Array&gt;)&lt;Array&gt; -&gt; x*x <span class="keyword">for</span> x <span class="keyword">in</span> xs</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <ul>
+<li>Object Variables</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>china &lt;name:String, population:Number&gt; =
+  name: <span class="string">'China'</span>
+  population:<span class="number">1354040000</span>
+
+dictionary &lt;Map&lt;String,String&gt;&gt; =
+  <span class="string">"happy"</span>: <span class="string">"enjoying or characterized by well-being and contentment"</span>
+  <span class="string">"sad"</span>: <span class="string">"affected with or expressive of grief or unhappiness"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <ul>
+<li>Object Arguments</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="title">print</span></span> = (person &lt;firstName:String, lastName:String&gt;) -&gt;
+  console.log person.firstName, person.firstName</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <ul>
+<li>Object Return Values</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>getLargestCountry = ()&lt;name:String, population:Number&gt; -&gt;
+  name: <span class="string">'China'</span>
+  population:<span class="number">1354040000</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h2>Type Composition</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <ul>
+<li>Array of Objects</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>countries &lt;Array&lt;name:String, population:Number&gt;&gt; = [
+  {name: <span class="string">'China'</span>, population:<span class="number">1354040000</span> },
+  {name: <span class="string">'India'</span>, population:<span class="number">1210193422</span> },
+  {name: <span class="string">'United States'</span>, population:<span class="number">315712000</span> }
+]</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

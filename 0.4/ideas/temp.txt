@@ -1,0 +1,56 @@
+
+#
+# * a:String
+#myString<String> = "Hello"
+#myFunction = ()<String> -> "Hello":
+## * a:Number
+#myNumber<Number> = 3.14
+##   * a:Integer
+#myInteger<Integer> = 5
+## * a:Array
+#myArray<Array> = [1,2,3,"Hello"]
+## * a:Array<String>, a:[String]
+## * a:{foo:Number, bar:String}
+## * a:Map<String, Number>
+## * a:{foo:Array<String>, bar:Map<String, Number>}
+## * a:Array<Map<String, String>>, a:[{String: String}]
+#
+## Argument Types
+## ==============
+#
+#foo = (arg1, arg2) ->
+#  enforceType(arg1, Number)
+#  enforceType(arg2, String)
+#  ...
+#
+#foo = (arg1:Number, arg2:String) ->
+#
+## Return Value Types
+## ==================
+#
+## Returning Primitives
+## --------------------
+#
+## * Returning Strings
+#foo = (arg1, arg2) ->
+#  enforceType(arg1, Number)
+#  enforceType(arg2, String)
+#  return enforceType(arg1 + arg2, String)
+#
+#foo = (arg1:Number, arg2:String):String -> arg1 + arg2
+#
+## * Returning Numbers
+#foo = (arg1, arg2) ->
+#  enforceType(arg1, Number)
+#  enforceType(arg2, Number)
+#  return enforceType(arg1 + arg2, Number)
+#
+#foo = (arg1:Number, arg2:Number):Number -> arg1 + arg2
+#
+## * Returning Objects with named and typed members
+#foo = (arr:[])->
+#  retval =
+#    
+#  return enforceType(arg1 + arg2, Number)
+#
+#foo = (arg1:Number, arg2:Number):Number -> arg1 + arg2
