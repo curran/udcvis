@@ -1,0 +1,31 @@
+{
+  "name": "udc",
+  "preferGlobal": true,
+  "version": "0.5.0",
+  "author": "Curran Kelleher <curran.kelleher@gmail.com>",
+  "description": "The next big thing.",
+  "contributors": [
+    {
+      "name": "Curran Kelleher",
+      "email": "curran.kelleher@gmail.com"
+    }
+  ],
+  "bin": {
+    "udc": "./bin/udc"
+  },
+  "scripts": {
+    "start": "node ./bin/udc"
+  },
+  "main": "./lib/udc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/curran/udcvis.git"
+  },
+  "keywords": [
+    "visualization"
+  ],
+  "dependencies": {
+    "express": "~3.2.6"
+  },
+  "license": "MIT"
+}
