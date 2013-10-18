@@ -1,0 +1,12 @@
+{
+  "component1": {
+    "module": "foo",
+    "x": 5,
+    "y": 10
+  },
+  "component2": {
+    "module": "bar",
+    "a": 50,
+    "b": 100
+  }
+}

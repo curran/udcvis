@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+  An application state editing tool.
+  The overall concept is that components can
+  be assembled and configured through a browser-based
+  text editor, and the changes to the configuration
+  are tracked and propagated into the application state,
+  causing the state of the application to change.
+
+  Curran Kelleher 10/17/2013
+-->
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>UDCVis Core Example</title>
+
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <style>
+      #editorDiv {
+        position: fixed;
+        top: 0%;
+        left: 0%;
+        width: 50%;
+        height: 100%;
+      }
+      #appDiv {
+        position: fixed;
+        top: 0%;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+      }
+    </style>
+
+    <!-- The main entry point is in js/main.js. -->
+    <script src="lib/require.js" data-main="js/main"></script>
+    <script src="requireConfig.js"></script>
+  </head>
+  <body>
+    
+    <!-- This div will contain the configuration editor. -->
+    <div id="editorDiv"></div>
+
+    <!-- This div will contain the running application. -->
+    <div id="appDiv"></div>
+  </body>
+</html>
