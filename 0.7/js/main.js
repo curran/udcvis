@@ -7,21 +7,35 @@
  *
  * Curran Kelleher 10/17/2013
  */
-require(['state', 'runtime', 'history', 'editor', 'jquery', 'createAction'], function (State, Runtime, History, Editor, $, createAction) {
+require(['tests', 'state', 'runtime', 'history', 'editor', 'jquery', 'createAction'], function (tests, State, Runtime, History, Editor, $, createAction) {
+  //tests.run();
 
   var state = State(),
       runtime = Runtime(state);
-      //editor = Editor(state);
   
   state.on('transition', function (transition) {
+    console.log(JSON.stringify(transition, null, 2));
   });
   state.transition([
-    createAction['add']('component1', 'foo'),
-    createAction['set']('component1', 'x', 500)
+    createAction['add']('dashboard', 'dashboard'),
+    createAction['set']('dashboard', 'layout', {
+      "orientation": "vertical",
+      "children": [
+        {
+          "name": "vis1",
+          "size": 3
+        },
+        {
+          "name": "vis2",
+          "size": 1
+        }
+      ]
+    })
   ]);
   state.off('transition');
 
-  console.log('here');
+
+  //console.log('here');
 
   //$.getJSON('config.json', function (config) {
   //  editor.setConfig(config);

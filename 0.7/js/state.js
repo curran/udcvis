@@ -13,7 +13,7 @@ define(['underscore', 'backbone', 'createAction'], function (_, Backbone, create
             return createAction['add'](alias, moduleName);
           },
           'set': function (alias, property, value) {
-            var oldValue = state[alias];
+            var oldValue = state[alias][property];
 
             state[alias][property] = value;
 
