@@ -7,8 +7,8 @@
  *
  * Curran Kelleher 10/17/2013
  */
-require(['tests', 'state', 'runtime', 'history', 'editor', 'jquery', 'createAction'], function (tests, State, Runtime, History, Editor, $, createAction) {
-  //tests.run();
+require(['tests', 'state', 'runtime', 'history', 'jquery', 'createAction'], function (tests, State, Runtime, History, $, createAction) {
+  tests.run();
 
   var state = State(),
       runtime = Runtime(state);
@@ -34,12 +34,10 @@ require(['tests', 'state', 'runtime', 'history', 'editor', 'jquery', 'createActi
   ]);
   state.off('transition');
 
-
   //console.log('here');
 
   //$.getJSON('config.json', function (config) {
   //  editor.setConfig(config);
   //});
-
 
 });

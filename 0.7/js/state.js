@@ -38,7 +38,7 @@ define(['underscore', 'backbone', 'createAction'], function (_, Backbone, create
     }
 
     state.serialize = function () {
-      return JSON.stringify(state);
+      return JSON.stringify(config);
     };
 
     return state;

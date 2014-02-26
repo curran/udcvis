@@ -1,0 +1,70 @@
+Issues:
+
+ * The session state system needs to be rigorously tested with unit tests.
+ * The state editor and history view should be decoupled from the core.
+ * The session state system should be set up as an AMD package.
+
+Core modules:
+
+ * State - manages the application state and executes changes to it.
+ * Runtime - manages the correspondence between state and loaded modules.
+ * History - provides a state history graph with undo/redo functionality.
+ * Sync - provides real-time synchronous collaboration.
+
+Secondary modules:
+
+ * Dashboard - the nestex box layout framework for visualizations
+ * Editor - the CodeMirror-based configuration editor
+ * HistoryView - the visual history navigation tool
+
+Next steps:
+
+ * Set up the unit test framework
+ * Set up the AMD package configuration
+ * Create the State module
+ * Write unit tests for the State module
+   * Test correctness of do and undo actions for:
+     * add
+     * set
+     * remove
+       * undo sequence needs to create and set all properties
+       * therefore undo needs to be an array
+   * Test triggering of transition events
+   * Test serialization of configuration
+ * Create configDiff module
+     * Detect diffs only
+     * Test all cases
+       * add
+       * set
+       * unset
+       * remove
+       * changing alias name
+       * changing module name
+     * Test errors
+       * invalid module
+ * Integrate configDiff with State module
+ * Write unit test for setting config from JSON
+ * Create the Runtime module
+ * Write unit tests for the Runtime module
+   * Test correctness of side effects for:
+     * add
+     * set
+     * unset
+     * remove
+ * Create the History module
+ * Write unit tests for History module
+   * Test construction of graph
+   * Test execution of undo actions
+   * Test branching history graphs
+   * Test serialization & deserialization of history
+ * Create the Sync module
+   * Implement the server side using socket.io
+ * Write unit tests for the Sync module
+   * Spawn two States and Runtimes
+   * Connect them both to the same server-side session
+   * Test propagation of state changes both ways
+   * Test collisions and rollbacks
+ * Create the Dashboard module
+ * Create an example "vis" module
+ * Test a simple dashboard layout with "vis" instances of different colors
+ * Create the Editor module
